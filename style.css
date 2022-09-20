@@ -1,0 +1,73 @@
+/*
+  Theme Name: Brighton Rope Custom Theme 2022
+  Author: Warren Hawker
+  Version: 1.0
+*/
+
+@import url('styles/abstracts/colors.css');
+@import url('styles/abstracts/fonts.css');
+@import url('styles/components/footer.css');
+@import url('styles/components/header.css');
+@import url('styles/pages/front-page.css');
+@import url('styles/abstracts/wordpress-styles.css');
+@import url('styles/components/links-buttons.css');
+
+*, 
+*::before, 
+*::after {
+  box-sizing: border-box;
+}
+
+ul, 
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+img, 
+picture, 
+iframe {
+  width: 100%;
+  display: block;
+  margin: auto;
+}
+
+body {
+  background-color: var(--color-primary-lighter);
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+main, section {
+  width: 100%;
+  max-width: 1500px;
+  padding: 20px;
+  margin: auto;
+}
+
+header, 
+footer {
+  width: 100%;
+  background-color: var(--color-primary-base);
+}
+
+.page-title {
+  text-align: center;
+  color: var(--color-accent-base);
+}
+
+.width-25 {
+  width: 25%;
+  margin: auto;
+}
+
+.width-30 {
+  width: 30%;
+  margin: auto;
+}
+
+.width-50 {
+  width: 50%;
+  margin: auto;
+}

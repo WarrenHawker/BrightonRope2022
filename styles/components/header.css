@@ -1,0 +1,149 @@
+.top-nav {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  padding: 10px 20px;
+  margin: auto;
+  display: flex;
+  color: #ffffff;
+}
+
+.logo-container {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  font-size: 32px;
+}
+
+#hamburger {
+  font-size: 32px;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.menu-item-has-children {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.menu-top-nav-container {
+  display: flex;
+  gap: 1em;
+  font-size: 18px;
+  position: absolute;
+  background-color: var(--color-primary-base);
+  top: 110px;
+  left: 0;
+  z-index: 999;
+  border-radius: 0 10px 10px 0;
+  width: 40%;
+  transform: translateX(-600px);
+  transition: 0.3s ease;
+}
+
+.sub-menu li {
+  text-align: right;
+}
+.menu-top-nav-container.active {
+  transform: translateX(0px);
+  transition: 0.3s ease;
+}
+
+.menu-top-nav-container ul { 
+  position: relative;
+}
+
+.menu-top-nav-container li,
+.menu-top-nav-container li li {
+  padding: 5px 14px;
+  border-radius: 0 10px 10px 0;
+}
+
+.menu-top-nav-container li li:hover, 
+.menu-top-nav-container li li:focus,
+.menu-top-nav-container li:hover, 
+.menu-top-nav-container li:focus,
+#hamburger:hover,
+#hamburger:focus,
+#hamburger:active {
+  background-color: var(--color-secondary-base);
+  color: black;
+  cursor: pointer;
+  border-radius: 0 10px 10px 0;
+  transition: 0.5s ease;
+}
+
+#hamburger:hover,
+#hamburger:focus,
+#hamburger:active {
+  border-radius: 10px;
+}
+
+@media all and (min-width: 600px) {
+
+  .menu-item-has-children {
+    box-shadow: none;
+  }
+
+  .top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #hamburger {
+    display: none;
+  }
+
+  .menu-top-nav-container {
+    position: initial;
+    transform: translateX(0);
+    flex-grow: 3;
+  }
+
+  .menu-top-nav-container ul {
+    display: flex;
+  }
+
+  .menu-item {
+    position: relative;
+  }
+
+  .menu-top-nav-container li:hover ul {
+    color: #ffffff;
+  }
+
+  .menu-top-nav-container li ul {
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+    left: 0;
+    top: 30px;
+  }
+
+  .menu-top-nav-container li:hover, 
+  .menu-top-nav-container li:focus, 
+  .menu-top-nav-container li li:hover,
+  .menu-top-nav-container li li:focus {
+    border-radius: 10px;
+  }
+
+  .menu-item-has-children::after {
+    content: '\25bc';
+  }
+  .menu-item-has-children:hover::after {
+    content: '\25bc';
+  }
+
+  .sub-menu {
+    display: none !important;
+  }
+
+  .menu-item-has-children:hover .sub-menu {
+    display: block !important;
+  }
+}
+
+
+
+

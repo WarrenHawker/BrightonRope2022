@@ -1,0 +1,73 @@
+.footer-nav {
+  position: relative;
+  width: 100%;
+  max-width: 1500px;
+  padding: 10px 20px;
+  margin: auto;
+  color: #ffffff;
+}
+
+.footer-section {
+  text-align: center;
+  margin: 30px;
+  font-size: 28px;
+}
+
+.footer-section li {
+  text-align: left;
+  line-height: 0.8;
+}
+
+.footer-section li a{
+  font-size: 16px;
+}
+
+.footer-section li:hover,
+.footer-section li:focus {
+  text-decoration: underline;
+  color: black;
+}
+
+.wp-social-link a svg{
+  font-size: 40px;
+}
+
+.wp-social-link a[href*="fetlife.com"] {
+  background-image: url(../../assets/images/FetlifeLogo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wp-social-link a[href*="fetlife.com/users/4003588"] > svg {
+  opacity: 0;
+}
+
+.copywrite-notice {  
+  font-size: 14px;
+  margin: 0;
+}
+
+
+
+@media all and (min-width: 600px) {
+  .footer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .copywrite-notice {
+    left: 30%;
+    right: 30%;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .footer-section .menu  {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+}
