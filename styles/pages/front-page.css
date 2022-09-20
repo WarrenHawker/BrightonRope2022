@@ -64,10 +64,6 @@
   text-decoration: underline;
 }
 
-.event-description a:hover, .event-description a:focus {
-  text-decoration: underline;
-}
-
 .event-description {
   margin-top: 10px;
 }

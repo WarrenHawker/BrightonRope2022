@@ -24,6 +24,7 @@
         )
       ));
 
+      if($homepageEvents->have_posts()) {
         while($homepageEvents->have_posts()) {
           $homepageEvents->the_post();?>
           <div class="event-container">
@@ -61,9 +62,12 @@
               <a href="<?php the_permalink(); ?>" class="button button-secondary">Learn more</a>
             </div>
           </div>
-              
-
-  <?php }?>
-  <a class=" button button-primary view-all-events-button" href="<?php echo site_url("/whats-on")?>">View All Events</a>
+          <?php }?>
+          <a class=" button button-primary view-all-events-button" href="<?php echo site_url("/whats-on")?>">View All Events</a>
+          
+    <?php  } else { ?>
+      <h2>I'm sorry, we don't have any upcoming events right now. Follow us on social media to be notified of future events </h2>
+    <?php }
+?>
 </section>
 <?php get_footer();?>
