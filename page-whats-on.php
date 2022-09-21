@@ -30,20 +30,20 @@
             $Events->the_post();?>
             <div class="event-container">
               <div class="event-inner-container">
-                <div class="event-date">
+              <div class="event-date">
                   <?php
                   $eventDate = new DateTime(get_field('start_date'));
                   $eventStartTime = new DateTime(get_field('start_time'));
                   $eventEndTime = new DateTime(get_field('end_time'));
                   if(get_field('single_day')) {
                     ?>
-                      <p><?php echo $eventDate->format('d M');?></p>
-                      <h3><?php echo $eventStartTime->format('g:ia');?></h3>
+                      <p><?php echo esc_html($eventDate->format('d M'));?></p>
+                      <h3><?php echo esc_html($eventStartTime->format('g:ia'));?></h3>
                   <?php } else {
                     $eventEndDate = new DateTime(get_field('end_date'));
                     ?>
-                      <p><?php echo $eventDate->format('d M');?> - <?php echo $eventEndDate->format('d M');?></p>
-                      <h3><?php echo $eventStartTime->format('g:ia');?></h3>
+                      <p><?php echo esc_html($eventDate->format('d M'));?> - <?php echo esc_html($eventEndDate->format('d M'));?></p>
+                      <h3><?php echo esc_html($eventStartTime->format('g:ia'));?></h3>
                   <?php }?>
                 </div>
                 
@@ -59,7 +59,7 @@
                 </div>
               </div>
               <div class="event-buttons">
-                <a href="<?php echo site_url("/book")?>" class="button button-primary">Book This Session</a>
+                <a href="<?php echo esc_url(site_url("/book"))?>" class="button button-primary">Book This Session</a>
                 <a href="<?php the_permalink(); ?>" class="button button-secondary">Learn more</a>
               </div>
             </div>

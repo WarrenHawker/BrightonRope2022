@@ -37,13 +37,13 @@
                   $eventEndTime = new DateTime(get_field('end_time'));
                   if(get_field('single_day')) {
                     ?>
-                      <p><?php echo $eventDate->format('d M');?></p>
-                      <h3><?php echo $eventStartTime->format('g:ia');?></h3>
+                      <p><?php echo esc_html($eventDate->format('d M'));?></p>
+                      <h3><?php echo esc_html($eventStartTime->format('g:ia'));?></h3>
                   <?php } else {
                     $eventEndDate = new DateTime(get_field('end_date'));
                     ?>
-                      <p><?php echo $eventDate->format('d M');?> - <?php echo $eventEndDate->format('d M');?></p>
-                      <h3><?php echo $eventStartTime->format('g:ia');?></h3>
+                      <p><?php echo esc_html($eventDate->format('d M'));?> - <?php echo esc_html($eventEndDate->format('d M'));?></p>
+                      <h3><?php echo esc_html($eventStartTime->format('g:ia'));?></h3>
                   <?php }?>
                 </div>
                 
@@ -59,12 +59,12 @@
                 </div>
               </div>
               <div class="event-buttons">
-                <a href="<?php echo site_url("/book")?>" class="button button-primary">Book This Session</a>
+                <a href="<?php echo esc_url(site_url("/book"))?>" class="button button-primary">Book This Session</a>
                 <a href="<?php the_permalink(); ?>" class="button button-secondary">Learn more</a>
               </div>
             </div>
             <?php }?>
-            <a class=" button button-primary view-all-events-button" href="<?php echo site_url("/whats-on")?>">View All Events</a>
+            <a class=" button button-primary view-all-events-button" href="<?php echo esc_url(site_url("/whats-on"))?>">View All Events</a>
             
       <?php  } else { ?>
         <h2>I'm sorry, we don't have any upcoming events right now. Follow us on social media to be notified of future events </h2>
