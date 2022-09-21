@@ -11,6 +11,7 @@
 @import url('styles/pages/front-page.css');
 @import url('styles/abstracts/wordpress-styles.css');
 @import url('styles/components/links-buttons.css');
+@import url('styles/components/events.css');
 
 *, 
 *::before, 

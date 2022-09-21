@@ -1,0 +1,80 @@
+.all-upcoming-events h1 {
+  text-align: center;
+  color: var(--color-accent-base);
+  font-size: 36px;
+}
+
+.event-container {
+  margin-bottom: 40px;
+  background-color: var(--color-secondary-lighter);
+  border-radius: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 1px solid var(--color-secondary-light);
+}
+
+.event-inner-container {
+  display: flex;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 10px;
+  
+}
+
+.event-date {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  background-color: var(--color-secondary-light);
+  border-radius: 10px;
+  min-width: 35%;
+}
+
+.event-date h3, .event-date p {
+  text-align: center;
+  font-weight: bold;
+}
+
+.event-date p {
+  margin-bottom: 0;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.event-date h3 {
+  margin-top: 5px;
+}
+
+.event-summary {
+  padding-left: 20px;
+}
+
+.event-title, .event-description {
+  margin: 0;
+}
+
+.event-title a:hover, .event-title a:focus {
+  text-decoration: underline;
+}
+
+.event-description {
+  margin-top: 10px;
+}
+
+.view-all-events-button {
+  width: 50%;
+  font-size: 24px;
+  margin: auto !important;
+  display: block !important;
+}
+
+.event-buttons {
+  display: flex; 
+  width: 70%;
+  margin: auto;
+  max-width: 400px;
+  min-width: 300px;
+}
