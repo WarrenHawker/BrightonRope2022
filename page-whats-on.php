@@ -69,5 +69,5 @@
       <?php }?>
   </section>
 </main>
-
+<div class="spacer"></div>
 <?php get_footer(); ?>

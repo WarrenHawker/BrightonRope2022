@@ -1,6 +1,21 @@
 a {
+  color: var(--color-accent-base);
+  text-decoration: none;  
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+header a, 
+footer a {
+  color: #ffffff;
+}
+
+header a:hover,
+header a:focus {
   text-decoration: none;
-  color: var(--text-accent);  
 }
 
 .current-menu-item > a:nth-child(1), 

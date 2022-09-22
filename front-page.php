@@ -77,6 +77,6 @@
     </section>
   <?php endif; ?>
 </main>
-
+<div class="spacer"></div>
 
 <?php get_footer();?>
