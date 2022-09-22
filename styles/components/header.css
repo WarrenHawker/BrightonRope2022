@@ -79,7 +79,7 @@
   border-radius: 10px;
 }
 
-@media all and (min-width: 600px) {
+@media all and (min-width: 650px) {
 
   .menu-item-has-children {
     box-shadow: none;

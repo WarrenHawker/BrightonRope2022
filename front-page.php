@@ -1,11 +1,11 @@
 <!-- home page template -->
 <?php get_header(); ?>
 <main>
-  <section>
+  <section class="col-100">
     <?php the_content();?>
   </section>
 
-  <section class="homepage-events">
+  <section class="homepage-events col-50">
     <h1>Our Upcoming Events</h1>
     <?php 
         $today = date('Ymd');
@@ -70,6 +70,12 @@
         <h2>I'm sorry, we don't have any upcoming events right now. Follow us on social media to be notified of future events </h2>
       <?php }?>
   </section>
+
+  <?php if ( is_active_sidebar( 'homepage-sidebar' ) ) : ?>
+    <section class="col-50">
+      <?php dynamic_sidebar( 'homepage-sidebar' ); ?>
+    </section>
+  <?php endif; ?>
 </main>
 
 

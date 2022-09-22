@@ -69,7 +69,7 @@ function brighton_rope_sidebars() {
   register_sidebar( array(
 		'name'          => 'Footer Section One',
 		'id'            => 'footer-section-one',
-		'description'   => 'Widgets added here would appear inside the first section of the footer',
+		'description'   => 'Widgets added here will appear inside the first section of the footer',
 		'before_widget' => '',
     'before_title' => '',
   ));
@@ -77,7 +77,7 @@ function brighton_rope_sidebars() {
   register_sidebar( array(
 		'name'          => 'Footer Section Two',
 		'id'            => 'footer-section-two',
-		'description'   => 'Widgets added here would appear inside the second section of the footer',
+		'description'   => 'Widgets added here will appear inside the second section of the footer',
 		'before_widget' => '',
     'before_title' => '',
   ));
@@ -85,9 +85,17 @@ function brighton_rope_sidebars() {
   register_sidebar( array(
 		'name'          => 'Footer Section Three',
 		'id'            => 'footer-section-three',
-		'description'   => 'Widgets added here would appear inside the third section of the footer',
+		'description'   => 'Widgets added here will appear inside the third section of the footer',
 		'before_widget' => '',
-    'before_title' => '',
+    'before_title'  => '',
+  ));
+
+  register_sidebar( array(
+    'name'          => 'Homepage Sidebar',
+    'id'            => 'homepage-sidebar',
+    'description'   => 'Widgets added here will appear on the homepage',
+    'before_widget' => '',
+    'before_title'  => '',
   ));
 };
 add_action( 'widgets_init', 'brighton_rope_sidebars' );
