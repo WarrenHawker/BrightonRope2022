@@ -46,7 +46,7 @@ add_action('wp_enqueue_scripts', 'brighton_rope_styles');
 function brighton_rope_scripts() {
   wp_enqueue_script(
     'index.js',
-    get_stylesheet_directory_uri() . '/scripts/index.js',
+    get_stylesheet_directory_uri() . '/build/index.js',
     array('jquery'),
     '1.0.0',
     true
