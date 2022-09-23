@@ -1,24 +1,18 @@
-export default class MobileNav {
-	constructor() {
-		this.menu = document.getElementsByClassName('menu-top-nav-container')[0];
-		this.hamburger = document.getElementById('hamburger');
-		this.events();
-	}
+export default function MobileNav() {
+	const hamburger = document.getElementById('hamburger');
+	const topNavMenu = document.getElementsByClassName('menu-top-nav-container')[0];
 
-	events() {
-		this.hamburger.addEventListener('click', () => this.openMenu());
-		window.addEventListener('load', () => {
-			this.menu.classList.remove('active');
-		});
-	}
-
-	openMenu() {
-		if (!this.menu.classList.contains('active')) {
-			this.hamburger.innerHTML = '&#9747;';
-			this.menu.classList.add('active');
+	hamburger.addEventListener('click', () => {
+		if (!topNavMenu.classList.contains('active')) {
+			hamburger.innerHTML = '&#9747;';
+			topNavMenu.classList.add('active');
 		} else {
-			this.hamburger.innerHTML = '&#9776;';
-			this.menu.classList.remove('active');
+			hamburger.innerHTML = '&#9776;';
+			topNavMenu.classList.remove('active');
 		}
-	}
+	});
+
+	window.addEventListener('load', () => {
+		topNavMenu.classList.remove('active');
+	});
 }

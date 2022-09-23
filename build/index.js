@@ -12,30 +12,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": function() { return /* binding */ MobileNav; }
 /* harmony export */ });
-class MobileNav {
-  constructor() {
-    this.menu = document.getElementsByClassName('menu-top-nav-container')[0];
-    this.hamburger = document.getElementById('hamburger');
-    this.events();
-  }
-
-  events() {
-    this.hamburger.addEventListener('click', () => this.openMenu());
-    window.addEventListener('load', () => {
-      this.menu.classList.remove('active');
-    });
-  }
-
-  openMenu() {
-    if (!this.menu.classList.contains('active')) {
-      this.hamburger.innerHTML = '&#9747;';
-      this.menu.classList.add('active');
+function MobileNav() {
+  const hamburger = document.getElementById('hamburger');
+  const topNavMenu = document.getElementsByClassName('menu-top-nav-container')[0];
+  hamburger.addEventListener('click', () => {
+    if (!topNavMenu.classList.contains('active')) {
+      hamburger.innerHTML = '&#9747;';
+      topNavMenu.classList.add('active');
     } else {
-      this.hamburger.innerHTML = '&#9776;';
-      this.menu.classList.remove('active');
+      hamburger.innerHTML = '&#9776;';
+      topNavMenu.classList.remove('active');
     }
-  }
-
+  });
+  window.addEventListener('load', () => {
+    topNavMenu.classList.remove('active');
+  });
 }
 
 /***/ })
@@ -105,7 +96,7 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_mobile_nav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/mobile-nav */ "./src/modules/mobile-nav.js");
 
-const mobileNav = new _modules_mobile_nav__WEBPACK_IMPORTED_MODULE_0__["default"]();
+(0,_modules_mobile_nav__WEBPACK_IMPORTED_MODULE_0__["default"])();
 }();
 /******/ })()
 ;
