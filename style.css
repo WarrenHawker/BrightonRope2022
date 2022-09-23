@@ -12,6 +12,7 @@
 @import url('styles/components/links-buttons.css');
 @import url('styles/components/events.css');
 @import url('styles/pages/single-event.css');
+@import url('styles/pages/about-us.css');
 
 *, 
 *::before, 
@@ -83,6 +84,10 @@ footer {
 .page-title {
   text-align: center;
   color: var(--color-accent-base);
+}
+
+.margin {
+  margin: auto !important;
 }
 
 @media all and (min-width: 650px) {

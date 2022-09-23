@@ -1,0 +1,31 @@
+.team-member {
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+.team-member h3, 
+.team-member h4 {
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0;
+}
+
+.team-member h3 {
+  color: var(--color-accent-base);
+}
+
+.profile-picture {
+  margin-bottom: 10px;
+}
+
+.profile-picture img {
+  max-width: 500px;
+}
+
+@media all and (min-width: 650px) {
+  .meet-the-team {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+}
