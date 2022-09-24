@@ -35,7 +35,7 @@ function openBookingForm() {
           venue: event.acf.venue,
           soldOut: event.acf.sold_out,
           allowSingles: event.acf.allow_single_tickets,
-          individualPrices: event.acf.individual_ticket_price,
+          individualPrices: event.acf.individual_ticket_price.split(','),
           pairPrices: event.acf.pair_ticket_price.split(','),
           startDate: convertDates(event.acf.start_date),
           endDate: convertDates(event.acf.end_date)
@@ -45,16 +45,19 @@ function openBookingForm() {
 
         if (eventData.endDate) {
           eventInfo.innerHTML = `
-          <h3>${eventData.name}</h3>
-          <h4>${eventData.startDate}</h4>
-          <h4>${eventData.endDate}</h4>
-
-        `;
+            <h3>${eventData.name}</h3>
+            <h4>${eventData.startDate}</h4>
+            <h4>${eventData.endDate}</h4>
+						<div class="booking-form-price-sub-container">
+            	${eventData.individualPrices.map((item, i) => `<input type="radio" id="price-${item}" name="price" value=${item}>
+							<label class="booking-form-sub-label" for="price-${item}">£${item}</label>`).join('')}
+						</div>
+          `;
         } else {
           eventInfo.innerHTML = `
-          <h3>${eventData.name}</h3>
-          <h4>${eventData.startDate}<h4>
-        `;
+            <h3>${eventData.name}</h3>
+            <h4>${eventData.startDate}<h4>
+          `;
         }
       });
     });
