@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <main>
-  <section class="single-event-details">
+  <section class="single-event-details" id="<?php the_ID();?>">
     <h1 class="page-title"><?php the_title() ?></h1>
     <?php 
       $eventStartDate = new DateTime(get_field('start_date'));
@@ -49,8 +49,8 @@
   </section>
 
   <div class="event-buttons single-event-buttons">
+    <a href="javascript:;" class="button button-primary book-session" id="<?php the_ID();?>">Book This Session</a>
     <a href="<?php echo esc_url(site_url('/whats-on')); ?>" class="button button-secondary">See all Events</a>
-    <a href="<?php echo esc_url(site_url("/book"))?>" class="button button-primary">Book This Session</a>
   </div>
 </main>
 <div class="spacer"></div>

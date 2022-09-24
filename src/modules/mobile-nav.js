@@ -1,4 +1,4 @@
-export default function MobileNav() {
+export default function mobileNav() {
 	const hamburger = document.getElementById('hamburger');
 	const topNavMenu = document.getElementsByClassName('menu-top-nav-container')[0];
 

@@ -17,9 +17,26 @@
                     <?php endif; ?>
                     <p class="copywrite-notice"> <span>©</span> 2022 Brighton Rope. All rights reserved</p>
         </nav>
-        
     </footer>
     
+    <div class="booking-form-overlay">
+        <div class="booking-form-container">
+            <i class="fa fa-window-close" id="booking-form-close"></i>
+            <div class="event-info"></div>
+            <div class="spinner-loader"></div>
+            <div class="booking-form-page page-one active">
+                <h3>page 1</h3>
+            </div>
+
+            <div class="booking-form-page page-two">
+                <h3>page 2</h3>
+            </div>
+
+            <div class="booking-form-page page-three ">
+                <h3>page 3</h3>
+            </div>
+        </div>
+    </div> 
     <?php wp_footer(); ?>
   </body>
 </html>

@@ -59,7 +59,7 @@
                 </div>
               </div>
               <div class="event-buttons">
-                <a href="<?php echo esc_url(site_url("/book"))?>" class="button button-primary">Book This Session</a>
+                <a href="javascript:;" class="button button-primary book-session" id="<?php the_ID();?>">Book This Session</a>
                 <a href="<?php the_permalink(); ?>" class="button button-secondary">Learn more</a>
               </div>
             </div>
