@@ -74,12 +74,13 @@
 
             <form id="booking-form" data-multi-step>
                 <div class="booking-form-page" data-step='1'>
-                    <label class="booking-form-label" for="individualOrGroup">Are you booking as an individual or a group?
+                <p id="group-tickets-only-message" style="display:none;"> We are only accepting group ticket requests for this event. We are sorry for the inconvenience.</p>
+                    <label class="booking-form-label" id="individual-label" for="individualOrGroup">
                         <span class="required"> * </span>
                     </label>
                     <div class="booking-form-sub-container">
                         <div class="booking-form-input-container">
-                            <input type="radio" id="individual" name="individualOrGroup" value="individual" required>
+                            <input type="radio" id="booking-form-individual" name="individualOrGroup" value="individual" required>
                             <label class="booking-form-sub-label" for="individual">Individual</label>
                         </div>
 

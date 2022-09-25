@@ -7,6 +7,9 @@ function openBookingForm() {
 	const eventInfo = document.getElementsByClassName('event-info')[0];
 	const waitingListForm = document.getElementById('waiting-list-form');
 	const bookingForm = document.getElementById('booking-form');
+	const groupTicketsOnly = document.getElementById('group-tickets-only-message');
+	const individualRadio = document.getElementById('booking-form-individual');
+	const individualLabel = document.getElementById('individual-label');
 
 	bookSessionButtons.forEach((button) => {
 		button.addEventListener('click', (e) => {
@@ -39,6 +42,16 @@ function openBookingForm() {
 					bookingForm.style.display = 'block';
 					waitingListForm.style.display = 'none';
 					showBookingFormPages();
+				}
+
+				if (!eventData.allowSingles) {
+					groupTicketsOnly.style.display = 'block';
+					individualRadio.parentElement.style.display = 'none';
+					individualLabel.innerHTML = `Are you booking as a pair or a group?<span class="required"> * </span>`;
+				} else {
+					groupTicketsOnly.style.display = 'none';
+					individualRadio.parentElement.style.display = 'flex';
+					individualLabel.innerHTML = `Are you booking as an individual or group?<span class="required"> * </span>`;
 				}
 
 				if (eventData.endDate) {
