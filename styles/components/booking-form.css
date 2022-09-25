@@ -130,19 +130,21 @@
   height: 15px;
   width: 15px;
   margin: 0 2px;
-  background-color: #bbbbbb;
-  border: none;
-  border-radius: 50%;
   display: inline-block;
-  opacity: 0.5;
+  width: 20px;
+	height: 20px;
+	background: white;
+	border: 3px solid #ddd;
+	border-radius: 50%;
 }
 
 .step.active {
-  opacity: 1;
+  border-color: rgb(11,204,108);
 }
 
 .step.finish {
-  background-color: #04AA6D;
+  background-color: rgb(11,204,108);
+  border-color: rgb(11,204,108);  
 }
 
 input.invalid {
