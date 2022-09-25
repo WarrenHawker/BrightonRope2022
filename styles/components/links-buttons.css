@@ -38,11 +38,13 @@ header a:focus {
   text-align: center;
   margin: auto;
   max-width: 400px;
+  cursor: pointer;
 }
 
 .button:hover,
 .button:focus {
   transform: scale(1.1);
+  text-decoration: none;
 }
 
 .button-primary {

@@ -12,6 +12,7 @@
   opacity: 0;
   transform: scale(1.09);
   transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  padding-top: 20px;
 }
 
 .booking-form-overlay.active {
@@ -22,24 +23,21 @@
 
 .booking-form-container {
   background-color: #ffffff;
-  height: 300px;
-  width: 300px;
   color: #000000;
   text-align: center;
   margin: auto;
   border-radius: 10px;
   position: relative;
+  width: 70%;
+  max-width: 500px;
+  min-height: 300px;
 }
 
 .booking-form-page {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: none;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .booking-form-page.active {
@@ -48,16 +46,20 @@
 
 #booking-form-close {
   position: absolute;
-  top: 13px;
-  right: 16px;
+  top: 5px;
+  right: -50px;
   font-size: 2.1rem;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
   background-color: #fff;
   color: var(--color-accent-base);
   line-height: 0.7;
   z-index: 999;
-  
+}
+
+#booking-form-close:hover,
+#booking-form-close:focus {
+  transform: scale(1.2);
 }
 
 @keyframes spin {
@@ -90,4 +92,68 @@
 
 .spinner-loader.active {
   display: block;
+}
+
+.event-info {
+  border-bottom: 1px solid rgba(28, 35, 43, 0.1);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.booking-form-label {
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  display: block;
+}
+
+.required {
+  color: #ff0000;
+  font-weight: 400;
+}
+
+.booking-form-sub-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.booking-form-input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-container {
+  margin-top: 20px;
+}
+
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+.step.finish {
+  background-color: #04AA6D;
+}
+
+input.invalid {
+  background-color: #ffdddd;
+}
+
+#waiting-list-form {
+  display: none;
+}
+
+#booking-form {
+  display: none;
+  position: relative;
 }
