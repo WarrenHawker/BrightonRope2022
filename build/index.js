@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/modules/booking-form.js":
-/*!*************************************!*\
-  !*** ./src/modules/booking-form.js ***!
-  \*************************************/
+/***/ "./src/modules/booking-form/booking-form.js":
+/*!**************************************************!*\
+  !*** ./src/modules/booking-form/booking-form.js ***!
+  \**************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -15,6 +15,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _html_templates_individual_participant__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./html-templates/individual-participant */ "./src/modules/booking-form/html-templates/individual-participant.js");
+/* harmony import */ var _html_templates_pair_participant__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./html-templates/pair-participant */ "./src/modules/booking-form/html-templates/pair-participant.js");
+/* harmony import */ var _html_templates_group_participant__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./html-templates/group-participant */ "./src/modules/booking-form/html-templates/group-participant.js");
+
+
+
 
 
 function openBookingForm() {
@@ -34,7 +40,6 @@ function openBookingForm() {
       waitingListForm.style.display = 'none';
       bookingForm.style.display = 'none';
       jquery__WEBPACK_IMPORTED_MODULE_0___default().getJSON(`http://brightonrope.local/wp-json/wp/v2/event/${e.target.id}`, event => {
-        // console.log(event);
         const eventData = {
           id: event.id,
           name: event.title.rendered,
@@ -90,25 +95,19 @@ function openBookingForm() {
 
 function showParticipantContainers(data) {
   const individualOrGroupRadio = [...document.querySelectorAll('input[name="individualOrGroup"]')];
-  const participantContainers = [...document.getElementsByClassName('participant-container')];
+  const participantContainerGroup = document.getElementById('participant-container-group');
   individualOrGroupRadio.forEach(radio => {
     radio.addEventListener('click', () => {
       let individualOrGroup = document.querySelector('input[name="individualOrGroup"]:checked').value;
 
       if (individualOrGroup == 'individual') {
-        participantContainers[0].style.display = 'block';
-        participantContainers[1].style.display = 'none';
-        participantContainers[2].style.display = 'none';
+        participantContainerGroup.innerHTML = (0,_html_templates_individual_participant__WEBPACK_IMPORTED_MODULE_1__["default"])();
         showPricesContainer(data.individualPrices);
       } else if (individualOrGroup == 'pair') {
-        participantContainers[0].style.display = 'block';
-        participantContainers[1].style.display = 'block';
-        participantContainers[2].style.display = 'none';
+        participantContainerGroup.innerHTML = (0,_html_templates_pair_participant__WEBPACK_IMPORTED_MODULE_2__["default"])();
         showPricesContainer(data.pairPrices);
       } else if (individualOrGroup == 'group') {
-        participantContainers[0].style.display = 'block';
-        participantContainers[1].style.display = 'block';
-        participantContainers[2].style.display = 'block';
+        participantContainerGroup.innerHTML = (0,_html_templates_group_participant__WEBPACK_IMPORTED_MODULE_3__["default"])();
         showPricesContainer(data.pairPrices);
       }
     });
@@ -169,8 +168,32 @@ function showBookingFormPages() {
 
     if (e.target.matches('[data-next]')) {
       incrementor = 1;
-      const inputs = [...formPages[currentPage].querySelectorAll('input')];
+      const inputs = [...formPages[currentPage].querySelectorAll('input'), ...formPages[currentPage].querySelectorAll('select')];
       const allValid = inputs.every(input => input.reportValidity());
+
+      for (let i = 0; i < inputs.length; i++) {
+        if (!inputs[i].checkValidity()) {
+          if (inputs[i].type == 'radio') {
+            inputs[i].parentElement.parentElement.classList.add('invalid');
+          } else {
+            inputs[i].parentElement.classList.add('invalid');
+          }
+        } else {
+          if (inputs[i].type == 'radio') {
+            inputs[i].parentElement.parentElement.classList.remove('invalid');
+          } else {
+            inputs[i].parentElement.classList.remove('invalid');
+          }
+        }
+
+        inputs[i].oninput = function (e) {
+          if (inputs[i].type == 'radio') {
+            e.target.parentElement.parentElement.classList.remove('invalid');
+          } else {
+            e.target.parentElement.classList.remove('invalid');
+          }
+        };
+      }
 
       if (allValid) {
         currentPage += incrementor;
@@ -211,12 +234,205 @@ function showBookingFormPages() {
 function showPricesContainer(prices) {
   const pricesContainer = document.getElementById('prices-container');
   pricesContainer.innerHTML = `
-		<p>Our sessions run on a Pay-What-You-Can system. Please select the total amount you wish to pay: </p>
-		${prices.map(item => `<input type="radio" id="price-${item}" name="price" value=${item}><label class="booking-form-sub-label" for="price-${item}">£${item}</label>`).join('')}
+		<p>Our sessions run on a Pay-What-You-Can system.</p> 
+		<p class="label">Please select the total amount you wish to pay <span class="required"> * </span></p>
+		<div class="radio-group-container">
+		${prices.map(item => `
+					<div class="radio-sub-container">
+					<input type="radio" id="price-${item}" name="price" value=${item} required><label class="booking-form-sub-label" for="price-${item}">£${item}</label>
+					</div>
+					`).join('')}
+		</div>
 	`;
 }
 
 
+
+/***/ }),
+
+/***/ "./src/modules/booking-form/html-templates/group-participant.js":
+/*!**********************************************************************!*\
+  !*** ./src/modules/booking-form/html-templates/group-participant.js ***!
+  \**********************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ groupParticipant; }
+/* harmony export */ });
+function groupParticipant() {
+  return `
+    <fieldset class="participant-container">
+      <p class="label">Participant 1 Name<span class="required"> * </span></p>
+      <div class="input-container">
+        <input type="text" name="fname1" required>
+        <label class="sub-label" for="fname1">First</label>
+      </div>
+      <div class="input-container">
+        <input type="text" name="lname1" required>
+        <label class="sub-label" for="lname1">Last</label>
+      </div>
+      <div class="input-container pronoun-select">
+        <select name="pronouns" required>
+          <option value="" disabled selected>--select--</option>
+          <option value="he/him">He/Him</option>
+          <option value="she/her">She/Her</option>
+          <option value="they/them">They/Them</option>
+          <option value="notUsed">I don't use them</option>
+          <option value="other">Other</option>
+        </select>
+        <label class="sub-label" for="pronouns">Pronouns</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="participant-container">
+      <p class="label">Participant 2 Name<span class="required"> * </span></p>
+      <div class="input-container">
+        <input type="text" name="fname2" required>
+        <label class="sub-label" for="fname2">First</label>
+      </div>
+      <div class="input-container">
+        <input type="text" name="lname2" required>
+        <label class="sub-label" for="lname2">Last</label>
+      </div>
+      <div class="input-container pronoun-select">
+        <select name="pronouns" required>
+          <option value="" disabled selected>--select--</option>
+          <option value="he/him">He/Him</option>
+          <option value="she/her">She/Her</option>
+          <option value="they/them">They/Them</option>
+          <option value="notUsed">I don't use them</option>
+          <option value="other">Other</option>
+        </select>
+        <label class="sub-label" for="pronouns">Pronouns</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="participant-container">
+      <p class="label">Participant 3 Name<span class="required"> * </span></p>
+      <div class="input-container">
+        <input type="text" name="fname3" required>
+        <label class="sub-label" for="fname3">First</label>
+      </div>
+      <div class="input-container">
+        <input type="text" name="lname3" required>
+        <label class="sub-label" for="lname3">Last</label>
+      </div>
+      <div class="input-container pronoun-select">
+        <select name="pronouns" required>
+          <option value="" disabled selected>--select--</option>
+          <option value="he/him">He/Him</option>
+          <option value="she/her">She/Her</option>
+          <option value="they/them">They/Them</option>
+          <option value="notUsed">I don't use them</option>
+          <option value="other">Other</option>
+        </select>
+        <label class="sub-label" for="pronouns">Pronouns</label>
+      </div>
+    </fieldset>
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/modules/booking-form/html-templates/individual-participant.js":
+/*!***************************************************************************!*\
+  !*** ./src/modules/booking-form/html-templates/individual-participant.js ***!
+  \***************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ individualParticipant; }
+/* harmony export */ });
+function individualParticipant() {
+  return `
+    <fieldset class="participant-container">
+      <p class="label">Participant Name<span class="required"> * </span></p>
+      <div class="input-container">
+        <input type="text" name="fname1" required>
+        <label class="sub-label" for="fname1">First</label>
+      </div>
+      <div class="input-container">
+        <input type="text" name="lname1" required>
+        <label class="sub-label" for="lname1">Last</label>
+      </div>
+      <div class="input-container pronoun-select">
+        <select name="pronouns" required>
+          <option value="" disabled selected>--select--</option>
+          <option value="he/him">He/Him</option>
+          <option value="she/her">She/Her</option>
+          <option value="they/them">They/Them</option>
+          <option value="notUsed">I don't use them</option>
+          <option value="other">Other</option>
+        </select>
+        <label class="sub-label" for="pronouns">Pronouns</label>
+      </div>
+    </fieldset>
+  `;
+}
+
+/***/ }),
+
+/***/ "./src/modules/booking-form/html-templates/pair-participant.js":
+/*!*********************************************************************!*\
+  !*** ./src/modules/booking-form/html-templates/pair-participant.js ***!
+  \*********************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ pairParticipant; }
+/* harmony export */ });
+function pairParticipant() {
+  return `
+    <fieldset class="participant-container">
+      <p class="label">Participant 1 Name<span class="required"> * </span></p>
+      <div class="input-container">
+        <input type="text" name="fname1" required>
+        <label class="sub-label" for="fname1">First</label>
+      </div>
+      <div class="input-container">
+        <input type="text" name="lname1" required>
+        <label class="sub-label" for="lname1">Last</label>
+      </div>
+      <div class="input-container pronoun-select">
+        <select name="pronouns" required>
+          <option value="" disabled selected>--select--</option>
+          <option value="he/him">He/Him</option>
+          <option value="she/her">She/Her</option>
+          <option value="they/them">They/Them</option>
+          <option value="notUsed">I don't use them</option>
+          <option value="other">Other</option>
+        </select>
+        <label class="sub-label" for="pronouns">Pronouns</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="participant-container">
+      <p class="label">Participant 2 Name<span class="required"> * </span></p>
+      <div class="input-container">
+        <input type="text" name="fname2" required>
+        <label class="sub-label" for="fname2">First</label>
+      </div>
+      <div class="input-container">
+        <input type="text" name="lname2" required>
+        <label class="sub-label" for="lname2">Last</label>
+      </div>
+      <div class="input-container pronoun-select">
+        <select name="pronouns" required>
+          <option value="" disabled selected>--select--</option>
+          <option value="he/him">He/Him</option>
+          <option value="she/her">She/Her</option>
+          <option value="they/them">They/Them</option>
+          <option value="notUsed">I don't use them</option>
+          <option value="other">Other</option>
+        </select>
+        <label class="sub-label" for="pronouns">Pronouns</label>
+      </div>
+    </fieldset>
+  `;
+}
 
 /***/ }),
 
@@ -335,14 +551,27 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_mobile_nav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/mobile-nav */ "./src/modules/mobile-nav.js");
-/* harmony import */ var _modules_booking_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/booking-form */ "./src/modules/booking-form.js");
+/* harmony import */ var _modules_booking_form_booking_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/booking-form/booking-form */ "./src/modules/booking-form/booking-form.js");
 //import module files
 
  //run functions from module files
 
 (0,_modules_mobile_nav__WEBPACK_IMPORTED_MODULE_0__["default"])();
-(0,_modules_booking_form__WEBPACK_IMPORTED_MODULE_1__.closeBookingForm)();
-(0,_modules_booking_form__WEBPACK_IMPORTED_MODULE_1__.openBookingForm)();
+(0,_modules_booking_form_booking_form__WEBPACK_IMPORTED_MODULE_1__.closeBookingForm)();
+(0,_modules_booking_form_booking_form__WEBPACK_IMPORTED_MODULE_1__.openBookingForm)(); // document.addEventListener('DOMContentLoaded', function () {
+// 	var elements = document.getElementsByTagName('INPUT');
+// 	for (var i = 0; i < elements.length; i++) {
+// 		elements[i].oninvalid = function (e) {
+// 			e.target.setCustomValidity('');
+// 			if (!e.target.validity.valid) {
+// 				e.target.setCustomValidity('This field cannot be left blank');
+// 			}
+// 		};
+// 		elements[i].oninput = function (e) {
+// 			e.target.setCustomValidity('');
+// 		};
+// 	}
+// });
 }();
 /******/ })()
 ;

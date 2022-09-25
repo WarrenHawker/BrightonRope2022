@@ -75,110 +75,108 @@
             <form id="booking-form" data-multi-step>
                 <div class="booking-form-page" data-step='1'>
                     <p id="group-tickets-only-message" style="display:none;"> We are only accepting group ticket requests for this event. We are sorry for the inconvenience.</p>
-                    <label class="booking-form-label" id="individual-label" for="individualOrGroup"></label>
-                    <div class="booking-form-sub-container">
-                        <div class="booking-form-input-container">
-                            <input type="radio" id="booking-form-individual" name="individualOrGroup" value="individual">
-                            <label class="booking-form-sub-label" for="individual">Individual</label>
-                        </div>
 
-                        <div class="booking-form-input-container">
-                            <input type="radio" id="pair" name="individualOrGroup" value="pair">
-                            <label class="booking-form-sub-label" for="pair">Pair</label> 
-                        </div>
+                    <fieldset>
+                        <p id="individual-label"></p>
+                        <div class="radio-group-container">
+                            <div class="radio-sub-container">
+                                <input type="radio" id="booking-form-individual" name="individualOrGroup" value="individual">
+                                <label for="booking-form-individual">Individual</label>
+                            </div>
 
-                        <div class="booking-form-input-container">
-                            <input type="radio" id="group" name="individualOrGroup" value="group">
-                            <label class="booking-form-sub-label" for="group">Group of 3</label> 
+                            <div class="radio-sub-container">
+                                <input type="radio" id="booking-form-pair" name="individualOrGroup" value="pair" required>
+                                <label for="booking-form-pair">Pair</label> 
+                            </div> 
+
+                            <div class="radio-sub-container">
+                                <input type="radio" id="booking-form-group" name="individualOrGroup" value="group">
+                                <label for="booking-form-group">Group of 3</label> 
+                            </div>
                         </div>
-                    </div>
-                    <p>By clicking NEXT you agree to our <a href="#" target="_blank">Consent Waiver</a></br>(opens in a new window)</p>
-                        <button type="button" class="button button-primary" data-next>Next</button>
+                    </fieldset>
+                    <p class="agree-to-waiver">By clicking NEXT you agree to our <a href="#" target="_blank">Consent Waiver</a></br>(opens in a new window)</p>
+                        <button type="button" class="button button-primary booking-form-button" data-next>Next</button>
                 </div>
 
                 <div class="booking-form-page" data-step='2'>
                     <h3>Participant information</h3>
 
-                    <div class="participant-container">
-                        <label>First Participant<span class="required"> * </span></label>
-                        <div class="participant-sub-container"> 
-                            <input type="text" name="fname1" required>
-                            <label for="fname1">First Name</label>
+                    <div id="participant-container-group"></div>
 
-                            <input type="text" name="lname1" required>
-                            <label for="lname1">Last Name</label>
-
-                            <select name="pronouns" required>
-                                <option value="" disabled selected>--select--</option>
-                                <option value="he/him">He/Him</option>
-                                <option value="she/her">She/Her</option>
-                                <option value="they/them">They/Them</option>
-                                <option value="notUsed">I don't use them</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <label for="pronouns">Pronouns</label>
-                        </div>
+                    <div class="input-container email">
+                        <label class="label" for="email">Email<span class="required"> * </span></label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div id="prices-container" class="input-container prices"></div>
+                    <div class="input-container info">
+                        <label class="label" for="additional-info">Additional Information</label>
+                        <textarea name="additional-info"></textarea>
                     </div>
 
-                    <div class="participant-container">
-                        <label>Second Participant<span class="required"> * </span></label>
-                        <div class="participant-sub-container"> 
-                            <input type="text" name="fname2" required>
-                            <label for="fname2">First Name</label>
-
-                            <input type="text" name="lname2" required>
-                            <label for="lname2">Last Name</label>
-
-                            <select name="pronouns" required>
-                                <option value="" disabled selected>--select--</option>
-                                <option value="he/him">He/Him</option>
-                                <option value="she/her">She/Her</option>
-                                <option value="they/them">They/Them</option>
-                                <option value="notUsed">I don't use them</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <label for="pronouns">Pronouns</label>
-                        </div>
+                    <div class="booking-form-button-container">
+                        <button type="button" class="button button-secondary booking-form-button" data-prev>Previous</button>
+                        <button type="button" class="button button-primary booking-form-button" data-next>Next</button>
                     </div>
-
-                    <div class="participant-container">
-                        <label>Third Participant<span class="required"> * </span></label>
-                        <div class="participant-sub-container"> 
-                            <input type="text" name="fname3" required>
-                            <label for="fname3">First Name</label>
-
-                            <input type="text" name="lname3" required>
-                            <label for="lname3">Last Name</label>
-
-                            <select name="pronouns" required>
-                                <option value="" disabled selected>--select--</option>
-                                <option value="he/him">He/Him</option>
-                                <option value="she/her">She/Her</option>
-                                <option value="they/them">They/Them</option>
-                                <option value="notUsed">I don't use them</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <label for="pronouns">Pronouns</label>
-                        </div>
-                    </div>
-
-                    <label for="email">Email<span class="required"> * </span></label>
-                    <input type="email" name="email" required>
-
-                    <div id="prices-container">
-                    </div>
-
-                    <label for="additional-info">Additional Information</label>
-                    <input type="textarea" name="additional-info">
-
-                    <button type="button" class="button button-secondary" data-prev>Previous</button>
-                    <button type="button" class="button button-primary" data-next>Next</button>
                 </div>
 
-                <div class="booking-form-page" data-step='3'>
-                    <h3>page 3</h3>
-                    <button type="button" class="button button-secondary" data-prev>Previous</button>
-                    <button type="submit" class="button button-primary">Submit</button>
+                <div class="booking-form-page" id="paypal-page" data-step='3'>
+                    <div id="smart-button-container">
+                        <div style="text-align: center;">
+                            <div id="paypal-button-container"></div>
+                        </div>
+                    </div>
+                    <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=GBP" data-sdk-integration-source="button-factory"></script>
+                    <script>
+                       
+                        function initPayPalButton() {
+                        paypal.Buttons({
+                            style: {
+                            shape: 'pill',
+                            color: 'gold',
+                            layout: 'vertical',
+                            label: 'paypal',
+                            
+                            },
+
+                            createOrder: function(data, actions) {
+                                let selectedPrice = document.querySelector('input[name="price"]:checked').value;
+                            return actions.order.create({
+                                purchase_units: [{"amount":{"currency_code":"GBP","value":selectedPrice}}]
+                            });
+                            },
+
+                            onApprove: function(data, actions) {
+                            return actions.order.capture().then(function(orderData) {
+                                
+                                // Full available details
+                                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                                // Show a success message within this page, e.g.
+                                const element = document.getElementById('paypal-button-container');
+                                element.innerHTML = '';
+                                element.innerHTML = `
+                                    <h3>Thank you for your payment!</h3>
+                                    <h4>Please Press the Submit button below to finish booking.</h4>
+                                    <button type="submit" class="button button-primary booking-form-button">Submit</button>
+                                `;
+                                const prevBtn = document.getElementById('final-prev-btn')
+                                prevBtn.style.display = "none";
+
+                                // Or go to another URL:  actions.redirect('thank_you.html');
+                                
+                            });
+                            },
+
+                            onError: function(err) {
+                            console.log(err);
+                            }
+                        }).render('#paypal-button-container');
+                        }
+                        initPayPalButton();
+                    </script>
+
+                    <button type="button" class="button button-secondary booking-form-button" id="final-prev-btn" data-prev>Previous</button>
                 </div>
 
                 <div class="step-container">
@@ -192,4 +190,3 @@
     <?php wp_footer(); ?>
   </body>
 </html>
-

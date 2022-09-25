@@ -1,4 +1,7 @@
 import $ from 'jquery';
+import individualParticipant from './html-templates/individual-participant';
+import pairParticipant from './html-templates/pair-participant';
+import groupParticipant from './html-templates/group-participant';
 
 function openBookingForm() {
 	const bookSessionButtons = document.querySelectorAll('.book-session');
@@ -20,7 +23,6 @@ function openBookingForm() {
 			bookingForm.style.display = 'none';
 
 			$.getJSON(`http://brightonrope.local/wp-json/wp/v2/event/${e.target.id}`, (event) => {
-				// console.log(event);
 				const eventData = {
 					id: event.id,
 					name: event.title.rendered,
@@ -77,24 +79,19 @@ function openBookingForm() {
 
 function showParticipantContainers(data) {
 	const individualOrGroupRadio = [...document.querySelectorAll('input[name="individualOrGroup"]')];
-	const participantContainers = [...document.getElementsByClassName('participant-container')];
+	const participantContainerGroup = document.getElementById('participant-container-group');
 	individualOrGroupRadio.forEach((radio) => {
 		radio.addEventListener('click', () => {
 			let individualOrGroup = document.querySelector('input[name="individualOrGroup"]:checked').value;
+
 			if (individualOrGroup == 'individual') {
-				participantContainers[0].style.display = 'block';
-				participantContainers[1].style.display = 'none';
-				participantContainers[2].style.display = 'none';
+				participantContainerGroup.innerHTML = individualParticipant();
 				showPricesContainer(data.individualPrices);
 			} else if (individualOrGroup == 'pair') {
-				participantContainers[0].style.display = 'block';
-				participantContainers[1].style.display = 'block';
-				participantContainers[2].style.display = 'none';
+				participantContainerGroup.innerHTML = pairParticipant();
 				showPricesContainer(data.pairPrices);
 			} else if (individualOrGroup == 'group') {
-				participantContainers[0].style.display = 'block';
-				participantContainers[1].style.display = 'block';
-				participantContainers[2].style.display = 'block';
+				participantContainerGroup.innerHTML = groupParticipant();
 				showPricesContainer(data.pairPrices);
 			}
 		});
@@ -154,11 +151,37 @@ function showBookingFormPages() {
 
 	bookingForm.addEventListener('click', (e) => {
 		let incrementor;
-
 		if (e.target.matches('[data-next]')) {
 			incrementor = 1;
-			const inputs = [...formPages[currentPage].querySelectorAll('input')];
+			const inputs = [
+				...formPages[currentPage].querySelectorAll('input'),
+				...formPages[currentPage].querySelectorAll('select'),
+			];
 			const allValid = inputs.every((input) => input.reportValidity());
+
+			for (let i = 0; i < inputs.length; i++) {
+				if (!inputs[i].checkValidity()) {
+					if (inputs[i].type == 'radio') {
+						inputs[i].parentElement.parentElement.classList.add('invalid');
+					} else {
+						inputs[i].parentElement.classList.add('invalid');
+					}
+				} else {
+					if (inputs[i].type == 'radio') {
+						inputs[i].parentElement.parentElement.classList.remove('invalid');
+					} else {
+						inputs[i].parentElement.classList.remove('invalid');
+					}
+				}
+				inputs[i].oninput = function (e) {
+					if (inputs[i].type == 'radio') {
+						e.target.parentElement.parentElement.classList.remove('invalid');
+					} else {
+						e.target.parentElement.classList.remove('invalid');
+					}
+				};
+			}
+
 			if (allValid) {
 				currentPage += incrementor;
 			}
@@ -198,13 +221,20 @@ function showBookingFormPages() {
 function showPricesContainer(prices) {
 	const pricesContainer = document.getElementById('prices-container');
 	pricesContainer.innerHTML = `
-		<p>Our sessions run on a Pay-What-You-Can system. Please select the total amount you wish to pay: </p>
+		<p>Our sessions run on a Pay-What-You-Can system.</p> 
+		<p class="label">Please select the total amount you wish to pay <span class="required"> * </span></p>
+		<div class="radio-group-container">
 		${prices
 			.map(
 				(item) =>
-					`<input type="radio" id="price-${item}" name="price" value=${item}><label class="booking-form-sub-label" for="price-${item}">£${item}</label>`
+					`
+					<div class="radio-sub-container">
+					<input type="radio" id="price-${item}" name="price" value=${item} required><label class="booking-form-sub-label" for="price-${item}">£${item}</label>
+					</div>
+					`
 			)
 			.join('')}
+		</div>
 	`;
 }
 
