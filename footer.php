@@ -74,13 +74,11 @@
 
             <form id="booking-form" data-multi-step>
                 <div class="booking-form-page" data-step='1'>
-                <p id="group-tickets-only-message" style="display:none;"> We are only accepting group ticket requests for this event. We are sorry for the inconvenience.</p>
-                    <label class="booking-form-label" id="individual-label" for="individualOrGroup">
-                        <span class="required"> * </span>
-                    </label>
+                    <p id="group-tickets-only-message" style="display:none;"> We are only accepting group ticket requests for this event. We are sorry for the inconvenience.</p>
+                    <label class="booking-form-label" id="individual-label" for="individualOrGroup"></label>
                     <div class="booking-form-sub-container">
                         <div class="booking-form-input-container">
-                            <input type="radio" id="booking-form-individual" name="individualOrGroup" value="individual" required>
+                            <input type="radio" id="booking-form-individual" name="individualOrGroup" value="individual">
                             <label class="booking-form-sub-label" for="individual">Individual</label>
                         </div>
 
@@ -99,7 +97,80 @@
                 </div>
 
                 <div class="booking-form-page" data-step='2'>
-                    <h3>page 2</h3>
+                    <h3>Participant information</h3>
+
+                    <div class="participant-container">
+                        <label>First Participant<span class="required"> * </span></label>
+                        <div class="participant-sub-container"> 
+                            <input type="text" name="fname1" required>
+                            <label for="fname1">First Name</label>
+
+                            <input type="text" name="lname1" required>
+                            <label for="lname1">Last Name</label>
+
+                            <select name="pronouns" required>
+                                <option value="" disabled selected>--select--</option>
+                                <option value="he/him">He/Him</option>
+                                <option value="she/her">She/Her</option>
+                                <option value="they/them">They/Them</option>
+                                <option value="notUsed">I don't use them</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <label for="pronouns">Pronouns</label>
+                        </div>
+                    </div>
+
+                    <div class="participant-container">
+                        <label>Second Participant<span class="required"> * </span></label>
+                        <div class="participant-sub-container"> 
+                            <input type="text" name="fname2" required>
+                            <label for="fname2">First Name</label>
+
+                            <input type="text" name="lname2" required>
+                            <label for="lname2">Last Name</label>
+
+                            <select name="pronouns" required>
+                                <option value="" disabled selected>--select--</option>
+                                <option value="he/him">He/Him</option>
+                                <option value="she/her">She/Her</option>
+                                <option value="they/them">They/Them</option>
+                                <option value="notUsed">I don't use them</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <label for="pronouns">Pronouns</label>
+                        </div>
+                    </div>
+
+                    <div class="participant-container">
+                        <label>Third Participant<span class="required"> * </span></label>
+                        <div class="participant-sub-container"> 
+                            <input type="text" name="fname3" required>
+                            <label for="fname3">First Name</label>
+
+                            <input type="text" name="lname3" required>
+                            <label for="lname3">Last Name</label>
+
+                            <select name="pronouns" required>
+                                <option value="" disabled selected>--select--</option>
+                                <option value="he/him">He/Him</option>
+                                <option value="she/her">She/Her</option>
+                                <option value="they/them">They/Them</option>
+                                <option value="notUsed">I don't use them</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <label for="pronouns">Pronouns</label>
+                        </div>
+                    </div>
+
+                    <label for="email">Email<span class="required"> * </span></label>
+                    <input type="email" name="email" required>
+
+                    <div id="prices-container">
+                    </div>
+
+                    <label for="additional-info">Additional Information</label>
+                    <input type="textarea" name="additional-info">
+
                     <button type="button" class="button button-secondary" data-prev>Previous</button>
                     <button type="button" class="button button-primary" data-next>Next</button>
                 </div>

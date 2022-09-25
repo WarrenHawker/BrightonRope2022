@@ -164,3 +164,7 @@ input.invalid {
   color: red;
   border: 2px solid red;
 }
+
+.participant-container {
+  display: none;
+}

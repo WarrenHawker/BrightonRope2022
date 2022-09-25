@@ -28,9 +28,11 @@ function openBookingForm() {
 					soldOut: event.acf.sold_out,
 					allowSingles: event.acf.allow_single_tickets,
 					individualPrices: event.acf.individual_ticket_price.split(','),
-					pairPrices: event.acf.pair_ticket_price.split(','),
+					pairPrices: event.acf.group_ticket_price.split(','),
 					startDate: convertDates(event.acf.start_date),
 					endDate: convertDates(event.acf.end_date),
+					startTime: convertTimes(event.acf.start_time),
+					endTime: convertTimes(event.acf.end_time),
 				};
 
 				spinnerLoader.classList.remove('active');
@@ -42,6 +44,7 @@ function openBookingForm() {
 					bookingForm.style.display = 'block';
 					waitingListForm.style.display = 'none';
 					showBookingFormPages();
+					showParticipantContainers(eventData); //runs showPricesContainer function
 				}
 
 				if (!eventData.allowSingles) {
@@ -58,14 +61,42 @@ function openBookingForm() {
 					eventInfo.innerHTML = `
 				    <h3 class="no-margin no-padding">${eventData.name}</h3>
 				    <h4 class="no-margin no-padding">${eventData.startDate} - ${eventData.endDate}</h4>
+						<h4 class="no-margin no-padding">${eventData.startTime} - ${eventData.endTime}</h4> 
 				  `;
 				} else {
 					eventInfo.innerHTML = `
 				    <h3 class="no-margin no-padding">${eventData.name}</h3>
-				    <h4 class="no-margin no-padding">${eventData.startDate}<h4>
+				    <h4 class="no-margin no-padding">${eventData.startDate}</h4>
+						<h4 class="no-margin no-padding">${eventData.startTime} - ${eventData.endTime}</h4> 
 				  `;
 				}
 			});
+		});
+	});
+}
+
+function showParticipantContainers(data) {
+	const individualOrGroupRadio = [...document.querySelectorAll('input[name="individualOrGroup"]')];
+	const participantContainers = [...document.getElementsByClassName('participant-container')];
+	individualOrGroupRadio.forEach((radio) => {
+		radio.addEventListener('click', () => {
+			let individualOrGroup = document.querySelector('input[name="individualOrGroup"]:checked').value;
+			if (individualOrGroup == 'individual') {
+				participantContainers[0].style.display = 'block';
+				participantContainers[1].style.display = 'none';
+				participantContainers[2].style.display = 'none';
+				showPricesContainer(data.individualPrices);
+			} else if (individualOrGroup == 'pair') {
+				participantContainers[0].style.display = 'block';
+				participantContainers[1].style.display = 'block';
+				participantContainers[2].style.display = 'none';
+				showPricesContainer(data.pairPrices);
+			} else if (individualOrGroup == 'group') {
+				participantContainers[0].style.display = 'block';
+				participantContainers[1].style.display = 'block';
+				participantContainers[2].style.display = 'block';
+				showPricesContainer(data.pairPrices);
+			}
 		});
 	});
 }
@@ -102,6 +133,10 @@ function convertDates(date) {
 	return new Intl.DateTimeFormat('en-GB', options).format(newDate);
 }
 
+function convertTimes(time) {
+	return time.substring(0, 5);
+}
+
 function showBookingFormPages() {
 	const bookingForm = document.querySelector('[data-multi-step]');
 	const formPages = [...bookingForm.querySelectorAll('[data-step]')];
@@ -122,19 +157,19 @@ function showBookingFormPages() {
 
 		if (e.target.matches('[data-next]')) {
 			incrementor = 1;
+			const inputs = [...formPages[currentPage].querySelectorAll('input')];
+			const allValid = inputs.every((input) => input.reportValidity());
+			if (allValid) {
+				currentPage += incrementor;
+			}
 		} else if (e.target.matches('[data-prev]')) {
 			incrementor = -1;
+			currentPage += incrementor;
 		}
 
 		if (incrementor == null) return;
-
-		const inputs = [...formPages[currentPage].querySelectorAll('input')];
-		const allValid = inputs.every((input) => input.reportValidity());
-		if (allValid) {
-			currentPage += incrementor;
-			showCurrentPage();
-			setStepIndicator();
-		}
+		showCurrentPage();
+		setStepIndicator();
 	});
 
 	function showCurrentPage() {
@@ -160,15 +195,17 @@ function showBookingFormPages() {
 	}
 }
 
-export { closeBookingForm, openBookingForm };
-
-{
-	/* <div class="booking-form-price-sub-container">
-            	${eventData.individualPrices
-								.map(
-									(item) => `<input type="radio" id="price-${item}" name="price" value=${item}>
-							<label class="booking-form-sub-label" for="price-${item}">£${item}</label>`
-								)
-								.join('')}
-						</div> */
+function showPricesContainer(prices) {
+	const pricesContainer = document.getElementById('prices-container');
+	pricesContainer.innerHTML = `
+		<p>Our sessions run on a Pay-What-You-Can system. Please select the total amount you wish to pay: </p>
+		${prices
+			.map(
+				(item) =>
+					`<input type="radio" id="price-${item}" name="price" value=${item}><label class="booking-form-sub-label" for="price-${item}">£${item}</label>`
+			)
+			.join('')}
+	`;
 }
+
+export { closeBookingForm, openBookingForm };
