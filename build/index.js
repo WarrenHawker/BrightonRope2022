@@ -58,6 +58,7 @@ function openBookingForm() {
         if (eventData.soldOut) {
           waitingListForm.style.display = 'block';
           bookingForm.style.display = 'none';
+          waitingListFormValidation();
         } else {
           bookingForm.style.display = 'block';
           waitingListForm.style.display = 'none';
@@ -146,6 +147,37 @@ function convertDates(date) {
 
 function convertTimes(time) {
   return time.substring(0, 5);
+}
+
+function waitingListFormValidation() {
+  const form = document.getElementById('waiting-list-form');
+  const inputs = [...form.querySelectorAll('input'), ...form.querySelectorAll('select')];
+  const submitBtn = document.getElementById('waiting-list-submit');
+  submitBtn.addEventListener('click', () => {
+    for (let i = 0; i < inputs.length; i++) {
+      if (!inputs[i].checkValidity()) {
+        if (inputs[i].type == 'radio') {
+          inputs[i].parentElement.parentElement.classList.add('invalid');
+        } else {
+          inputs[i].parentElement.classList.add('invalid');
+        }
+      } else {
+        if (inputs[i].type == 'radio') {
+          inputs[i].parentElement.parentElement.classList.remove('invalid');
+        } else {
+          inputs[i].parentElement.classList.remove('invalid');
+        }
+      }
+
+      inputs[i].oninput = function (e) {
+        if (inputs[i].type == 'radio') {
+          e.target.parentElement.parentElement.classList.remove('invalid');
+        } else {
+          e.target.parentElement.classList.remove('invalid');
+        }
+      };
+    }
+  });
 }
 
 function showBookingFormPages() {
@@ -558,20 +590,7 @@ __webpack_require__.r(__webpack_exports__);
 
 (0,_modules_mobile_nav__WEBPACK_IMPORTED_MODULE_0__["default"])();
 (0,_modules_booking_form_booking_form__WEBPACK_IMPORTED_MODULE_1__.closeBookingForm)();
-(0,_modules_booking_form_booking_form__WEBPACK_IMPORTED_MODULE_1__.openBookingForm)(); // document.addEventListener('DOMContentLoaded', function () {
-// 	var elements = document.getElementsByTagName('INPUT');
-// 	for (var i = 0; i < elements.length; i++) {
-// 		elements[i].oninvalid = function (e) {
-// 			e.target.setCustomValidity('');
-// 			if (!e.target.validity.valid) {
-// 				e.target.setCustomValidity('This field cannot be left blank');
-// 			}
-// 		};
-// 		elements[i].oninput = function (e) {
-// 			e.target.setCustomValidity('');
-// 		};
-// 	}
-// });
+(0,_modules_booking_form_booking_form__WEBPACK_IMPORTED_MODULE_1__.openBookingForm)();
 }();
 /******/ })()
 ;

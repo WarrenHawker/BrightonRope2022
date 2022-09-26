@@ -25,52 +25,57 @@
             <div class="event-info"></div>
             <div class="spinner-loader"></div>
             <form id="waiting-list-form">
-                <p>I'm sorry, we have sold out for this event. Please fill in your details below to be added to our waiting list. We will contact you directly if a space becomes available.</p>
-                <div class="booking-form-participant-container">
-                    <label class="booking-form-label name-label" for="name">Name
-                        <span class="required"> * </span>
-                    </label>
-                    <div class="booking-form-sub-container">
-                        <div class="name-input-sub-container">
-                        <input type="text" id="name" name="fname" required>
-                        <label class="booking-form-sub-label">First</label>
+                <p class="fully-booked-message">I'm sorry, we have sold out for this event. Please fill in your details below to be added to our waiting list. We will contact you directly if a space becomes available.</p>
+                <fieldset class="participant-container">
+                    <p class="label">Name<span class="required"> * </span></p>
+                    <div class="input-container">
+                        <input type="text" name="fname1" required>
+                        <label class="sub-label" for="fname1">First</label>
                     </div>
+                    <div class="input-container">
+                        <input type="text" name="lname1" required>
+                        <label class="sub-label" for="lname1">Last</label>
+                    </div>
+                    <div class="input-container pronoun-select">
+                        <select name="pronouns" required>
+                        <option value="" disabled selected>--select--</option>
+                        <option value="he/him">He/Him</option>
+                        <option value="she/her">She/Her</option>
+                        <option value="they/them">They/Them</option>
+                        <option value="notUsed">I don't use them</option>
+                        <option value="other">Other</option>
+                        </select>
+                        <label class="sub-label" for="pronouns">Pronouns</label>
+                    </div>
+                </fieldset>
 
-                    <div class="name-input-sub-container">
-                        <input type="text" id="name" name="lname" required>
-                        <label class="booking-form-sub-label">Last</label>
+                <fieldset>
+                    <p class="label waiting-list-label">Do you wish to book as an individual or group<span class="required"> * </span></p>
+                    <div class="radio-group-container">
+                        <div class="radio-sub-container">
+                            <input type="radio" id="waiting-list-individual" name="individualOrGroup" value="individual" required>
+                            <label for="waiting-list-individual">Individual</label>
+                            </div>
+
+                        <div class="radio-sub-container">
+                            <input type="radio" id="waiting-list-pair" name="individualOrGroup" value="pair">
+                            <label for="waiting-list-pair">Pair</label> 
+                        </div> 
+
+                        <div class="radio-sub-container">
+                            <input type="radio" id="waiting-list-group" name="individualOrGroup" value="group">
+                            <label for="waiting-list-group">Group of 3</label> 
+                        </div>
                     </div>
+                </fieldset>
+
+                <div class="input-container waiting-list email ">
+                    <label class="label" for="email">Email<span class="required"> * </span></label>
+                    <input type="email" name="email" required>
                 </div>
 
-                <div class="booking-form-sub-container">
-                            <label class="booking-form-label" for="email">Email
-                                <span class="required"> * </span>
-                            </label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                            <label class="booking-form-label" for="individualOrGroup">Are you wanting to book as an individual or a group?
-                            <span class="required"> * </span>
-                        </label>
-                        <div class="booking-form-sub-container">
-                            <div class="booking-form-input-container">
-                                <input type="radio" id="individual" name="individualOrGroup" value="individual" required>
-                                <label class="booking-form-sub-label" for="individual">Individual</label>
-                            </div>
-
-                            <div class="booking-form-input-container">
-                                <input type="radio" id="pair" name="individualOrGroup" value="pair" required>
-                                <label class="booking-form-sub-label" for="pair">Pair</label> 
-                            </div>
-
-                            <div class="booking-form-input-container">
-                                <input type="radio" id="group" name="individualOrGroup" value="group" required>
-                                <label class="booking-form-sub-label" for="group">Group of 3</label> 
-                            </div>
-                        </div>
-                        </div>
-                        <button class="button button-primary">Submit</button>
-                    
-                        </form>
+                <button class="button button-primary booking-form-button" id="waiting-list-submit">Submit</button>    
+            </form>
 
             <form id="booking-form" data-multi-step>
                 <div class="booking-form-page" data-step='1'>

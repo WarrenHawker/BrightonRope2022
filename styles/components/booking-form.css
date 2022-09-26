@@ -89,7 +89,8 @@
   padding-bottom: 20px;
 }
 
-#group-tickets-only-message {
+#group-tickets-only-message, 
+.fully-booked-message {
   color: red;
   border: 2px solid red;
 }
@@ -98,6 +99,10 @@
 #booking-form, 
 .booking-form-page {
   display: none;
+}
+
+#waiting-list-form {
+  padding-bottom: 20px;
 }
 
 .booking-form-page.active {
@@ -150,6 +155,14 @@
   grid-column: 1 / 3;
   width: 50%;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.pronoun-select select {
+  text-align: center;
+  width: 60%;
+  margin: auto;
 }
 
 .sub-label {
@@ -157,9 +170,16 @@
   text-align: center;
 }
 
-#individual-label {
+#individual-label,
+.waiting-list-label {
   margin-top: 0;
   font-weight: bold;
+}
+
+.fully-booked-message {
+  width: 90%;
+  margin: auto;
+  margin-bottom: 20px;
 }
 
 .radio-group-container {
@@ -223,4 +243,9 @@ button.booking-form-button {
 
 #paypal-page {
   padding: 20px;
+}
+
+.input-container.waiting-list.email {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
