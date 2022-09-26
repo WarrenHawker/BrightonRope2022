@@ -1,0 +1,28 @@
+.venues-group {
+  text-align: center;
+}
+
+.venue-container {
+  padding-bottom: 40px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.venue-container h1 {
+  color: var(--color-accent-base);
+  margin: 0;
+}
+
+@media all and (min-width: 650px) {
+  .venues-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .venue-container {
+    border: 1px solid black;
+    padding: 20px;
+  }
+}
+

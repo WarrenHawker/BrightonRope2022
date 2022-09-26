@@ -40,7 +40,6 @@
         'capability_type' => 'venue',
         'map_meta_cap' => true,
         'supports' => array('title', 'editor', 'excerpt'),
-        'has_archive' => true,
         'rewrite' => array('slug' => 'venues'),
         'show_in_rest' => true, 
         //true uses new block editor, false uses classic editor
