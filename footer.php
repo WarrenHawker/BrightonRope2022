@@ -100,7 +100,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <p class="agree-to-waiver">By clicking NEXT you agree to our <a href="#" target="_blank">Consent Waiver</a></br>(opens in a new window)</p>
+                    <p class="agree-to-waiver">By clicking NEXT you agree to our <a href="<?php echo esc_url(site_url('/consent-waiver')) ?>" target="_blank">Consent Waiver</a></br>(opens in a new window)</p>
                         <button type="button" class="button button-primary booking-form-button" data-next>Next</button>
                 </div>
 
