@@ -42,7 +42,8 @@ function openBookingForm() {
 				if (eventData.soldOut) {
 					waitingListForm.style.display = 'block';
 					bookingForm.style.display = 'none';
-					waitingListFormValidation();
+					const submitBtn = document.getElementById('waiting-list-submit');
+					submitBtn.addEventListener('click', waitingListFormValidation);
 				} else {
 					bookingForm.style.display = 'block';
 					waitingListForm.style.display = 'none';
@@ -104,12 +105,29 @@ function closeBookingForm() {
 	const bookingFormOverlay = document.getElementsByClassName('booking-form-overlay')[0];
 	const bookingFormPages = [...document.getElementsByClassName('booking-form-page')];
 	const steps = [...document.getElementsByClassName('step')];
+	const bookingForm = document.querySelector('[data-multi-step]');
+	const waitingListForm = document.getElementById('waiting-list-form');
+	const submitBtn = document.getElementById('waiting-list-submit');
 
 	closeButton.addEventListener('click', () => {
 		bookingFormOverlay.classList.remove('active');
-		bookingFormPages.forEach((page) => page.classList.remove('active'));
-		steps.forEach((page) => page.classList.remove('active'));
-		steps.forEach((page) => page.classList.remove('finish'));
+
+		if (bookingForm.style.display == 'block') {
+			bookingForm.removeEventListener('click', bookingFormValidation);
+			bookingFormPages.forEach((page) => page.classList.remove('active'));
+			steps.forEach((page) => page.classList.remove('active'));
+			steps.forEach((page) => page.classList.remove('finish'));
+		} else if (waitingListForm.style.display == 'block') {
+			submitBtn.removeEventListener('click', waitingListFormValidation);
+		}
+		const inputs = [...document.querySelectorAll('input'), ...document.querySelectorAll('select')];
+		inputs.forEach((input) => {
+			if (input.type == 'radio') {
+				input.parentElement.parentElement.classList.remove('invalid');
+			} else {
+				input.parentElement.classList.remove('invalid');
+			}
+		});
 	});
 }
 
@@ -138,9 +156,83 @@ function convertTimes(time) {
 function waitingListFormValidation() {
 	const form = document.getElementById('waiting-list-form');
 	const inputs = [...form.querySelectorAll('input'), ...form.querySelectorAll('select')];
-	const submitBtn = document.getElementById('waiting-list-submit');
 
-	submitBtn.addEventListener('click', () => {
+	for (let i = 0; i < inputs.length; i++) {
+		if (!inputs[i].checkValidity()) {
+			if (inputs[i].type == 'radio') {
+				inputs[i].parentElement.parentElement.classList.add('invalid');
+			} else {
+				inputs[i].parentElement.classList.add('invalid');
+			}
+		} else {
+			if (inputs[i].type == 'radio') {
+				inputs[i].parentElement.parentElement.classList.remove('invalid');
+			} else {
+				inputs[i].parentElement.classList.remove('invalid');
+			}
+		}
+		inputs[i].oninput = function (e) {
+			if (inputs[i].type == 'radio') {
+				e.target.parentElement.parentElement.classList.remove('invalid');
+			} else {
+				e.target.parentElement.classList.remove('invalid');
+			}
+		};
+	}
+}
+
+function showBookingFormPages() {
+	const bookingForm = document.querySelector('[data-multi-step]');
+	const formPages = [...bookingForm.querySelectorAll('[data-step]')];
+	bookingForm.reset();
+	let currentPage = formPages.findIndex((page) => {
+		return page.classList.contains('active');
+	});
+
+	if (currentPage < 0) {
+		currentPage = 0;
+		formPages[currentPage].classList.add('active');
+		showCurrentPage(formPages, currentPage);
+		setStepIndicator(currentPage);
+	}
+	bookingForm.addEventListener('click', bookingFormValidation);
+}
+
+function showPricesContainer(prices) {
+	const pricesContainer = document.getElementById('prices-container');
+	pricesContainer.innerHTML = `
+		<p>Our sessions run on a Pay-What-You-Can system.</p> 
+		<p class="label">Please select the total amount you wish to pay <span class="required"> * </span></p>
+		<div class="radio-group-container">
+		${prices
+			.map(
+				(item) =>
+					`
+					<div class="radio-sub-container">
+					<input type="radio" id="price-${item}" name="price" value=${item} required><label class="booking-form-sub-label" for="price-${item}">£${item}</label>
+					</div>
+					`
+			)
+			.join('')}
+		</div>
+	`;
+}
+
+function bookingFormValidation(e) {
+	const bookingForm = document.querySelector('[data-multi-step]');
+	const formPages = [...bookingForm.querySelectorAll('[data-step]')];
+	let currentPage = formPages.findIndex((page) => {
+		return page.classList.contains('active');
+	});
+	let incrementor;
+	if (e.target.matches('[data-next]')) {
+		incrementor = 1;
+		const inputs = [
+			...formPages[currentPage].querySelectorAll('input'),
+			...formPages[currentPage].querySelectorAll('select'),
+		];
+		const allValid = inputs.every((input) => input.reportValidity());
+
 		for (let i = 0; i < inputs.length; i++) {
 			if (!inputs[i].checkValidity()) {
 				if (inputs[i].type == 'radio') {
@@ -163,111 +255,40 @@ function waitingListFormValidation() {
 				}
 			};
 		}
-	});
-}
 
-function showBookingFormPages() {
-	const bookingForm = document.querySelector('[data-multi-step]');
-	const formPages = [...bookingForm.querySelectorAll('[data-step]')];
-	bookingForm.reset();
-	let currentPage = formPages.findIndex((page) => {
-		return page.classList.contains('active');
-	});
-
-	if (currentPage < 0) {
-		currentPage = 0;
-		formPages[currentPage].classList.add('active');
-		showCurrentPage();
-		setStepIndicator();
-	}
-
-	bookingForm.addEventListener('click', (e) => {
-		let incrementor;
-		if (e.target.matches('[data-next]')) {
-			incrementor = 1;
-			const inputs = [
-				...formPages[currentPage].querySelectorAll('input'),
-				...formPages[currentPage].querySelectorAll('select'),
-			];
-			const allValid = inputs.every((input) => input.reportValidity());
-
-			for (let i = 0; i < inputs.length; i++) {
-				if (!inputs[i].checkValidity()) {
-					if (inputs[i].type == 'radio') {
-						inputs[i].parentElement.parentElement.classList.add('invalid');
-					} else {
-						inputs[i].parentElement.classList.add('invalid');
-					}
-				} else {
-					if (inputs[i].type == 'radio') {
-						inputs[i].parentElement.parentElement.classList.remove('invalid');
-					} else {
-						inputs[i].parentElement.classList.remove('invalid');
-					}
-				}
-				inputs[i].oninput = function (e) {
-					if (inputs[i].type == 'radio') {
-						e.target.parentElement.parentElement.classList.remove('invalid');
-					} else {
-						e.target.parentElement.classList.remove('invalid');
-					}
-				};
-			}
-
-			if (allValid) {
-				currentPage += incrementor;
-			}
-		} else if (e.target.matches('[data-prev]')) {
-			incrementor = -1;
+		if (allValid) {
 			currentPage += incrementor;
 		}
-
-		if (incrementor == null) return;
-		showCurrentPage();
-		setStepIndicator();
-	});
-
-	function showCurrentPage() {
-		formPages.forEach((page, index) => {
-			page.classList.toggle('active', index === currentPage);
-		});
+	} else if (e.target.matches('[data-prev]')) {
+		incrementor = -1;
+		currentPage += incrementor;
 	}
 
-	function setStepIndicator() {
-		const steps = [...document.getElementsByClassName('step')];
-		steps.forEach((step, index) => {
-			if (index == currentPage) {
-				step.classList.add('active');
-				step.classList.remove('finish');
-			} else if (index < currentPage) {
-				step.classList.add('finish');
-				step.classList.remove('active');
-			} else {
-				step.classList.remove('finish');
-				step.classList.remove('active');
-			}
-		});
-	}
+	if (incrementor == null) return;
+	showCurrentPage(formPages, currentPage);
+	setStepIndicator(currentPage);
 }
 
-function showPricesContainer(prices) {
-	const pricesContainer = document.getElementById('prices-container');
-	pricesContainer.innerHTML = `
-		<p>Our sessions run on a Pay-What-You-Can system.</p> 
-		<p class="label">Please select the total amount you wish to pay <span class="required"> * </span></p>
-		<div class="radio-group-container">
-		${prices
-			.map(
-				(item) =>
-					`
-					<div class="radio-sub-container">
-					<input type="radio" id="price-${item}" name="price" value=${item} required><label class="booking-form-sub-label" for="price-${item}">£${item}</label>
-					</div>
-					`
-			)
-			.join('')}
-		</div>
-	`;
+function showCurrentPage(formPages, currentPage) {
+	formPages.forEach((page, index) => {
+		page.classList.toggle('active', index === currentPage);
+	});
+}
+
+function setStepIndicator(currentPage) {
+	const steps = [...document.getElementsByClassName('step')];
+	steps.forEach((step, index) => {
+		if (index == currentPage) {
+			step.classList.add('active');
+			step.classList.remove('finish');
+		} else if (index < currentPage) {
+			step.classList.add('finish');
+			step.classList.remove('active');
+		} else {
+			step.classList.remove('finish');
+			step.classList.remove('active');
+		}
+	});
 }
 
 export { closeBookingForm, openBookingForm };

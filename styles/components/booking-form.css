@@ -94,6 +94,9 @@
 .fully-booked-message {
   color: red;
   border: 2px solid red;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 20px;
 }
 
 #waiting-list-form, 
@@ -175,12 +178,6 @@
 .waiting-list-label {
   margin-top: 0;
   font-weight: bold;
-}
-
-.fully-booked-message {
-  width: 90%;
-  margin: auto;
-  margin-bottom: 20px;
 }
 
 .radio-group-container {
