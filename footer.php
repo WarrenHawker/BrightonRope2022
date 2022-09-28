@@ -29,12 +29,12 @@
                 <fieldset class="participant-container">
                     <p class="label">Name<span class="required"> * </span></p>
                     <div class="input-container">
-                        <input type="text" name="fname1" required>
-                        <label class="sub-label" for="fname1">First</label>
+                        <input type="text" name="fname" required>
+                        <label class="sub-label" for="fname">First</label>
                     </div>
                     <div class="input-container">
-                        <input type="text" name="lname1" required>
-                        <label class="sub-label" for="lname1">Last</label>
+                        <input type="text" name="lname" required>
+                        <label class="sub-label" for="lname">Last</label>
                     </div>
                     <div class="input-container pronoun-select">
                         <select name="pronouns" required>

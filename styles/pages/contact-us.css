@@ -1,0 +1,26 @@
+#contact-us-form {
+  text-align: center;
+  border: 1px solid black;
+  padding: 30px;
+}
+
+#contact-us-form label {
+  font-size: 24px;
+}
+
+#contact-us-form input {
+  height: 30px;
+}
+
+.input-container.email.contact-us,
+.input-container.info.contact-us {
+  grid-column: 1/-1;
+}
+
+.input-container.email.contact-us {
+  margin-bottom: 20px;
+}
+
+.input-container.info.contact-us textarea {
+  height: 200px;
+}
