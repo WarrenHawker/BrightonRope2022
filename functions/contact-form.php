@@ -24,7 +24,4 @@ function process_contact_form() {
   wp_redirect(site_url('/confirmation'));
 
 }
-
-
-
 add_action('admin_post_nopriv_submit_contact_form', 'process_contact_form');

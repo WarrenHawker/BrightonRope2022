@@ -4,8 +4,8 @@ if(!defined('ABSPATH') ) EXIT; //Exit if accessed directly
 $roots_includes = array(
   '/functions/custom-post-types.php',
   '/functions/contact-form.php',
-  '/functions/event-participants.php',
-  '/functions/event-database.php',
+  '/functions/events/event-admin.php',
+  '/functions/events/event-database.php',
 );
 
 foreach($roots_includes as $file){
@@ -37,7 +37,7 @@ add_action('wp_before_admin_bar_render', 'mytheme_admin_bar_render');
 
 function brighton_rope_styles() {
   wp_enqueue_style(
-    'main-stylesheet',
+    'website-stylesheet',
     get_stylesheet_uri(),
     array(),
     '1.0',
@@ -117,3 +117,13 @@ if (! function_exists('fa_custom_setup_kit') ) {
   }
 }
 fa_custom_setup_kit('https://kit.fontawesome.com/0de87d0496.js');
+
+function brighton_rope_admin_styles() {
+  wp_enqueue_style(
+    'admin-main-stylesheet',
+    get_stylesheet_directory_uri() . '/styles/admin/admin-styles.css',
+    array(),
+    '1.0',
+  );
+}
+add_action( 'admin_enqueue_scripts', 'brighton_rope_admin_styles' );

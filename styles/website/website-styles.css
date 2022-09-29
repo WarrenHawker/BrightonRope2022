@@ -1,0 +1,138 @@
+@import url('abstracts/colors.css');
+@import url('abstracts/fonts.css');
+@import url('components/footer.css');
+@import url('components/header.css');
+@import url('abstracts/wordpress-styles.css');
+@import url('components/links-buttons.css');
+@import url('components/events.css');
+@import url('pages/single-event.css');
+@import url('pages/about-us.css');
+@import url('components/booking-form.css');
+@import url('pages/venues.css');
+@import url('pages/contact-us.css');
+
+*, 
+*::before, 
+*::after {
+  box-sizing: border-box;
+}
+
+header ul,
+footer ul, 
+header ol,
+footer ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+img, 
+picture, 
+iframe {
+  width: 100%;
+  display: block;
+  margin: auto;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-primary-background);
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  display: block;
+  width: 100%;
+  max-width: 1500px;
+  padding: 20px;
+  margin: auto;
+  flex-grow: 1;
+}
+
+section {
+  margin: auto;
+  padding-top: 50px;
+}
+
+section:first-of-type {
+  padding-top: 0;
+}
+
+section h1 {
+  text-align: center;
+  color: var(--color-accent-base);
+  font-size: 36px;
+}
+
+header, 
+footer {
+  width: 100%;
+  background-color: var(--color-primary-base);
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.page-title {
+  text-align: center;
+  color: var(--color-accent-base);
+}
+
+.margin {
+  margin: auto !important;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+@media all and (min-width: 650px) {
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 1 auto;
+  }
+
+  .col-100 {
+    width: 100%;
+    margin: initial;
+  }
+
+  .col-75 {
+    width: 75%;
+    margin: initial;
+  }
+
+  .col-50 {
+    width: 50%;
+    margin: initial;
+  }
+
+  .col-25 {
+    width: 25%;
+    margin: initial;
+  }
+
+  .page-title {
+    width: 100%;
+  }
+
+  section {
+    flex: 0 1 auto;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+}
