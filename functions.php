@@ -3,7 +3,9 @@
 if(!defined('ABSPATH') ) EXIT; //Exit if accessed directly
 $roots_includes = array(
   '/functions/custom-post-types.php',
-  'functions/contact-form.php',
+  '/functions/contact-form.php',
+  '/functions/event-participants.php',
+  '/functions/event-database.php',
 );
 
 foreach($roots_includes as $file){

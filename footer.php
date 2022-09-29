@@ -36,17 +36,6 @@
                         <input type="text" name="lname" required>
                         <label class="sub-label" for="lname">Last</label>
                     </div>
-                    <div class="input-container pronoun-select">
-                        <select name="pronouns" required>
-                        <option value="" disabled selected>--select--</option>
-                        <option value="he/him">He/Him</option>
-                        <option value="she/her">She/Her</option>
-                        <option value="they/them">They/Them</option>
-                        <option value="notUsed">I don't use them</option>
-                        <option value="other">Other</option>
-                        </select>
-                        <label class="sub-label" for="pronouns">Pronouns</label>
-                    </div>
                 </fieldset>
 
                 <fieldset>
