@@ -53,3 +53,5 @@
         )
     )  );
 }
+
+add_action('init', 'brightonRopePostTypes');

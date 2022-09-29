@@ -3,6 +3,7 @@
 if(!defined('ABSPATH') ) EXIT; //Exit if accessed directly
 $roots_includes = array(
   '/functions/custom-post-types.php',
+  'functions/contact-form.php',
 );
 
 foreach($roots_includes as $file){
@@ -13,7 +14,7 @@ foreach($roots_includes as $file){
   require_once $filepath;
 }
 unset($file, $filepath);
-add_action('init', 'brightonRopePostTypes');
+
 
 function my_remove_admin_menus() {
     remove_menu_page( 'edit-comments.php' );
@@ -100,12 +101,7 @@ function brighton_rope_sidebars() {
 };
 add_action( 'widgets_init', 'brighton_rope_sidebars' );
 
-/**
- * Font Awesome Kit Setup
- * 
- * This will add your Font Awesome Kit to the front-end, the admin back-end,
- * and the login screen area.
- */
+//font awesome kit setup
 if (! function_exists('fa_custom_setup_kit') ) {
   function fa_custom_setup_kit($kit_url = '') {
     foreach ( [ 'wp_enqueue_scripts', 'admin_enqueue_scripts', 'login_enqueue_scripts' ] as $action ) {
@@ -118,5 +114,4 @@ if (! function_exists('fa_custom_setup_kit') ) {
     }
   }
 }
-
 fa_custom_setup_kit('https://kit.fontawesome.com/0de87d0496.js');
