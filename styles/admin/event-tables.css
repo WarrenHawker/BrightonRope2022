@@ -1,4 +1,13 @@
-table {
+.events-admin-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.admin-event-table {
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 0.9em;
@@ -7,31 +16,48 @@ table {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-thead tr {
+.admin-event-table thead tr {
   background-color: var(--color-primary-base);
   color: #ffffff;
   text-align: left;
 }
 
-th,
-td {
-    padding: 12px 30px;
+.admin-event-table th,
+.admin-event-table td {
+  padding: 12px 30px;
 }
 
-tbody tr {
+.admin-event-table tbody tr {
   border-bottom: 1px solid #dddddd;
 }
 
-tbody tr:nth-of-type(even) {
+.admin-event-table tbody tr:nth-of-type(even) {
   background-color: #f7f7f7;
 }
 
-tbody tr:last-of-type {
+.admin-event-table tbody tr:last-of-type {
   border-bottom: 2px solid var(--color-primary-base);
 }
 
-tbody tr:hover {
+.admin-event-table tbody tr:hover {
   font-weight: bold;
   color: var(--color-primary-base);
   cursor: pointer;
+}
+
+.event-tables-container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media all and (min-width: 960px) {
+  .event-tables-container {
+    flex-direction: row;
+    max-width: max-content;
+    gap: 100px;
+  }
+
+  #event-participant-table {
+    margin-bottom: 50px;
+  }
 }

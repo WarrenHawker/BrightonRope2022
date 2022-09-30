@@ -1,12 +1,2 @@
 @import url('./event-tables.css');
 @import url('../website/abstracts/colors.css');
-
-.events-admin-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.label {
-  font-weight: bold;
-}

@@ -31,6 +31,7 @@ function admin_HTML() { ?>
       <div>
         <label class="label" for="month">Month Filter:</label>
         <select id="event-month" name="event-month">
+          
           <option value="all" selected>Show all</option>
           <?php 
             for ($x = 0; $x < count($event_start_months); $x++) {
@@ -40,69 +41,170 @@ function admin_HTML() { ?>
         </select>
       </div>
 
-      <div>
+      <!-- <div>
         <label for="search-event">Search:</label>
         <input type="text" id="search-event" name="search-event">
-      </div>
+      </div> -->
     </div>
 
-    <div id="admin-event-table"></div>
+    <div class="event-tables-container">
+      <div id="admin-event-table"></div>
+      <div class="event-tables-sub-container">
+        <div id="event-participant-table"></div>
+        <div id="event-waiting-list-table"></div>
+      </div>
+    </div>
   <?php    
-
 }
 
 function admin_show_events() {
   global $wpdb;
-  $selected_month = new DateTime($_POST['month']);
+  if($_POST['month'] == 'all') {
+    $selected_events = new WP_Query(array(
+      'posts_per_page' => -1,
+      'post_type' => 'event',
+      'meta_key' => 'start_date',
+      'orderby' => 'meta_value_num',
+      'order' => 'ASC'
+    ));
+  } else {
+    $selected_month = new DateTime($_POST['month']);
   
-  $month_start = $selected_month->format('Ymd');
-  $days_in_month = $selected_month->format('t');
-  $year = $selected_month->format('Y');
-  $month = $selected_month->format('m');
-  $month_end = $year . $month . $days_in_month;
-  
-  $Events = new WP_Query(array(
-          'posts_per_page' => -1,
-          'post_type' => 'event',
-          'meta_key' => 'start_date',
-          'orderby' => 'meta_value_num',
-          'order' => 'ASC',
-          'meta_query' => array(
-            array(
-              'key' => 'start_date',
-              'compare' => 'BETWEEN',
-              'value' => array($month_start, $month_end),
-              'type' => 'numeric'
-            )
-          )
-        ));
-        ?>
-          <table>
-            <thead>
-              <tr>
-                <th>Event ID</th>
-                <th>Event Name</th>
-                <th>Event Start Date</th>
-                <th>Event End Date</th>  
-              </tr>
-            </thead>
-
-        <?php
-          while($Events->have_posts()) {
-            $Events->the_post();?>
-              <tbody>
-                <tr>
-                  <td><?php echo get_the_id() ?></td>
-                  <td><?php echo get_the_title() ?></td>
-                  <td><?php echo get_field('start_date') ?></td>
-                  <td><?php echo get_field('end_date') ?></td>
-                </tr>   
-              </tbody>
-          <?php 
-          };
-          ?> 
-          </table>
+    $month_start = $selected_month->format('Ymd');
+    $days_in_month = $selected_month->format('t');
+    $year = $selected_month->format('Y');
+    $month = $selected_month->format('m');
+    $month_end = $year . $month . $days_in_month;
+    
+    $selected_events = new WP_Query(array(
+      'posts_per_page' => -1,
+      'post_type' => 'event',
+      'meta_key' => 'start_date',
+      'orderby' => 'meta_value_num',
+      'order' => 'ASC',
+      'meta_query' => array(
+        array(
+          'key' => 'start_date',
+          'compare' => 'BETWEEN',
+          'value' => array($month_start, $month_end),
+          'type' => 'numeric'
+        )
+      )
+    ));
+  }
+  ?>
+    <table class="admin-event-table">
+      <thead>
+        <tr>
+          <th>Event ID</th>
+          <th>Event Name</th>
+          <th>Event Start Date</th>
+          <th>Event End Date</th>  
+        </tr>
+      </thead>
+      <tbody>
+  <?php
+    while($selected_events->have_posts()) {
+      $selected_events->the_post();?>
+        <tr class="admin-event-row" onclick="getEventParticipants(event)" id="<?php echo get_the_id()?>">
+          <td><?php echo get_the_id() ?></td>
+          <td><?php echo get_the_title() ?></td>
+          <td><?php echo get_field('start_date') ?></td>
+          <td><?php echo get_field('end_date') ?></td>
+        </tr>   
+      <?php 
+    };
+  ?> 
+      </tbody>
+    </table>
   <?php 
   wp_die();   
-};
+}
+
+function admin_get_participants() {
+  global $wpdb;
+  $selected_event = "wp_event_" . $_POST['eventID'] . "_participants";
+  $query = $wpdb->prepare("SELECT * FROM $selected_event ORDER BY Booking_ID Asc");
+  $participants = $wpdb->get_results($query);
+  ?>
+    <h1>Event Participants <button>Add new Participant</button></h1>
+    
+    <table class="admin-event-table">
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>Participant 1</th>
+          <th>Participant 2</th>
+          <th>Participant 3</th>
+          <th>Email</th>
+          <th>Amount paid</th>
+          <th>Additional Information</th>
+          <th>Submission Date</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($participants as $rows) { 
+          $formatted_date = new DateTime($rows->Submission_date);
+          $formatted_date = $formatted_date->format('jS M Y');
+          ?>
+            <tr>
+              <td><?php echo $rows->Booking_ID ?></td>
+              <td><?php echo $rows->Participant_1 ?></td>
+              <td><?php echo $rows->Participant_2 ?></td>
+              <td><?php echo $rows->Participant_3 ?></td>
+              <td><?php echo $rows->Email ?></td>
+              <td><?php echo $rows->Amount_paid ?></td>
+              <td><?php echo $rows->Additional_info ?></td>
+              <td><?php echo $formatted_date ?></td>
+              <td><?php echo $rows->Notes ?></td>
+          </tr>
+        <?php }?>
+      </tbody>
+    </table>
+  <?php
+  wp_die();
+}
+
+function admin_get_waiting_list() {
+  global $wpdb;
+  $selected_event = "wp_event_" . $_POST['eventID'] . "_waiting";
+  $query = $wpdb->prepare("SELECT * FROM $selected_event ORDER BY Inquiry_ID Asc");
+  $waiting_list = $wpdb->get_results($query);
+  ?>
+    <h1>Event Waiting List <button>Add new Inquiry</button></h1>
+    
+    <table class="admin-event-table">
+      <thead>
+        <tr>
+          <th>Inquiry ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Participants</th>
+          <th>Submission Date</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($waiting_list as $rows) { 
+          $formatted_date = new DateTime($rows->Submission_date);
+          $formatted_date = $formatted_date->format('jS M Y');
+          ?>
+            <tr>
+              <td><?php echo $rows->Inquiry_ID ?></td>
+              <td><?php echo $rows->Inquiry_Name ?></td>
+              <td><?php echo $rows->Email ?></td>
+              <td><?php echo $rows->Participants ?></td>
+              <td><?php echo $rows->$formatted_date ?></td>
+              <td><?php echo $rows->Notes ?></td>
+          </tr>
+        <?php }?>
+      </tbody>
+    </table>
+  <?php
+  wp_die();
+}
+
 add_action('wp_ajax_admin_get_events', 'admin_show_events');
+add_action('wp_ajax_admin_get_participants', 'admin_get_participants');
+add_action('wp_ajax_admin_get_waiting_list', 'admin_get_waiting_list');

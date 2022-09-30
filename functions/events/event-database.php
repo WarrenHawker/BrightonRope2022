@@ -1,10 +1,9 @@
 <?php
 
-function create_event_participants_table() {
+function create_event_participants_table($event_ID) {
   global $wpdb;
   $charset_collate = $wpdb->get_charset_collate();
-  $eventID = get_the_ID();
-  $table_name = "wp_event_" . $eventID . "_participants";
+  $table_name = "wp_event_" . $event_ID . "_participants";
   $sql = "CREATE TABLE `$table_name` (
     Booking_ID int NOT NULL AUTO_INCREMENT,
     Participant_1 text NOT NULL,
@@ -22,11 +21,10 @@ function create_event_participants_table() {
   dbDelta($sql);
 }
 
-function create_event_waitingList_table() {
+function create_event_waitingList_table($event_ID) {
   global $wpdb;
   $charset_collate = $wpdb->get_charset_collate();
-  $eventID = get_the_ID();
-  $table_name = "wp_event_" . $eventID . "_waiting";
+  $table_name = "wp_event_" . $event_ID . "_waiting";
   $sql = "CREATE TABLE `$table_name` (
     Inquiry_ID int NOT NULL AUTO_INCREMENT,
     Inquiry_Name text NOT NULL, 
@@ -42,14 +40,47 @@ function create_event_waitingList_table() {
   dbDelta($sql);
 }
 
+function insert_event_participants() {
+
+}
+
+function insert_event_waitingList() {
+
+}
+
+function delete_event_participants() {
+
+}
+
+function delete_event_waitingList() {
+
+}
+
+function update_event_participants() {
+
+}
+
+function update_event_waitingList() {
+
+}
+
+function purge_event_participants() {
+
+}
+
+function purge_event_waitingList() {
+  
+}
 
 function wpdocs_run_on_publish_only( $new_status, $old_status, $post ) {
   if ( ( 'publish' === $new_status && 'publish' !== $old_status )
       && 'event' === $post->post_type
   ) {
-    create_event_participants_table();
-    create_event_waitingList_table();
+
+    $event_post = get_post($post);
+    $event_ID = $event_post->ID; 
+    create_event_participants_table($event_ID);
+    create_event_waitingList_table($event_ID);
   }
 }
-
 add_action('transition_post_status', 'wpdocs_run_on_publish_only', 10, 3);
