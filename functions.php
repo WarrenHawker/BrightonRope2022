@@ -127,3 +127,19 @@ function brighton_rope_admin_styles() {
   );
 }
 add_action( 'admin_enqueue_scripts', 'brighton_rope_admin_styles' );
+
+function brighton_rope_admin_scripts() {
+  wp_register_script( 
+    'event-admin', 
+    get_stylesheet_directory_uri() . '/src/modules/event-admin.js', 
+    array( 'jquery' ) 
+  );
+
+  $script_data_array = array(
+    'ajaxurl' => admin_url( 'admin-ajax.php' ),
+);
+
+  wp_localize_script('event-admin', 'ajaxData', $script_data_array);
+  wp_enqueue_script( 'event-admin' );
+}
+add_action( 'admin_enqueue_scripts', 'brighton_rope_admin_scripts' );

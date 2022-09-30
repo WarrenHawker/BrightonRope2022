@@ -27,10 +27,10 @@ function admin_HTML() { ?>
       }
      $event_start_months = array_values(array_unique($event_start_months));
     ?>  
-    <div class="event-search-container">
+    <div class="events-admin-container">
       <div>
         <label class="label" for="month">Month Filter:</label>
-        <select id="month" name="month">
+        <select id="event-month" name="event-month">
           <option value="all" selected>Show all</option>
           <?php 
             for ($x = 0; $x < count($event_start_months); $x++) {
@@ -45,41 +45,64 @@ function admin_HTML() { ?>
         <input type="text" id="search-event" name="search-event">
       </div>
     </div>
+
+    <div id="admin-event-table"></div>
   <?php    
-  admin_show_events();
+
 }
 
 function admin_show_events() {
-  ?>
-    <table>
-      <thead>
-        <tr>
-          <th>Event ID</th>
-          <th>Event Name</th>
-          <th>Event Start Date</th>
-          <th>Event End Date</th>  
-        </tr>
-      </thead>
-      <tbody>
-        <?php $selectedEvents = new WP_Query(array(
+  global $wpdb;
+  $selected_month = new DateTime($_POST['month']);
+  
+  $month_start = $selected_month->format('Ymd');
+  $days_in_month = $selected_month->format('t');
+  $year = $selected_month->format('Y');
+  $month = $selected_month->format('m');
+  $month_end = $year . $month . $days_in_month;
+  
+  $Events = new WP_Query(array(
           'posts_per_page' => -1,
           'post_type' => 'event',
           'meta_key' => 'start_date',
           'orderby' => 'meta_value_num',
-          'order' => 'ASC'
-        )); 
-        while ($selectedEvents->have_posts()) {
-          $selectedEvents->the_post();
-          ?>
-            <tr>
-              <td><?php echo get_the_id() ?></td>
-              <td><?php echo get_the_title() ?></td>
-              <td><?php echo get_field('start_date') ?></td>
-              <td><?php echo get_field('end_date') ?></td>
-            </tr>   
-          <?php
-        }?>
-      </tbody>
-    </table>
+          'order' => 'ASC',
+          'meta_query' => array(
+            array(
+              'key' => 'start_date',
+              'compare' => 'BETWEEN',
+              'value' => array($month_start, $month_end),
+              'type' => 'numeric'
+            )
+          )
+        ));
+        ?>
+          <table>
+            <thead>
+              <tr>
+                <th>Event ID</th>
+                <th>Event Name</th>
+                <th>Event Start Date</th>
+                <th>Event End Date</th>  
+              </tr>
+            </thead>
+
+        <?php
+          while($Events->have_posts()) {
+            $Events->the_post();?>
+              <tbody>
+                <tr>
+                  <td><?php echo get_the_id() ?></td>
+                  <td><?php echo get_the_title() ?></td>
+                  <td><?php echo get_field('start_date') ?></td>
+                  <td><?php echo get_field('end_date') ?></td>
+                </tr>   
+              </tbody>
+          <?php 
+          };
+          ?> 
+          </table>
   <?php 
-}
+  wp_die();   
+};
+add_action('wp_ajax_admin_get_events', 'admin_show_events');
