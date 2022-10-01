@@ -81,7 +81,7 @@ function setParticipantRowActive(e, id) {
 	const tableRows = [...document.querySelectorAll('table.participants tr.participant-row')];
 
 	tableRows.forEach((row) => {
-		if(row.classList.contains('edit') && e.target.tagName == 'INPUT') {
+		if(row.classList.contains('edit') && (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')) {
 			return;
 		} else if(row.id == `participant-row-${id}`) {
 			row.classList.toggle('active');
@@ -113,31 +113,87 @@ function updateParticipantTableDisplay() {
 	
 	tableRows.forEach((row) => {
 		const rowTextAreas = [...row.querySelectorAll('textarea')];
-		const rowActions = row.firstElementChild.firstElementChild;
+		const rowInputs = [...row.querySelectorAll('input'), ...row.querySelectorAll('textarea')];
+		const participantActions = row.querySelector('.participant-actions');
+		const editActions = row.querySelector('.participant-edit-actions');
 
 		if(row.classList.contains('active')) {
 			rowTextAreas.forEach((area) => {
 				area.style.height = `${area.scrollHeight}px`;
 			})
-			rowActions.style.display = "block";
+			
+			participantActions.style.display = 'block';
 		} else {
 			rowTextAreas.forEach((area) => {
 				area.style.height = `40px`;
 			})
-			rowActions.style.display = "none";
+			participantActions.style.display = 'none';
 		}
 
-		const rowInputs = [...row.querySelectorAll('input'), ...row.querySelectorAll('textarea')];
 		if(row.classList.contains('edit')) {
 			rowInputs.forEach((input)=> {
 				input.disabled = false;
 			});
+			editActions.style.display = 'flex';
+			participantActions.style.display = 'none';
 		} else {
 			rowInputs.forEach((input)=> {
 				input.disabled = true;
 			});
+			editActions.style.display = 'none';
 		}
 	})
+}
+
+function updateParticipantInfo(e, id) {
+	e.stopPropagation();
+	const activeEventID = document.querySelector('.admin-event-row.active').id;
+	const participantRow = document.querySelector('.participant-row.active');
+	const rowInputs = [...participantRow.querySelectorAll('input'), ...participantRow.querySelectorAll('textarea')];
+	(function ($) {
+		$(document).ready(function () {
+			if(e.target.classList.contains('btn-cancel')) {
+				let data = {
+					'action': 'admin_get_participant_info',
+					'eventID': activeEventID,
+					'participantID': id,
+				}
+				$.post(ajaxData.ajaxurl, data, function (response) {
+					const participantData = Object.values(JSON.parse(response));
+					rowInputs.forEach((input, index) => {
+						if(input.tagName == 'INPUT') {
+							input.value = participantData[index];
+						} else if(input.tagName == 'TEXTAREA') {
+							console.log(participantData[index]);
+							$(input).val(participantData[index]);
+						};
+						
+					})
+					participantRow.classList.remove('edit');
+					updateParticipantTableDisplay();
+				});
+				
+
+			} else if(e.target.classList.contains('btn-save')) {
+				let data = {
+					'action': 'admin_set_participant_info',
+					'eventID': activeEventID,
+					'participantID': id,
+					'participant1': rowInputs[0].value,
+					'participant2': rowInputs[1].value,
+					'participant3': rowInputs[2].value,
+					'email': rowInputs[3].value,
+					'additionalInfo': $(rowInputs[4]).val(),
+					'notes': $(rowInputs[5]).val(),
+
+				}
+				$.post(ajaxData.ajaxurl, data, function (response) {
+					participantRow.classList.remove('edit');
+					updateParticipantTableDisplay();
+				});
+			}
+		});
+	})(jQuery);	
 }
 eventMonthSelect();
 

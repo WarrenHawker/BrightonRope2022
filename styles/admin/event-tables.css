@@ -85,10 +85,6 @@ td>input:enabled {
   margin-top: 10px;
 }
 
-.participant-actions.active {
-  display: block;
-}
-
-.save-cancel-buttons {
-  display: flex;
+.participant-edit-actions {
+  display: none;
 }
