@@ -191,9 +191,23 @@ function updateParticipantInfo(e, id) {
 					participantRow.classList.remove('edit');
 					updateParticipantTableDisplay();
 				});
+			} else if(e.target.classList.contains('btn-delete')) {
+				const message = 'are you sure you wish to remove this booking from the event? Once deleted, this cannot be undone'
+				if(confirm(message)==true) {
+					let data = {
+						'action': 'admin_delete_participant',
+						'eventID': activeEventID,
+						'participantID': id
+					}
+					$.post(ajaxData.ajaxurl, data, function (response) {
+						$(participantRow).remove();
+						updateParticipantTableDisplay();
+					});
+				} else return;
 			}
 		});
 	})(jQuery);	
 }
+
 eventMonthSelect();
 

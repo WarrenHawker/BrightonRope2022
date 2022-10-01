@@ -73,7 +73,7 @@ function admin_get_participants() {
                 <div class="participant-actions" id=<?php echo "participant-actions-" . $rows->Booking_ID ?>>
                   <button onclick="setParticipantRowEdit(event, <?php echo $rows->Booking_ID?>)">EDIT</button>
                   <button>MOVE</button>
-                  <button>DELETE</button>
+                  <button class="btn-delete" onclick="updateParticipantInfo(event, <?php echo $rows->Booking_ID?>)">DELETE</button>
                 </div>
                 <div class="participant-edit-actions">
                   <button class="btn-cancel" onclick="updateParticipantInfo(event, <?php echo $rows->Booking_ID?>)">Cancel</button>
@@ -99,10 +99,8 @@ function admin_get_participants() {
               <td><?php echo $formatted_date ?></td>
               <td> 
                 <textarea name="notes" disabled> <?php echo $rows->Notes ?></textarea> 
-              </td>
-              
+              </td>   
           </tr>
-          
         <?php }?>
       </tbody>
     </table>
@@ -191,6 +189,16 @@ function admin_set_participant_info() {
   wp_die();
 }
 
+function admin_delete_participant() {
+  global $wpdb;
+  $selected_table = "wp_event_" . $_POST['eventID'] . "_participants";
+  $selected_participant = $_POST['participantID'];
+  $where = ['Booking_ID' => $selected_participant];
+
+  $wpdb->delete($selected_table, $where);
+  wp_die();
+}
+
 function wpdocs_run_on_publish_only( $new_status, $old_status, $post ) {
   if ( ( 'publish' === $new_status && 'publish' !== $old_status )
       && 'event' === $post->post_type
@@ -208,3 +216,4 @@ add_action('wp_ajax_admin_get_participants', 'admin_get_participants');
 add_action('wp_ajax_admin_get_waiting_list', 'admin_get_waiting_list');
 add_action('wp_ajax_admin_get_participant_info', 'admin_get_participant_info');
 add_action('wp_ajax_admin_set_participant_info', 'admin_set_participant_info');
+add_action('wp_ajax_admin_delete_participant', 'admin_delete_participant');
