@@ -40,6 +40,7 @@ function admin_HTML() { ?>
             <?php }?>
         </select>
       </div>
+      <button id="btn-back-events" onclick="showAllEvents()">Back</button>
     </div>
 
     <div class="event-tables-container">
@@ -101,7 +102,7 @@ function admin_show_events() {
   <?php
     while($selected_events->have_posts()) {
       $selected_events->the_post();?>
-        <tr class="admin-event-row active" onclick="getEventParticipants(event)" id="<?php echo get_the_id()?>">
+        <tr class="admin-event-row" onclick="getEventParticipants(event)" id="<?php echo get_the_id()?>">
           <td><?php echo get_the_id() ?></td>
           <td><?php echo get_the_title() ?></td>
           <td><?php echo get_field('start_date') ?></td>

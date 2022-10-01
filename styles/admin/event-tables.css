@@ -88,3 +88,15 @@ td>input:enabled {
 .participant-edit-actions {
   display: none;
 }
+
+.admin-event-row.hidden {
+  display: none;
+}
+
+.admin-event-row.active {
+  display: block;
+}
+
+#btn-back-events {
+  display: none;
+}

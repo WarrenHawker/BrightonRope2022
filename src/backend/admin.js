@@ -30,6 +30,19 @@ function eventMonthSelect() {
 }
 
 function getEventParticipants(e) {
+	const tableRows = [...document.querySelectorAll('.admin-event-row')];
+	const btnBack = document.getElementById('btn-back-events');
+	tableRows.forEach((row) => {
+		if(row == e.target.parentElement) {
+			row.classList.add('active');
+		}
+		else {
+			row.classList.remove('active');
+			row.classList.add('hidden');	
+		}
+	});
+	btnBack.style.display = 'block';
+
 	(function ($) {
 		$(document).ready(function () {
 
@@ -53,6 +66,24 @@ function getEventParticipants(e) {
 				});
 			});
 		})(jQuery);	
+}
+
+function showAllEvents() {
+
+	const tableRows = [...document.querySelectorAll('.admin-event-row')];
+	const btnBack = document.getElementById('btn-back-events');
+	tableRows.forEach((row) => {
+		row.classList.remove('active');
+		row.classList.remove('hidden');
+	});
+	btnBack.style.display = 'none';
+
+	(function ($) {
+		$(document).ready(function () {
+			$('#event-participant-table').empty();
+			$('#event-waiting-list-table').empty();
+		});
+	})(jQuery);
 }
 
 function setInputSizes() {	
