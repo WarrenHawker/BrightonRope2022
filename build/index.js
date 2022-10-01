@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/modules/booking-form/booking-form.js":
-/*!**************************************************!*\
-  !*** ./src/modules/booking-form/booking-form.js ***!
-  \**************************************************/
+/***/ "./src/frontend/modules/booking-form/booking-form.js":
+/*!***********************************************************!*\
+  !*** ./src/frontend/modules/booking-form/booking-form.js ***!
+  \***********************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -15,9 +15,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _html_templates_individual_participant__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./html-templates/individual-participant */ "./src/modules/booking-form/html-templates/individual-participant.js");
-/* harmony import */ var _html_templates_pair_participant__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./html-templates/pair-participant */ "./src/modules/booking-form/html-templates/pair-participant.js");
-/* harmony import */ var _html_templates_group_participant__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./html-templates/group-participant */ "./src/modules/booking-form/html-templates/group-participant.js");
+/* harmony import */ var _html_templates_individual_participant__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./html-templates/individual-participant */ "./src/frontend/modules/booking-form/html-templates/individual-participant.js");
+/* harmony import */ var _html_templates_pair_participant__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./html-templates/pair-participant */ "./src/frontend/modules/booking-form/html-templates/pair-participant.js");
+/* harmony import */ var _html_templates_group_participant__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./html-templates/group-participant */ "./src/frontend/modules/booking-form/html-templates/group-participant.js");
 
 
 
@@ -306,10 +306,10 @@ function setStepIndicator(currentPage) {
 
 /***/ }),
 
-/***/ "./src/modules/booking-form/html-templates/group-participant.js":
-/*!**********************************************************************!*\
-  !*** ./src/modules/booking-form/html-templates/group-participant.js ***!
-  \**********************************************************************/
+/***/ "./src/frontend/modules/booking-form/html-templates/group-participant.js":
+/*!*******************************************************************************!*\
+  !*** ./src/frontend/modules/booking-form/html-templates/group-participant.js ***!
+  \*******************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -358,10 +358,10 @@ function groupParticipant() {
 
 /***/ }),
 
-/***/ "./src/modules/booking-form/html-templates/individual-participant.js":
-/*!***************************************************************************!*\
-  !*** ./src/modules/booking-form/html-templates/individual-participant.js ***!
-  \***************************************************************************/
+/***/ "./src/frontend/modules/booking-form/html-templates/individual-participant.js":
+/*!************************************************************************************!*\
+  !*** ./src/frontend/modules/booking-form/html-templates/individual-participant.js ***!
+  \************************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -386,10 +386,10 @@ function individualParticipant() {
 
 /***/ }),
 
-/***/ "./src/modules/booking-form/html-templates/pair-participant.js":
-/*!*********************************************************************!*\
-  !*** ./src/modules/booking-form/html-templates/pair-participant.js ***!
-  \*********************************************************************/
+/***/ "./src/frontend/modules/booking-form/html-templates/pair-participant.js":
+/*!******************************************************************************!*\
+  !*** ./src/frontend/modules/booking-form/html-templates/pair-participant.js ***!
+  \******************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -426,10 +426,10 @@ function pairParticipant() {
 
 /***/ }),
 
-/***/ "./src/modules/mobile-nav.js":
-/*!***********************************!*\
-  !*** ./src/modules/mobile-nav.js ***!
-  \***********************************/
+/***/ "./src/frontend/modules/mobile-nav.js":
+/*!********************************************!*\
+  !*** ./src/frontend/modules/mobile-nav.js ***!
+  \********************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -536,12 +536,12 @@ module.exports = window["jQuery"];
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 !function() {
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/*!*******************************!*\
+  !*** ./src/frontend/index.js ***!
+  \*******************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_mobile_nav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/mobile-nav */ "./src/modules/mobile-nav.js");
-/* harmony import */ var _modules_booking_form_booking_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/booking-form/booking-form */ "./src/modules/booking-form/booking-form.js");
+/* harmony import */ var _modules_mobile_nav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/mobile-nav */ "./src/frontend/modules/mobile-nav.js");
+/* harmony import */ var _modules_booking_form_booking_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/booking-form/booking-form */ "./src/frontend/modules/booking-form/booking-form.js");
 //import module files
 
  //run functions from module files

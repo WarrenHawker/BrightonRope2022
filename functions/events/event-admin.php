@@ -129,7 +129,7 @@ function admin_get_participants() {
   ?>
     <h1>Event Participants <button>Add new Participant</button></h1>
     
-    <table class="admin-event-table">
+    <table class="admin-event-table participants">
       <thead>
         <tr>
           <th>Booking ID</th>
@@ -148,20 +148,47 @@ function admin_get_participants() {
           $formatted_date = new DateTime($rows->Submission_date);
           $formatted_date = $formatted_date->format('jS M Y');
           ?>
-            <tr>
-              <td><?php echo $rows->Booking_ID ?></td>
-              <td><?php echo $rows->Participant_1 ?></td>
-              <td><?php echo $rows->Participant_2 ?></td>
-              <td><?php echo $rows->Participant_3 ?></td>
-              <td><?php echo $rows->Email ?></td>
-              <td><?php echo $rows->Amount_paid ?></td>
-              <td><?php echo $rows->Additional_info ?></td>
+            <tr onclick="setParticipantRowActive(event, <?php echo $rows->Booking_ID?>)" class="participant-row" id=<?php echo "participant-row-" . $rows->Booking_ID?>>
+              <td><?php echo $rows->Booking_ID ?>
+                <div class="participant-actions" id=<?php echo "participant-actions-" . $rows->Booking_ID ?>>
+                  <button id=<?php echo "edit-participant-" . $rows->Booking_ID ?> onclick="setParticipantRowEdit(event, <?php echo $rows->Booking_ID?>)">EDIT</button>
+                  <button id=<?php echo "move-participant-" . $rows->Booking_ID ?>>MOVE</button>
+                  <button id=<?php echo "delete-participant-" . $rows->Booking_ID ?>>DELETE</button>
+                  <div class="save-cancel-buttons">
+                    <button>Cancel</button>
+                    <button>Save</button>
+                  </div>
+                </div>
+              </td>
+              <td> 
+                <input type="text" name="participant1" value="<?php echo $rows->Participant_1 ?>" disabled/> 
+              </td>
+              <td> 
+                <input type="text" name="participant2" value="<?php echo $rows->Participant_2 ?>" disabled/> 
+              </td>
+              <td> 
+                <input type="text" name="participant3" value="<?php echo $rows->Participant_3 ?>" disabled/> 
+              </td>
+              <td> 
+                <input type="text" name="email" value="<?php echo $rows->Email ?>" disabled/> 
+              </td>
+              <td> 
+                <input type="text" name="amountPaid" value="<?php echo $rows->Amount_paid ?>" disabled/> 
+              </td>
+              <td> 
+                <textarea name="additionalInfo" disabled> <?php echo $rows->Additional_info ?></textarea> 
+              </td>
               <td><?php echo $formatted_date ?></td>
-              <td><?php echo $rows->Notes ?></td>
+              <td> 
+                <textarea name="notes" disabled> <?php echo $rows->Notes ?></textarea> 
+              </td>
+              
           </tr>
+          
         <?php }?>
       </tbody>
     </table>
+    <button id=<?php echo "purge-participants-" . $_POST['eventID']?>>Purge Event Participants</button>
   <?php
   wp_die();
 }
@@ -174,7 +201,7 @@ function admin_get_waiting_list() {
   ?>
     <h1>Event Waiting List <button>Add new Inquiry</button></h1>
     
-    <table class="admin-event-table">
+    <table class="admin-event-table waiting-list">
       <thead>
         <tr>
           <th>Inquiry ID</th>

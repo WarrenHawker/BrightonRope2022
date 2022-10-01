@@ -1,6 +1,5 @@
-.events-admin-container {
-  display: flex;
-  flex-direction: column;
+#event-participant-table {
+  margin-bottom: 50px;
 }
 
 .label {
@@ -40,7 +39,6 @@
 }
 
 .admin-event-table tbody tr:hover {
-  font-weight: bold;
   color: var(--color-primary-base);
   cursor: pointer;
 }
@@ -50,14 +48,47 @@
   flex-direction: column;
 }
 
-@media all and (min-width: 960px) {
-  .event-tables-container {
-    flex-direction: row;
-    max-width: max-content;
-    gap: 100px;
-  }
+.participant-actions {
+  padding-top: 20px;
+}
 
-  #event-participant-table {
-    margin-bottom: 50px;
-  }
+td>input,
+td>textarea {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  background: none !important;
+  color: black !important;
+}
+
+td>textarea {
+  max-width: 150px;
+  word-wrap: break-word;
+}
+
+td>input:enabled,
+td>textarea:enabled {
+  border: 1px solid black !important;
+  background-color: #ffffff !important;
+}
+
+td>input:enabled {
+  text-align: center;
+}
+
+.participant-actions {
+  display: none;
+}
+
+.participant-actions button {
+  display: block;
+  margin-top: 10px;
+}
+
+.participant-actions.active {
+  display: block;
+}
+
+.save-cancel-buttons {
+  display: flex;
 }
