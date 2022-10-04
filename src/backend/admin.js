@@ -62,7 +62,7 @@ function getEventParticipants(e) {
 			});
 
 			$.post(ajaxData.ajaxurl, dataWaitingList, function (response) {
-				$('#waiting-list-table-container').html(waitingListTable(response));
+				$('#waiting-list-table-container').html(waitingListTable(JSON.parse(response)));
 			});
 		});
 	});

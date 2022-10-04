@@ -7,6 +7,7 @@ function event_admin_page() {
 add_action('admin_menu', 'event_admin_page'); 
 
 function admin_HTML() { ?>
+  <div class="events-admin-page">
     <h1>Events Admin</h1>
     <?php  
       $event_start_months = [];
@@ -26,9 +27,9 @@ function admin_HTML() { ?>
       }
      $event_start_months = array_values(array_unique($event_start_months));
     ?>  
-    <div class="events-admin-container">
+    <div class="events-filter-container">
       <div class="events-admin-sub-container">
-        <label class="label" for="month">Month Filter:</label>
+        <label for="month">Month Filter:</label>
         <select id="event-month" name="event-month">
           
           <option value="all" selected>Show all</option>
@@ -39,7 +40,7 @@ function admin_HTML() { ?>
             <?php }?>
         </select>
       </div>
-      <button class="btn-admin " id="btn-back-events">Back</button>
+      <button class="btn-admin large" id="btn-back-events">Back</button>
     </div>
 
     <div class="event-tables-container">
@@ -49,10 +50,11 @@ function admin_HTML() { ?>
         <div id="waiting-list-table-container"></div>
       </div>
     </div>
+  </div>
   <?php    
 }
 
-function admin_show_events() {
+function admin_get_events() {
   global $wpdb;
   if($_POST['month'] == 'all') {
     $selected_events = new WP_Query(array(
@@ -115,5 +117,5 @@ function admin_show_events() {
   <?php 
   wp_die();   
 }
-add_action('wp_ajax_admin_get_events', 'admin_show_events');
+add_action('wp_ajax_admin_get_events', 'admin_get_events');
 

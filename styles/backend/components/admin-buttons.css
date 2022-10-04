@@ -1,5 +1,5 @@
 .btn-admin {
-	font-size: 20px;
+	font-size: 13px;
 	border-radius: 3px;
 	border: 1px solid var(--color-primary-light);
 	cursor: pointer;
@@ -8,11 +8,6 @@
 	transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
 	padding: 0 1em 0 1em;
 	margin: 1em;
-}
-
-#add-participant {
-	padding: 0.5em 1em 0.5em 1em;
-	margin-top: 0;
 }
 
 .btn-admin:hover,
@@ -34,11 +29,15 @@
 
 .btn-admin.delete {
 	background-color: #ef6c6c;
-	color: #000000;
+	color: #ffffff;
 }
 
 .btn-admin.delete:hover,
 .btn-admin.delete:focus {
 	background-color: #af1212;
 	color: #ffffff;
+}
+
+.large {
+	font-size: 20px;
 }
