@@ -1,6 +1,7 @@
-@import url('./event-tables.css');
+@import url('./components/event-tables.css');
 @import url('../frontend/abstracts/colors.css');
 @import url('../frontend/components/booking-form.css');
+@import url('./components/admin-buttons.css');
 
 *,
 *::before,

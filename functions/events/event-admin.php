@@ -27,7 +27,7 @@ function admin_HTML() { ?>
      $event_start_months = array_values(array_unique($event_start_months));
     ?>  
     <div class="events-admin-container">
-      <div>
+      <div class="events-admin-sub-container">
         <label class="label" for="month">Month Filter:</label>
         <select id="event-month" name="event-month">
           
@@ -39,7 +39,7 @@ function admin_HTML() { ?>
             <?php }?>
         </select>
       </div>
-      <button id="btn-back-events">Back</button>
+      <button class="btn-admin " id="btn-back-events">Back</button>
     </div>
 
     <div class="event-tables-container">

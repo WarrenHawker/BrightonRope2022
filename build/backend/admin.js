@@ -43,13 +43,13 @@ function participantsTable(data) {
           <textarea disabled>${item.Notes}</textarea>
         </div>
         <div class="participant-action-buttons">
-          <button class="btn-participant-edit" id="btn-participant-edit-${item.Booking_ID}">Edit</button>
-          <button>Move</button>
-          <button class="btn-participant-delete" id="btn-participant-delete-${item.Booking_ID}">Delete</button>
+          <button class="btn-admin btn-participant-edit" id="btn-participant-edit-${item.Booking_ID}">Edit</button>
+          <button class="btn-admin">Move</button>
+          <button class="btn-admin delete btn-participant-delete" id="btn-participant-delete-${item.Booking_ID}">Delete</button>
         </div>
         <div class="participant-edit-buttons">
-          <button class="btn-participant-cancel" id="btn-participant-cancel-${item.Booking_ID}">Cancel</button>
-          <button class="btn-participant-save" id="btn-participant-save-${item.Booking_ID}">Save</button>
+          <button class="btn-admin btn-participant-cancel" id="btn-participant-cancel-${item.Booking_ID}">Cancel</button>
+          <button class="btn-admin primary btn-participant-save" id="btn-participant-save-${item.Booking_ID}">Save</button>
         </div>
       </li>
     `;
@@ -58,7 +58,7 @@ function participantsTable(data) {
   return `
   <div class="table-heading">
     <h1>Event Participants</h1>
-    <button id="add-participant">Add new Participant</button>
+    <button class="btn-admin primary" id="add-participant">Add new Participant</button>
   </div>
   <div class="participant-table">
     <ol>
