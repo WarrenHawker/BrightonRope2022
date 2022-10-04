@@ -39,7 +39,7 @@ function admin_HTML() { ?>
             <?php }?>
         </select>
       </div>
-      <button id="btn-back-events" onclick="showAllEvents()">Back</button>
+      <button id="btn-back-events">Back</button>
     </div>
 
     <div class="event-tables-container">

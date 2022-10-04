@@ -12,88 +12,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": function() { return /* binding */ participantsTable; }
 /* harmony export */ });
-// export default function participantsTable(data) {
-// const participantDisplay = data
-// 	.map((item) => {
-// 		// prettier-ignore
-// 		return `
-//     <div class="table-row body">
-//       <div class="table-column id">
-//         <li class="table-item">${item.Booking_ID}</li>
-//       </div>
-//       <div class="table-column single">
-//         <li class="table-item">${item.Participant_1}</li>
-//         <li class="table-item">${item.Participant_2}</li>
-//         <li class="table-item">${item.Participant_3}</li>
-//         <li class="table-item">${item.Email}</li>
-//       </div>
-//       <div class="table-column full">
-//         <li class="table-item info">${item.Additional_info}</li>
-//       </div>
-//       <div class="table-column double">
-//         <li class="table-item">${item.Amount_paid}</li>
-//         <li class="table-item">${item.Submission_date}</li>
-//       </div>
-//       <div class="table-column full">
-//         <li class="table-item notes">${item.Notes}</li>
-//       </div>
-//     </div>
-//   `
-// 	})
-// 	.join('');
-// 	// prettier-ignore
-// 	return `
-//     <div class="table participant-table">
-//         <div class="table-row head">
-//           <div class="table-column id">
-//             <li class="table-item">ID</li>
-//           </div>
-//           <div class="table-column single">
-//             <li class="table-item">Participant 1</li>
-//             <li class="table-item">Participant 2</li>
-//             <li class="table-item">Participant 3</li>
-//             <li class="table-item">Email</li>
-//           </div>
-//           <div class="table-column full">
-//             <li class="table-item info">Additional Information</li>
-//           </div>
-//           <div class="table-column double">
-//             <li class="table-item">Amount <br> Paid</li>
-//             <li class="table-item">Submission <br> Date</li>
-//           </div>
-//           <div class="table-column full">
-//             <li class="table-item notes">Notes</li>
-//           </div>
-//         </div>
-//         ${participantDisplay}
-//     </div>
-// //   `
-// // }
 function participantsTable(data) {
   const participantDisplay = data.map(item => {
     // prettier-ignore
     return `
-      <li class="table-row body">
+      <li class="table-row body" id="participant-row-${item.Booking_ID}">
         <div class="table-item" data-name='ID'>${item.Booking_ID}</div>
         <div class="table-column single">
-          <div class="table-item" data-name='Participant 1'>${item.Participant_1}</div>
-          <div class="table-item" data-name='Participant 2'>${item.Participant_2}</div>
-          <div class="table-item" data-name='Participant 3'>${item.Participant_3}</div>
-          <div class="table-item" data-name='Email'>${item.Email}</div>
+          <div class="table-item" data-name='Participant 1'>
+            <input type="text" value="${item.Participant_1}" disabled></input>
+          </div>
+          <div class="table-item" data-name='Participant 2'>
+            <input type="text" value="${item.Participant_2}" disabled></input>
+          </div>
+          <div class="table-item" data-name='Participant 3'>
+            <input type="text" value="${item.Participant_3}" disabled></input>
+          </div>
+          <div class="table-item" data-name='Email'>
+            <input type="text" value="${item.Email}" disabled></input>
+          </div>
         </div>
-        <div class="table-item" data-name='Additional Information'>${item.Additional_info}</div>
+        <div class="table-item" data-name='Additional Information'>
+          <textarea disabled>${item.Additional_info}</textarea>
+        </div>
         <div class="table-column double">
           <div class="table-item" data-name='Amount Paid'>£${item.Amount_paid}</div>
           <div class="table-item" data-name='Submission Date'>${convertDates(item.Submission_date)}</div>
         </div>
-        <div class="table-item" data-name='Notes'>${item.Notes}</div>
+        <div class="table-item" data-name='Notes'>
+          <textarea disabled>${item.Notes}</textarea>
+        </div>
         <div class="participant-action-buttons">
-        <button>Edit</button>
-        <button>Move</button>
-        <button>Delete</button>
-      </div>
+          <button class="btn-participant-edit" id="btn-participant-edit-${item.Booking_ID}">Edit</button>
+          <button>Move</button>
+          <button class="btn-participant-delete" id="btn-participant-delete-${item.Booking_ID}">Delete</button>
+        </div>
+        <div class="participant-edit-buttons">
+          <button class="btn-participant-cancel" id="btn-participant-cancel-${item.Booking_ID}">Cancel</button>
+          <button class="btn-participant-save" id="btn-participant-save-${item.Booking_ID}">Save</button>
+        </div>
       </li>
-      
     `;
   }).join(''); // prettier-ignore
 
@@ -250,33 +208,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function eventMonthSelect() {
-  (function ($) {
-    $(document).ready(function () {
-      $(window).load(function () {
-        let data = {
-          action: 'admin_get_events',
-          month: 'all'
-        };
-        $.post(ajaxData.ajaxurl, data, function (response) {
-          $('#admin-event-table').html(response);
-          getEventParticipants();
-        });
-      });
-      $('#event-month').change(function (e) {
-        let selectedMonth = e.target.value;
-        let data = {
-          action: 'admin_get_events',
-          month: selectedMonth
-        };
-        $.post(ajaxData.ajaxurl, data, function (response) {
-          $('#admin-event-table').html(response);
-          $('#event-participant-table').empty();
-          $('#event-waiting-list-table').empty();
-          getEventParticipants();
-        });
-      });
+  jquery__WEBPACK_IMPORTED_MODULE_2___default()(window).load(function () {
+    let data = {
+      action: 'admin_get_events',
+      month: 'all'
+    };
+    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+      jquery__WEBPACK_IMPORTED_MODULE_2___default()('#admin-event-table').html(response);
+      getEventParticipants();
     });
-  })(jQuery);
+  });
+  jquery__WEBPACK_IMPORTED_MODULE_2___default()('#event-month').change(function (e) {
+    let selectedMonth = e.target.value;
+    let data = {
+      action: 'admin_get_events',
+      month: selectedMonth
+    };
+    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+      jquery__WEBPACK_IMPORTED_MODULE_2___default()('#admin-event-table').html(response);
+      jquery__WEBPACK_IMPORTED_MODULE_2___default()('#event-participant-table').empty();
+      jquery__WEBPACK_IMPORTED_MODULE_2___default()('#event-waiting-list-table').empty();
+      getEventParticipants();
+    });
+  });
 }
 
 function getEventParticipants(e) {
@@ -293,9 +247,7 @@ function getEventParticipants(e) {
           row.classList.add('hidden');
         }
       });
-      btnBack.style.display = 'block'; // (function ($) {
-      // 	$(document).ready(function () {
-
+      btnBack.style.display = 'block';
       let dataParticipants = {
         action: 'admin_get_participants',
         eventID: e.target.parentElement.id
@@ -305,203 +257,199 @@ function getEventParticipants(e) {
         eventID: e.target.parentElement.id
       };
       jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, dataParticipants, function (response) {
-        jquery__WEBPACK_IMPORTED_MODULE_2___default()('#participant-table-container').html((0,_html_templates_participants_table__WEBPACK_IMPORTED_MODULE_0__["default"])(JSON.parse(response))); // setInputSizes();
-        // setColumnSizes();
+        jquery__WEBPACK_IMPORTED_MODULE_2___default()('#participant-table-container').html((0,_html_templates_participants_table__WEBPACK_IMPORTED_MODULE_0__["default"])(JSON.parse(response)));
+        setParticipantRowEdit();
       });
       jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, dataWaitingList, function (response) {
         jquery__WEBPACK_IMPORTED_MODULE_2___default()('#waiting-list-table-container').html((0,_html_templates_waiting_list_table__WEBPACK_IMPORTED_MODULE_1__["default"])(response));
-      }); // 	});
-      // })(jQuery);
+      });
     });
   });
-}
+} //back button - shows all events from filter
+
 
 function showAllEvents() {
-  const tableRows = [...document.querySelectorAll('.admin-event-row')];
   const btnBack = document.getElementById('btn-back-events');
-  tableRows.forEach(row => {
-    row.classList.remove('active');
-    row.classList.remove('hidden');
-  });
-  btnBack.style.display = 'none';
-
-  (function ($) {
-    $(document).ready(function () {
-      $('#event-participant-table').empty();
-      $('#event-waiting-list-table').empty();
-    });
-  })(jQuery);
-}
-
-function setInputSizes() {
-  (function ($) {
-    $(document).ready(function () {
-      function resizeInput() {
-        if (!$(this).attr('value')) {
-          $(this).attr('size', '10');
-        } else {
-          $(this).attr('size', $(this).val().length);
-        }
-
-        if ($(this).is('textarea')) {
-          $(this).height($(this).prop('scrollHeight') + 'px');
-        }
-      }
-
-      $('td > input').keyup(resizeInput).each(resizeInput);
-      $('td > textarea').keyup(resizeInput);
-    });
-  })(jQuery);
-}
-
-function setParticipantRowActive(e, id) {
-  const tableRows = [...document.querySelectorAll('table.participants tr.participant-row')];
-  tableRows.forEach(row => {
-    if (row.classList.contains('edit') && (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')) {
-      return;
-    } else if (row.id == `participant-row-${id}`) {
-      row.classList.toggle('active');
-    } else {
+  btnBack.addEventListener('click', () => {
+    const tableRows = [...document.querySelectorAll('.admin-event-row')];
+    const btnBack = document.getElementById('btn-back-events');
+    tableRows.forEach(row => {
       row.classList.remove('active');
-      row.classList.remove('edit');
-    }
+      row.classList.remove('hidden');
+    });
+    btnBack.style.display = 'none';
+    jquery__WEBPACK_IMPORTED_MODULE_2___default()('#participant-table-container').empty();
+    jquery__WEBPACK_IMPORTED_MODULE_2___default()('#waiting-list-table-container').empty();
   });
-  updateParticipantTableDisplay();
-}
+} //contains participant action button event listeners
 
-function setParticipantRowEdit(e, id) {
-  e.stopPropagation();
-  const tableRows = [...document.querySelectorAll('table.participants tr.participant-row')];
-  tableRows.forEach(row => {
-    if (row.id == `participant-row-${id}`) {
-      row.classList.toggle('edit');
-    } else {
-      row.classList.remove('edit');
-    }
+
+function setParticipantRowEdit() {
+  const editButtons = [...document.getElementsByClassName('btn-participant-edit')];
+  const cancelButtons = [...document.getElementsByClassName('btn-participant-cancel')];
+  const saveButtons = [...document.getElementsByClassName('btn-participant-save')];
+  const deleteButtons = [...document.getElementsByClassName('btn-participant-delete')];
+  const tableRows = [...document.querySelectorAll('.participant-table .table-row.body')];
+  editButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const ID = button.id.slice(21);
+      tableRows.forEach(row => {
+        if (row.id == `participant-row-${ID}`) {
+          row.classList.add('edit');
+        } else {
+          row.classList.remove('edit');
+        }
+      });
+      updateParticipantTableDisplay();
+    });
   });
-  updateParticipantTableDisplay();
+  cancelButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const ID = button.id.slice(23);
+      tableRows.forEach(row => {
+        if (row.id == `participant-row-${ID}`) {
+          row.classList.remove('edit');
+        }
+      });
+      updateParticipantTableDisplay();
+      updateParticipantInfo(e, ID);
+    });
+  });
+  saveButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const ID = button.id.slice(21);
+      tableRows.forEach(row => {
+        if (row.id == `participant-row-${ID}`) {
+          row.classList.remove('edit');
+        }
+      });
+      updateParticipantTableDisplay();
+      updateParticipantInfo(e, ID);
+    });
+  });
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const ID = button.id.slice(23);
+      tableRows.forEach(row => {
+        if (row.id == `participant-row-${ID}`) {
+          row.classList.remove('edit');
+        }
+      });
+      updateParticipantTableDisplay();
+      updateParticipantInfo(e, ID);
+    });
+  });
 }
 
 function updateParticipantTableDisplay() {
   const tablesContainer = document.getElementsByClassName('event-tables-container')[0];
-  const tableRows = [...tablesContainer.querySelectorAll('table.participants tr.participant-row')];
+  const tableRows = [...tablesContainer.querySelectorAll('.participant-table .table-row.body')];
   tableRows.forEach(row => {
     const rowTextAreas = [...row.querySelectorAll('textarea')];
     const rowInputs = [...row.querySelectorAll('input'), ...row.querySelectorAll('textarea')];
-    const participantActions = row.querySelector('.participant-actions');
-    const editActions = row.querySelector('.participant-edit-actions');
-
-    if (row.classList.contains('active')) {
-      rowTextAreas.forEach(area => {
-        area.style.height = `${area.scrollHeight}px`;
-      });
-      participantActions.style.display = 'block';
-    } else {
-      rowTextAreas.forEach(area => {
-        area.style.height = `40px`;
-      });
-      participantActions.style.display = 'none';
-    }
+    const participantActions = row.querySelector('.participant-action-buttons');
+    const editActions = row.querySelector('.participant-edit-buttons');
 
     if (row.classList.contains('edit')) {
       rowInputs.forEach(input => {
         input.disabled = false;
       });
-      editActions.style.display = 'flex';
+      rowTextAreas.forEach(area => {
+        area.style.height = `${area.scrollHeight + 2}px`;
+      });
       participantActions.style.display = 'none';
+      editActions.style.display = 'flex';
     } else {
       rowInputs.forEach(input => {
         input.disabled = true;
       });
+      rowTextAreas.forEach(area => {
+        area.style.height = `40px`;
+      });
+      participantActions.style.display = 'flex';
       editActions.style.display = 'none';
-    }
+    } // if (row.classList.contains('active')) {
+    // 	rowTextAreas.forEach((area) => {
+    // 		area.style.height = `${area.scrollHeight}px`;
+    // 	});
+    // 	participantActions.style.display = 'block';
+    // } else {
+    // 	rowTextAreas.forEach((area) => {
+    // 		area.style.height = `40px`;
+    // 	});
+    // 	participantActions.style.display = 'none';
+    // }
+    // if (row.classList.contains('edit')) {
+    // 	rowInputs.forEach((input) => {
+    // 		input.disabled = false;
+    // 	});
+    // 	editActions.style.display = 'flex';
+    // 	participantActions.style.display = 'none';
+    // } else {
+    // 	rowInputs.forEach((input) => {
+    // 		input.disabled = true;
+    // 	});
+    // 	editActions.style.display = 'none';
+    // }
+
   });
 }
 
 function updateParticipantInfo(e, id) {
-  e.stopPropagation();
   const activeEventID = document.querySelector('.admin-event-row.active').id;
-  const participantRow = document.querySelector('.participant-row.active');
+  const participantRow = document.getElementById(`participant-row-${id}`);
   const rowInputs = [...participantRow.querySelectorAll('input'), ...participantRow.querySelectorAll('textarea')];
 
-  (function ($) {
-    $(document).ready(function () {
-      if (e.target.classList.contains('btn-cancel')) {
-        let data = {
-          action: 'admin_get_participant_info',
-          eventID: activeEventID,
-          participantID: id
-        };
-        $.post(ajaxData.ajaxurl, data, function (response) {
-          const participantData = Object.values(JSON.parse(response));
-          rowInputs.forEach((input, index) => {
-            if (input.tagName == 'INPUT') {
-              input.value = participantData[index];
-            } else if (input.tagName == 'TEXTAREA') {
-              console.log(participantData[index]);
-              $(input).val(participantData[index]);
-            }
-          });
-          participantRow.classList.remove('edit');
-          updateParticipantTableDisplay();
-        });
-      } else if (e.target.classList.contains('btn-save')) {
-        let data = {
-          action: 'admin_set_participant_info',
-          eventID: activeEventID,
-          participantID: id,
-          participant1: rowInputs[0].value,
-          participant2: rowInputs[1].value,
-          participant3: rowInputs[2].value,
-          email: rowInputs[3].value,
-          additionalInfo: $(rowInputs[4]).val(),
-          notes: $(rowInputs[5]).val()
-        };
-        $.post(ajaxData.ajaxurl, data, function (response) {
-          participantRow.classList.remove('edit');
-          updateParticipantTableDisplay();
-        });
-      } else if (e.target.classList.contains('btn-delete')) {
-        const message = 'are you sure you wish to remove this booking from the event? Once deleted, this cannot be undone';
-
-        if (confirm(message) == true) {
-          let data = {
-            action: 'admin_delete_participant',
-            eventID: activeEventID,
-            participantID: id
-          };
-          $.post(ajaxData.ajaxurl, data, function (response) {
-            $(participantRow).remove();
-            updateParticipantTableDisplay();
-          });
-        } else return;
-      }
+  if (e.target.classList.contains('btn-participant-cancel')) {
+    let data = {
+      action: 'admin_get_participant_info',
+      eventID: activeEventID,
+      participantID: id
+    };
+    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+      const participantData = JSON.parse(response);
+      rowInputs[0].value = participantData[0].Participant_1;
+      rowInputs[1].value = participantData[0].Participant_2;
+      rowInputs[2].value = participantData[0].Participant_3;
+      rowInputs[3].value = participantData[0].Email;
+      jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[4]).val(participantData[0].Additional_info);
+      jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[5]).val(participantData[0].Notes);
     });
-  })(jQuery);
-}
-
-function setColumnSizes() {
-  const singleColumns = [...document.querySelectorAll('.table-column.single li')];
-
-  if (!singleColumns) {
-    return;
-  } else {
-    let minWidth;
-    singleColumns.forEach(element => {
-      if (!minWidth || element.getBoundingClientRect().width < minWidth) {
-        minWidth = element.getBoundingClientRect().width;
-      }
+  } else if (e.target.classList.contains('btn-participant-save')) {
+    let data = {
+      action: 'admin_set_participant_info',
+      eventID: activeEventID,
+      participantID: id,
+      participant1: rowInputs[0].value,
+      participant2: rowInputs[1].value,
+      participant3: rowInputs[2].value,
+      email: rowInputs[3].value,
+      additionalInfo: jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[4]).val(),
+      notes: jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[5]).val()
+    };
+    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+      participantRow.classList.remove('edit');
+      updateParticipantTableDisplay();
     });
-    singleColumns.forEach(element => {
-      element.style.width = `${minWidth}px`;
-      element.style.flexShrink = 0;
-      element.style.flexGrow = 1;
-    });
-    console.log(minWidth);
+  } else if (e.target.classList.contains('btn-participant-delete')) {
+    const message = 'are you sure you wish to remove this booking from the event? Once deleted, this cannot be undone';
+
+    if (confirm(message) == true) {
+      let data = {
+        action: 'admin_delete_participant',
+        eventID: activeEventID,
+        participantID: id
+      };
+      jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+        jquery__WEBPACK_IMPORTED_MODULE_2___default()(participantRow).remove();
+        updateParticipantTableDisplay();
+      });
+    } else return;
   }
 }
 
 eventMonthSelect();
+showAllEvents();
 }();
 /******/ })()
 ;
