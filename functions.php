@@ -49,7 +49,7 @@ add_action('wp_enqueue_scripts', 'brighton_rope_styles');
 function brighton_rope_scripts() {
   wp_enqueue_script(
     'index.js',
-    get_stylesheet_directory_uri() . '/build/index.js',
+    get_stylesheet_directory_uri() . '/build/frontend/index.js',
     array('jquery'),
     '1.0.0',
     true
@@ -121,7 +121,7 @@ fa_custom_setup_kit('https://kit.fontawesome.com/0de87d0496.js');
 function brighton_rope_admin_styles() {
   wp_enqueue_style(
     'admin-main-stylesheet',
-    get_stylesheet_directory_uri() . '/styles/admin/admin-styles.css',
+    get_stylesheet_directory_uri() . '/styles/backend/admin-styles.css',
     array(),
     '1.0',
   );
@@ -131,7 +131,7 @@ add_action( 'admin_enqueue_scripts', 'brighton_rope_admin_styles' );
 function brighton_rope_admin_scripts() {
   wp_register_script( 
     'admin', 
-    get_stylesheet_directory_uri() . '/src/backend/admin.js', 
+    get_stylesheet_directory_uri() . '/build/backend/admin.js', 
     array( 'jquery' ),
     '1.0.0',
     true 
@@ -139,7 +139,7 @@ function brighton_rope_admin_scripts() {
 
   $script_data_array = array(
     'ajaxurl' => admin_url( 'admin-ajax.php' ),
-);
+  );
 
   wp_localize_script('admin', 'ajaxData', $script_data_array);
   wp_enqueue_script( 'admin' );

@@ -4,7 +4,6 @@ require_once ABSPATH . 'wp-settings.php';
 function event_admin_page() {
   add_submenu_page('edit.php?post_type=event', 'Admin', 'Admin', 'edit_events', 'edit-tags.php?post_type=event_participants', 'admin_HTML');
 }
-
 add_action('admin_menu', 'event_admin_page'); 
 
 function admin_HTML() { ?>
@@ -46,8 +45,8 @@ function admin_HTML() { ?>
     <div class="event-tables-container">
       <div id="admin-event-table"></div>
       <div class="event-tables-sub-container">
-        <div id="event-participant-table"></div>
-        <div id="event-waiting-list-table"></div>
+        <div id="participant-table-container"></div>
+        <div id="waiting-list-table-container"></div>
       </div>
     </div>
   <?php    
@@ -102,7 +101,7 @@ function admin_show_events() {
   <?php
     while($selected_events->have_posts()) {
       $selected_events->the_post();?>
-        <tr class="admin-event-row" onclick="getEventParticipants(event)" id="<?php echo get_the_id()?>">
+        <tr class="admin-event-row" id="<?php echo get_the_id()?>">
           <td><?php echo get_the_id() ?></td>
           <td><?php echo get_the_title() ?></td>
           <td><?php echo get_field('start_date') ?></td>
@@ -116,6 +115,5 @@ function admin_show_events() {
   <?php 
   wp_die();   
 }
-
 add_action('wp_ajax_admin_get_events', 'admin_show_events');
 

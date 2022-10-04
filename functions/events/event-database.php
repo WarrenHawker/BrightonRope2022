@@ -46,66 +46,10 @@ function admin_get_participants() {
   $selected_table = "wp_event_" . $_POST['eventID'] . "_participants";
   $query = $wpdb->prepare("SELECT * FROM $selected_table ORDER BY Booking_ID Asc");
   $participants = $wpdb->get_results($query);
-  ?>
-    <h1>Event Participants <button>Add new Participant</button></h1>
-    
-    <table class="admin-event-table participants">
-      <thead>
-        <tr>
-          <th>Booking ID</th>
-          <th>Participant 1</th>
-          <th>Participant 2</th>
-          <th>Participant 3</th>
-          <th>Email</th>
-          <th>Amount paid</th>
-          <th>Additional Information</th>
-          <th>Submission Date</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach($participants as $rows) { 
-          $formatted_date = new DateTime($rows->Submission_date);
-          $formatted_date = $formatted_date->format('jS M Y');
-          ?>
-            <tr onclick="setParticipantRowActive(event, <?php echo $rows->Booking_ID?>)" class="participant-row" id=<?php echo "participant-row-" . $rows->Booking_ID?>>
-              <td><?php echo $rows->Booking_ID ?>
-                <div class="participant-actions" id=<?php echo "participant-actions-" . $rows->Booking_ID ?>>
-                  <button onclick="setParticipantRowEdit(event, <?php echo $rows->Booking_ID?>)">EDIT</button>
-                  <button>MOVE</button>
-                  <button class="btn-delete" onclick="updateParticipantInfo(event, <?php echo $rows->Booking_ID?>)">DELETE</button>
-                </div>
-                <div class="participant-edit-actions">
-                  <button class="btn-cancel" onclick="updateParticipantInfo(event, <?php echo $rows->Booking_ID?>)">Cancel</button>
-                  <button class="btn-save" onclick="updateParticipantInfo(event, <?php echo $rows->Booking_ID?>)">Save</button>
-                </div>
-              </td>
-              <td> 
-                <input type="text" name="participant1" value="<?php echo $rows->Participant_1 ?>" disabled/> 
-              </td>
-              <td> 
-                <input type="text" name="participant2" value="<?php echo $rows->Participant_2 ?>" disabled/> 
-              </td>
-              <td> 
-                <input type="text" name="participant3" value="<?php echo $rows->Participant_3 ?>" disabled/> 
-              </td>
-              <td> 
-                <input type="text" name="email" value="<?php echo $rows->Email ?>" disabled/> 
-              </td>
-              <td>£<?php echo $rows->Amount_paid ?></td>
-              <td> 
-                <textarea name="additionalInfo" disabled> <?php echo $rows->Additional_info ?></textarea> 
-              </td>
-              <td><?php echo $formatted_date ?></td>
-              <td> 
-                <textarea name="notes" disabled> <?php echo $rows->Notes ?></textarea> 
-              </td>   
-          </tr>
-        <?php }?>
-      </tbody>
-    </table>
-    <button id=<?php echo "purge-participants-" . $_POST['eventID']?>>Purge Event Participants</button>
-  <?php
+
+  $participants_JSON = json_encode($participants);
+  echo $participants_JSON;
+  
   wp_die();
 }
 
@@ -114,37 +58,10 @@ function admin_get_waiting_list() {
   $selected_table = "wp_event_" . $_POST['eventID'] . "_waiting";
   $query = $wpdb->prepare("SELECT * FROM $selected_table ORDER BY Inquiry_ID Asc");
   $waiting_list = $wpdb->get_results($query);
-  ?>
-    <h1>Event Waiting List <button>Add new Inquiry</button></h1>
-    
-    <table class="admin-event-table waiting-list">
-      <thead>
-        <tr>
-          <th>Inquiry ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Participants</th>
-          <th>Submission Date</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach($waiting_list as $rows) { 
-          $formatted_date = new DateTime($rows->Submission_date);
-          $formatted_date = $formatted_date->format('jS M Y');
-          ?>
-            <tr>
-              <td><?php echo $rows->Inquiry_ID ?></td>
-              <td><?php echo $rows->Inquiry_Name ?></td>
-              <td><?php echo $rows->Email ?></td>
-              <td><?php echo $rows->Participants ?></td>
-              <td><?php echo $rows->$formatted_date ?></td>
-              <td><?php echo $rows->Notes ?></td>
-          </tr>
-        <?php }?>
-      </tbody>
-    </table>
-  <?php
+  
+  $waiting_list_JSON = json_encode($waiting_list);
+  echo $waiting_list_JSON;
+
   wp_die();
 }
 
@@ -156,17 +73,8 @@ function admin_get_participant_info() {
   $query = $wpdb->prepare("SELECT * FROM $selected_table WHERE Booking_ID=$selected_participant ORDER BY Booking_ID Asc");
   $participant = $wpdb->get_results($query);
 
-  $participant_info = (object) [
-    'Participant_1' => $participant[0]->Participant_1,
-    'Participant_2' => $participant[0]->Participant_2,
-    'Participant_3' => $participant[0]->Participant_3,
-    'Email' => $participant[0]->Email,
-    'Additional_info' => $participant[0]->Additional_info,
-    'Notes' => $participant[0]->Notes,
-  ];
-
-  $participant_info_JSON = json_encode($participant_info);
-  echo $participant_info_JSON;
+  $participant_JSON = json_encode($participant);
+  echo $participant_JSON;
 
   wp_die();
 }

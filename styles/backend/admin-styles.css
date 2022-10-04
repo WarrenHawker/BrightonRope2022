@@ -1,0 +1,9 @@
+@import url('./event-tables.css');
+@import url('../frontend/abstracts/colors.css');
+@import url('../frontend/components/booking-form.css');
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
