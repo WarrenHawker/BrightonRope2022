@@ -19,7 +19,7 @@ export default function participantsTable(data) {
               <input type="text" value="${item.Email}" disabled></input>
             </div>
           </div>
-          <div class="table-item" data-name='Additional Information'>
+          <div class="table-item" data-name='Additional Info'>
             <textarea disabled>${item.Additional_info}</textarea>
           </div>
           <div class="table-column double">
@@ -45,7 +45,7 @@ export default function participantsTable(data) {
 	// prettier-ignore
 	return `
   <div class="table-heading">
-    <h1>Event Participants</h1>
+    <h1 id="participants-table-header">Event Participants</h1>
     <button class="btn-admin primary large" id="add-participant">Add new Participant</button>
   </div>
   <div class="participant-table">

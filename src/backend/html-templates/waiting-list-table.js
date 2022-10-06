@@ -38,7 +38,7 @@ export default function waitingListTable(data) {
 	// prettier-ignore
 	return `
   <div class="table-heading">
-    <h1>Waiting List</h1>
+    <h1 id="waiting-list-table-header">Waiting List</h1>
     <button class="btn-admin primary large" id="add-inquiry">Add new Inquiry</button>
   </div>
   <div class="waiting-list-table">

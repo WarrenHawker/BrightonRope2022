@@ -32,7 +32,7 @@ function participantsTable(data) {
               <input type="text" value="${item.Email}" disabled></input>
             </div>
           </div>
-          <div class="table-item" data-name='Additional Information'>
+          <div class="table-item" data-name='Additional Info'>
             <textarea disabled>${item.Additional_info}</textarea>
           </div>
           <div class="table-column double">
@@ -57,7 +57,7 @@ function participantsTable(data) {
 
   return `
   <div class="table-heading">
-    <h1>Event Participants</h1>
+    <h1 id="participants-table-header">Event Participants</h1>
     <button class="btn-admin primary large" id="add-participant">Add new Participant</button>
   </div>
   <div class="participant-table">
@@ -142,7 +142,7 @@ function waitingListTable(data) {
 
   return `
   <div class="table-heading">
-    <h1>Waiting List</h1>
+    <h1 id="waiting-list-table-header">Waiting List</h1>
     <button class="btn-admin primary large" id="add-inquiry">Add new Inquiry</button>
   </div>
   <div class="waiting-list-table">
@@ -341,7 +341,7 @@ function showAllEvents() {
     jquery__WEBPACK_IMPORTED_MODULE_2___default()('#participant-table-container').empty();
     jquery__WEBPACK_IMPORTED_MODULE_2___default()('#waiting-list-table-container').empty();
   });
-} //contains participant action button event listeners
+} //contains table header mobile and participant action button event listeners
 
 
 function setParticipantRowEdit() {
@@ -350,6 +350,7 @@ function setParticipantRowEdit() {
   const saveButtons = [...document.getElementsByClassName('btn-participant-save')];
   const deleteButtons = [...document.getElementsByClassName('btn-participant-delete')];
   const tableRows = [...document.querySelectorAll('.participant-table .table-row.body')];
+  const participantsHeader = document.getElementById('participants-table-header');
   editButtons.forEach(button => {
     button.addEventListener('click', () => {
       const ID = button.id.slice(21);
@@ -398,6 +399,10 @@ function setParticipantRowEdit() {
       updateParticipantTableDisplay();
       updateParticipantInfo(e, ID);
     });
+  });
+  participantsHeader.addEventListener('click', () => {
+    document.querySelector('.participant-table').classList.toggle('show');
+    participantsHeader.classList.toggle('show');
   });
 }
 
@@ -483,7 +488,7 @@ function updateParticipantInfo(e, id) {
       });
     } else return;
   }
-} //contains waiting list action button event listeners
+} //contains table header mobile and waiting list action button event listeners
 
 
 function setWaitingListRowEdit() {
@@ -492,6 +497,7 @@ function setWaitingListRowEdit() {
   const saveButtons = [...document.getElementsByClassName('btn-waiting-list-save')];
   const deleteButtons = [...document.getElementsByClassName('btn-waiting-list-delete')];
   const tableRows = [...document.querySelectorAll('.waiting-list-table .table-row.body')];
+  const waitingListHeader = document.getElementById('waiting-list-table-header');
   editButtons.forEach(button => {
     button.addEventListener('click', () => {
       const ID = button.id.slice(21);
@@ -541,6 +547,10 @@ function setWaitingListRowEdit() {
       updateParticipantTableDisplay();
       updateWaitingListInfo(e, ID);
     });
+  });
+  waitingListHeader.addEventListener('click', () => {
+    document.querySelector('.waiting-list-table').classList.toggle('show');
+    waitingListHeader.classList.toggle('show');
   });
 }
 

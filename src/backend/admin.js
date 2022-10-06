@@ -87,13 +87,14 @@ function showAllEvents() {
 	});
 }
 
-//contains participant action button event listeners
+//contains table header mobile and participant action button event listeners
 function setParticipantRowEdit() {
 	const editButtons = [...document.getElementsByClassName('btn-participant-edit')];
 	const cancelButtons = [...document.getElementsByClassName('btn-participant-cancel')];
 	const saveButtons = [...document.getElementsByClassName('btn-participant-save')];
 	const deleteButtons = [...document.getElementsByClassName('btn-participant-delete')];
 	const tableRows = [...document.querySelectorAll('.participant-table .table-row.body')];
+	const participantsHeader = document.getElementById('participants-table-header');
 
 	editButtons.forEach((button) => {
 		button.addEventListener('click', () => {
@@ -148,6 +149,10 @@ function setParticipantRowEdit() {
 			updateParticipantTableDisplay();
 			updateParticipantInfo(e, ID);
 		});
+	});
+	participantsHeader.addEventListener('click', () => {
+		document.querySelector('.participant-table').classList.toggle('show');
+		participantsHeader.classList.toggle('show');
 	});
 }
 
@@ -239,13 +244,14 @@ function updateParticipantInfo(e, id) {
 	}
 }
 
-//contains waiting list action button event listeners
+//contains table header mobile and waiting list action button event listeners
 function setWaitingListRowEdit() {
 	const editButtons = [...document.getElementsByClassName('btn-waiting-list-edit')];
 	const cancelButtons = [...document.getElementsByClassName('btn-waiting-list-cancel')];
 	const saveButtons = [...document.getElementsByClassName('btn-waiting-list-save')];
 	const deleteButtons = [...document.getElementsByClassName('btn-waiting-list-delete')];
 	const tableRows = [...document.querySelectorAll('.waiting-list-table .table-row.body')];
+	const waitingListHeader = document.getElementById('waiting-list-table-header');
 
 	editButtons.forEach((button) => {
 		button.addEventListener('click', () => {
@@ -301,6 +307,10 @@ function setWaitingListRowEdit() {
 			updateParticipantTableDisplay();
 			updateWaitingListInfo(e, ID);
 		});
+	});
+	waitingListHeader.addEventListener('click', () => {
+		document.querySelector('.waiting-list-table').classList.toggle('show');
+		waitingListHeader.classList.toggle('show');
 	});
 }
 
