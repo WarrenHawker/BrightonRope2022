@@ -1,5 +1,8 @@
 import participantsTable from './html-templates/participants-table';
 import waitingListTable from './html-templates/waiting-list-table';
+import addParticipantForm from './html-templates/add-participant-form';
+import addInquiryForm from './html-templates/add-inquiry-form';
+import { closeAdminForm } from './admin-form';
 import $ from 'jquery';
 
 //calls getEventParticipants function
@@ -95,6 +98,7 @@ function setParticipantRowEdit() {
 	const deleteButtons = [...document.getElementsByClassName('btn-participant-delete')];
 	const tableRows = [...document.querySelectorAll('.participant-table .table-row.body')];
 	const participantsHeader = document.getElementById('participants-table-header');
+	const addParticipantButton = document.getElementById('add-participant');
 
 	editButtons.forEach((button) => {
 		button.addEventListener('click', () => {
@@ -153,6 +157,10 @@ function setParticipantRowEdit() {
 	participantsHeader.addEventListener('click', () => {
 		document.querySelector('.participant-table').classList.toggle('show');
 		participantsHeader.classList.toggle('show');
+	});
+
+	addParticipantButton.addEventListener('click', () => {
+		document.getElementsByClassName('admin-form-overlay')[0].classList.add('active');
 	});
 }
 
@@ -252,6 +260,7 @@ function setWaitingListRowEdit() {
 	const deleteButtons = [...document.getElementsByClassName('btn-waiting-list-delete')];
 	const tableRows = [...document.querySelectorAll('.waiting-list-table .table-row.body')];
 	const waitingListHeader = document.getElementById('waiting-list-table-header');
+	const addInquiryButton = document.getElementById('add-inquiry');
 
 	editButtons.forEach((button) => {
 		button.addEventListener('click', () => {
@@ -311,6 +320,10 @@ function setWaitingListRowEdit() {
 	waitingListHeader.addEventListener('click', () => {
 		document.querySelector('.waiting-list-table').classList.toggle('show');
 		waitingListHeader.classList.toggle('show');
+	});
+
+	addInquiryButton.addEventListener('click', () => {
+		document.getElementsByClassName('admin-form-overlay')[0].classList.add('active');
 	});
 }
 
@@ -406,5 +419,10 @@ function updateWaitingListInfo(e, id) {
 	}
 }
 
+function addNewParticipant() {}
+
+function addNewInquiry() {}
+
 eventMonthSelect();
 showAllEvents();
+closeAdminForm();

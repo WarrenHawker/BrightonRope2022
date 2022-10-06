@@ -50,6 +50,12 @@ function admin_HTML() { ?>
         <div id="waiting-list-table-container"></div>
       </div>
     </div>
+
+    <div class="admin-form-overlay">
+      <div class="admin-form-container">
+        <i class="fa fa-window-close" id="admin-form-close" aria-hidden="true"></i>
+      </div>
+    </div> 
   </div>
   <?php    
 }

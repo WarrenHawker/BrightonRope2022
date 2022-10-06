@@ -2,6 +2,64 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/backend/admin-form.js":
+/*!***********************************!*\
+  !*** ./src/backend/admin-form.js ***!
+  \***********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "closeAdminForm": function() { return /* binding */ closeAdminForm; }
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function closeAdminForm() {
+  const closeButton = document.getElementById('admin-form-close');
+  const adminFormOverlay = document.getElementsByClassName('admin-form-overlay')[0];
+  closeButton.addEventListener('click', () => {
+    adminFormOverlay.classList.remove('active');
+  });
+}
+
+
+
+/***/ }),
+
+/***/ "./src/backend/html-templates/add-inquiry-form.js":
+/*!********************************************************!*\
+  !*** ./src/backend/html-templates/add-inquiry-form.js ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ addInquiryForm; }
+/* harmony export */ });
+function addInquiryForm() {
+  return ``;
+}
+
+/***/ }),
+
+/***/ "./src/backend/html-templates/add-participant-form.js":
+/*!************************************************************!*\
+  !*** ./src/backend/html-templates/add-participant-form.js ***!
+  \************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ addParticipantForm; }
+/* harmony export */ });
+function addParticipantForm() {
+  return ``;
+}
+
+/***/ }),
+
 /***/ "./src/backend/html-templates/participants-table.js":
 /*!**********************************************************!*\
   !*** ./src/backend/html-templates/participants-table.js ***!
@@ -259,33 +317,39 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _html_templates_participants_table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./html-templates/participants-table */ "./src/backend/html-templates/participants-table.js");
 /* harmony import */ var _html_templates_waiting_list_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./html-templates/waiting-list-table */ "./src/backend/html-templates/waiting-list-table.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "jquery");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _html_templates_add_participant_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./html-templates/add-participant-form */ "./src/backend/html-templates/add-participant-form.js");
+/* harmony import */ var _html_templates_add_inquiry_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./html-templates/add-inquiry-form */ "./src/backend/html-templates/add-inquiry-form.js");
+/* harmony import */ var _admin_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./admin-form */ "./src/backend/admin-form.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
 
 
  //calls getEventParticipants function
 
 function eventMonthSelect() {
-  jquery__WEBPACK_IMPORTED_MODULE_2___default()(window).load(function () {
+  jquery__WEBPACK_IMPORTED_MODULE_5___default()(window).load(function () {
     let data = {
       action: 'admin_get_events',
       month: 'all'
     };
-    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
-      jquery__WEBPACK_IMPORTED_MODULE_2___default()('#admin-event-table').html(response);
+    jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, data, function (response) {
+      jquery__WEBPACK_IMPORTED_MODULE_5___default()('#admin-event-table').html(response);
       getEventParticipants();
     });
   });
-  jquery__WEBPACK_IMPORTED_MODULE_2___default()('#event-month').change(function (e) {
+  jquery__WEBPACK_IMPORTED_MODULE_5___default()('#event-month').change(function (e) {
     let selectedMonth = e.target.value;
     let data = {
       action: 'admin_get_events',
       month: selectedMonth
     };
-    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
-      jquery__WEBPACK_IMPORTED_MODULE_2___default()('#admin-event-table').html(response);
-      jquery__WEBPACK_IMPORTED_MODULE_2___default()('#event-participant-table').empty();
-      jquery__WEBPACK_IMPORTED_MODULE_2___default()('#event-waiting-list-table').empty();
+    jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, data, function (response) {
+      jquery__WEBPACK_IMPORTED_MODULE_5___default()('#admin-event-table').html(response);
+      jquery__WEBPACK_IMPORTED_MODULE_5___default()('#event-participant-table').empty();
+      jquery__WEBPACK_IMPORTED_MODULE_5___default()('#event-waiting-list-table').empty();
       getEventParticipants();
     });
   });
@@ -315,12 +379,12 @@ function getEventParticipants(e) {
         action: 'admin_get_waiting_list',
         eventID: e.target.parentElement.id
       };
-      jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, dataParticipants, function (response) {
-        jquery__WEBPACK_IMPORTED_MODULE_2___default()('#participant-table-container').html((0,_html_templates_participants_table__WEBPACK_IMPORTED_MODULE_0__["default"])(JSON.parse(response)));
+      jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, dataParticipants, function (response) {
+        jquery__WEBPACK_IMPORTED_MODULE_5___default()('#participant-table-container').html((0,_html_templates_participants_table__WEBPACK_IMPORTED_MODULE_0__["default"])(JSON.parse(response)));
         setParticipantRowEdit();
       });
-      jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, dataWaitingList, function (response) {
-        jquery__WEBPACK_IMPORTED_MODULE_2___default()('#waiting-list-table-container').html((0,_html_templates_waiting_list_table__WEBPACK_IMPORTED_MODULE_1__["default"])(JSON.parse(response)));
+      jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, dataWaitingList, function (response) {
+        jquery__WEBPACK_IMPORTED_MODULE_5___default()('#waiting-list-table-container').html((0,_html_templates_waiting_list_table__WEBPACK_IMPORTED_MODULE_1__["default"])(JSON.parse(response)));
         setWaitingListRowEdit();
       });
     });
@@ -338,8 +402,8 @@ function showAllEvents() {
       row.classList.remove('hidden');
     });
     btnBack.style.display = 'none';
-    jquery__WEBPACK_IMPORTED_MODULE_2___default()('#participant-table-container').empty();
-    jquery__WEBPACK_IMPORTED_MODULE_2___default()('#waiting-list-table-container').empty();
+    jquery__WEBPACK_IMPORTED_MODULE_5___default()('#participant-table-container').empty();
+    jquery__WEBPACK_IMPORTED_MODULE_5___default()('#waiting-list-table-container').empty();
   });
 } //contains table header mobile and participant action button event listeners
 
@@ -351,6 +415,7 @@ function setParticipantRowEdit() {
   const deleteButtons = [...document.getElementsByClassName('btn-participant-delete')];
   const tableRows = [...document.querySelectorAll('.participant-table .table-row.body')];
   const participantsHeader = document.getElementById('participants-table-header');
+  const addParticipantButton = document.getElementById('add-participant');
   editButtons.forEach(button => {
     button.addEventListener('click', () => {
       const ID = button.id.slice(21);
@@ -404,6 +469,9 @@ function setParticipantRowEdit() {
     document.querySelector('.participant-table').classList.toggle('show');
     participantsHeader.classList.toggle('show');
   });
+  addParticipantButton.addEventListener('click', () => {
+    document.getElementsByClassName('admin-form-overlay')[0].classList.add('active');
+  });
 }
 
 function updateParticipantTableDisplay() {
@@ -448,14 +516,14 @@ function updateParticipantInfo(e, id) {
       eventID: activeEventID,
       participantID: id
     };
-    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+    jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, data, function (response) {
       const participantData = JSON.parse(response);
       rowInputs[0].value = participantData[0].Participant_1;
       rowInputs[1].value = participantData[0].Participant_2;
       rowInputs[2].value = participantData[0].Participant_3;
       rowInputs[3].value = participantData[0].Email;
-      jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[4]).val(participantData[0].Additional_info);
-      jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[5]).val(participantData[0].Notes);
+      jquery__WEBPACK_IMPORTED_MODULE_5___default()(rowInputs[4]).val(participantData[0].Additional_info);
+      jquery__WEBPACK_IMPORTED_MODULE_5___default()(rowInputs[5]).val(participantData[0].Notes);
     });
   } else if (e.target.classList.contains('btn-participant-save')) {
     let data = {
@@ -466,10 +534,10 @@ function updateParticipantInfo(e, id) {
       participant2: rowInputs[1].value,
       participant3: rowInputs[2].value,
       email: rowInputs[3].value,
-      additionalInfo: jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[4]).val(),
-      notes: jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[5]).val()
+      additionalInfo: jquery__WEBPACK_IMPORTED_MODULE_5___default()(rowInputs[4]).val(),
+      notes: jquery__WEBPACK_IMPORTED_MODULE_5___default()(rowInputs[5]).val()
     };
-    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+    jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, data, function (response) {
       participantRow.classList.remove('edit');
       updateParticipantTableDisplay();
     });
@@ -482,8 +550,8 @@ function updateParticipantInfo(e, id) {
         eventID: activeEventID,
         participantID: id
       };
-      jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
-        jquery__WEBPACK_IMPORTED_MODULE_2___default()(participantRow).remove();
+      jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, data, function (response) {
+        jquery__WEBPACK_IMPORTED_MODULE_5___default()(participantRow).remove();
         updateParticipantTableDisplay();
       });
     } else return;
@@ -498,6 +566,7 @@ function setWaitingListRowEdit() {
   const deleteButtons = [...document.getElementsByClassName('btn-waiting-list-delete')];
   const tableRows = [...document.querySelectorAll('.waiting-list-table .table-row.body')];
   const waitingListHeader = document.getElementById('waiting-list-table-header');
+  const addInquiryButton = document.getElementById('add-inquiry');
   editButtons.forEach(button => {
     button.addEventListener('click', () => {
       const ID = button.id.slice(21);
@@ -552,6 +621,9 @@ function setWaitingListRowEdit() {
     document.querySelector('.waiting-list-table').classList.toggle('show');
     waitingListHeader.classList.toggle('show');
   });
+  addInquiryButton.addEventListener('click', () => {
+    document.getElementsByClassName('admin-form-overlay')[0].classList.add('active');
+  });
 }
 
 function updateWaitingListTableDisplay() {
@@ -596,11 +668,11 @@ function updateWaitingListInfo(e, id) {
       eventID: activeEventID,
       waitingListID: id
     };
-    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+    jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, data, function (response) {
       const waitingListData = JSON.parse(response);
       rowInputs[0].value = waitingListData[0].Inquiry_Name;
       rowInputs[1].value = waitingListData[0].Email;
-      jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[2]).val(waitingListData[0].Notes);
+      jquery__WEBPACK_IMPORTED_MODULE_5___default()(rowInputs[2]).val(waitingListData[0].Notes);
       rowInputs[3].value = waitingListData[0].Participants;
     });
   } else if (e.target.classList.contains('btn-waiting-list-save')) {
@@ -610,10 +682,10 @@ function updateWaitingListInfo(e, id) {
       inquiryID: id,
       name: rowInputs[0].value,
       email: rowInputs[1].value,
-      notes: jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[2]).val(),
+      notes: jquery__WEBPACK_IMPORTED_MODULE_5___default()(rowInputs[2]).val(),
       participants: rowInputs[3].value
     };
-    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+    jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, data, function (response) {
       waitingListRow.classList.remove('edit');
       updateWaitingListTableDisplay();
     });
@@ -626,16 +698,21 @@ function updateWaitingListInfo(e, id) {
         eventID: activeEventID,
         inquiryID: id
       };
-      jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
-        jquery__WEBPACK_IMPORTED_MODULE_2___default()(waitingListRow).remove();
+      jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, data, function (response) {
+        jquery__WEBPACK_IMPORTED_MODULE_5___default()(waitingListRow).remove();
         updateWaitingListTableDisplay();
       });
     } else return;
   }
 }
 
+function addNewParticipant() {}
+
+function addNewInquiry() {}
+
 eventMonthSelect();
 showAllEvents();
+(0,_admin_form__WEBPACK_IMPORTED_MODULE_4__.closeAdminForm)();
 }();
 /******/ })()
 ;

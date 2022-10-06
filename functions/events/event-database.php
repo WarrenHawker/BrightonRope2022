@@ -146,6 +146,16 @@ function admin_delete_waiting_list_info() {
   $wpdb->delete($selected_table, $where);
   wp_die();
 }
+
+function add_new_participant() {
+  global $wpdb;
+
+}
+
+function add_new_inquiry() {
+  global $wpdb;
+}
+
 function wpdocs_run_on_publish_only( $new_status, $old_status, $post ) {
   if ( ( 'publish' === $new_status && 'publish' !== $old_status )
       && 'event' === $post->post_type
@@ -169,3 +179,6 @@ add_action('wp_ajax_admin_delete_participant', 'admin_delete_participant');
 add_action('wp_ajax_admin_get_waiting_list_info', 'admin_get_waiting_list_info');
 add_action('wp_ajax_admin_set_waiting_list_info', 'admin_set_waiting_list_info');
 add_action('wp_ajax_admin_delete_waiting_list_info', 'admin_delete_waiting_list_info');
+
+add_action('wp_ajax_add_new_participant', 'add_new_participant');
+add_action('wp_ajax_add_new_inquiry', 'add_new_inquiry');
