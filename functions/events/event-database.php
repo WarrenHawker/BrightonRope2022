@@ -107,6 +107,45 @@ function admin_delete_participant() {
   wp_die();
 }
 
+function admin_get_waiting_list_info() {
+  global $wpdb;
+
+  $selected_table = "wp_event_" . $_POST['eventID'] . "_waiting";
+  $selected_Inquiry = $_POST['waitingListID'];
+  $query = $wpdb->prepare("SELECT * FROM $selected_table WHERE Inquiry_ID=$selected_Inquiry ORDER BY Inquiry_ID Asc");
+  $Inquiry = $wpdb->get_results($query);
+
+  $Inquiry_JSON = json_encode($Inquiry);
+  echo $Inquiry_JSON;
+
+  wp_die();
+}
+
+function admin_set_waiting_list_info() {
+  global $wpdb;
+  $selected_table = "wp_event_" . $_POST['eventID'] . "_waiting";
+  $selected_Inquiry = $_POST['inquiryID'];
+  $where = ['Inquiry_ID' => $selected_Inquiry];
+  $data_to_insert = array(
+    'Inquiry_Name' => sanitize_text_field($_POST['name']),
+    'Email' => sanitize_text_field($_POST['email']),
+    'Participants' => $_POST['participants'],
+    'Notes' => sanitize_text_field($_POST['notes'])
+  );
+  $wpdb->update($selected_table, $data_to_insert, $where);
+
+  wp_die();
+}
+
+function admin_delete_waiting_list_info() {
+  global $wpdb;
+  $selected_table = "wp_event_" . $_POST['eventID'] . "_waiting";
+  $selected_Inquiry = $_POST['inquiryID'];
+  $where = ['Inquiry_ID' => $selected_Inquiry];
+
+  $wpdb->delete($selected_table, $where);
+  wp_die();
+}
 function wpdocs_run_on_publish_only( $new_status, $old_status, $post ) {
   if ( ( 'publish' === $new_status && 'publish' !== $old_status )
       && 'event' === $post->post_type
@@ -122,6 +161,11 @@ add_action('transition_post_status', 'wpdocs_run_on_publish_only', 10, 3);
 
 add_action('wp_ajax_admin_get_participants', 'admin_get_participants');
 add_action('wp_ajax_admin_get_waiting_list', 'admin_get_waiting_list');
+
 add_action('wp_ajax_admin_get_participant_info', 'admin_get_participant_info');
 add_action('wp_ajax_admin_set_participant_info', 'admin_set_participant_info');
 add_action('wp_ajax_admin_delete_participant', 'admin_delete_participant');
+
+add_action('wp_ajax_admin_get_waiting_list_info', 'admin_get_waiting_list_info');
+add_action('wp_ajax_admin_set_waiting_list_info', 'admin_set_waiting_list_info');
+add_action('wp_ajax_admin_delete_waiting_list_info', 'admin_delete_waiting_list_info');

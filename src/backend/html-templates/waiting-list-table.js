@@ -11,19 +11,25 @@ export default function waitingListTable(data) {
 					<div class="table-item"data-name='Email'>
 						<input type="text" value="${item.Email}" disabled></input>
 					</div>
-					<div class="table-item non-input" data-name='Participants'>${item.Participants}</div>
+					<div class="table-item" data-name='Participants'>
+						<select disabled>
+							<option value="Individual">Individual</option>
+							<option value="Pair">Pair</option>
+							<option value="Group">Group</option>
+						</select>
+					</div>
 					<div class="table-item non-input" data-name='Submission Date'>${convertDates(item.Submission_date)}</div>
 					<div class="table-item" data-name='Notes'>
 						<textarea disabled>${item.Notes}</textarea>
 					</div>
 					<div class="waiting-list-action-buttons">
-            <button class="btn-admin btn-waiting-list-edit" id="btn-participant-edit-${item.Booking_ID}">Edit</button>
+            <button class="btn-admin btn-waiting-list-edit" id="btn-participant-edit-${item.Inquiry_ID}">Edit</button>
             <button class="btn-admin">Move</button>
-            <button class="btn-admin delete btn-waiting-list-delete" id="btn-waiting-list-delete-${item.Booking_ID}">Delete</button>
+            <button class="btn-admin delete btn-waiting-list-delete" id="btn-waiting-list-delete-${item.Inquiry_ID}">Delete</button>
           </div>
           <div class="waiting-list-edit-buttons">
-            <button class="btn-admin btn-waiting-list-cancel" id="btn-waiting-list-cancel-${item.Booking_ID}">Cancel</button>
-            <button class="btn-admin primary btn-waiting-list-save" id="btn-waiting-list-save-${item.Booking_ID}">Save</button>
+            <button class="btn-admin btn-waiting-list-cancel" id="btn-waiting-list-cancel-${item.Inquiry_ID}">Cancel</button>
+            <button class="btn-admin primary btn-waiting-list-save" id="btn-waiting-list-save-${item.Inquiry_ID}">Save</button>
           </div>
 			</li>
     `

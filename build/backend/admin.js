@@ -116,19 +116,25 @@ function waitingListTable(data) {
 					<div class="table-item"data-name='Email'>
 						<input type="text" value="${item.Email}" disabled></input>
 					</div>
-					<div class="table-item non-input" data-name='Participants'>${item.Participants}</div>
+					<div class="table-item" data-name='Participants'>
+						<select disabled>
+							<option value="Individual">Individual</option>
+							<option value="Pair">Pair</option>
+							<option value="Group">Group</option>
+						</select>
+					</div>
 					<div class="table-item non-input" data-name='Submission Date'>${convertDates(item.Submission_date)}</div>
 					<div class="table-item" data-name='Notes'>
 						<textarea disabled>${item.Notes}</textarea>
 					</div>
 					<div class="waiting-list-action-buttons">
-            <button class="btn-admin btn-waiting-list-edit" id="btn-participant-edit-${item.Booking_ID}">Edit</button>
+            <button class="btn-admin btn-waiting-list-edit" id="btn-participant-edit-${item.Inquiry_ID}">Edit</button>
             <button class="btn-admin">Move</button>
-            <button class="btn-admin delete btn-waiting-list-delete" id="btn-waiting-list-delete-${item.Booking_ID}">Delete</button>
+            <button class="btn-admin delete btn-waiting-list-delete" id="btn-waiting-list-delete-${item.Inquiry_ID}">Delete</button>
           </div>
           <div class="waiting-list-edit-buttons">
-            <button class="btn-admin btn-waiting-list-cancel" id="btn-waiting-list-cancel-${item.Booking_ID}">Cancel</button>
-            <button class="btn-admin primary btn-waiting-list-save" id="btn-waiting-list-save-${item.Booking_ID}">Save</button>
+            <button class="btn-admin btn-waiting-list-cancel" id="btn-waiting-list-cancel-${item.Inquiry_ID}">Cancel</button>
+            <button class="btn-admin primary btn-waiting-list-save" id="btn-waiting-list-save-${item.Inquiry_ID}">Save</button>
           </div>
 			</li>
     `;
@@ -257,7 +263,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
 
 
-
+ //calls getEventParticipants function
 
 function eventMonthSelect() {
   jquery__WEBPACK_IMPORTED_MODULE_2___default()(window).load(function () {
@@ -283,7 +289,8 @@ function eventMonthSelect() {
       getEventParticipants();
     });
   });
-}
+} //calls setParticipantRowEdit and setWaitingListRowEdit functions
+
 
 function getEventParticipants(e) {
   const adminEventRows = [...document.getElementsByClassName('admin-event-row')];
@@ -314,6 +321,7 @@ function getEventParticipants(e) {
       });
       jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, dataWaitingList, function (response) {
         jquery__WEBPACK_IMPORTED_MODULE_2___default()('#waiting-list-table-container').html((0,_html_templates_waiting_list_table__WEBPACK_IMPORTED_MODULE_1__["default"])(JSON.parse(response)));
+        setWaitingListRowEdit();
       });
     });
   });
@@ -420,30 +428,7 @@ function updateParticipantTableDisplay() {
       });
       participantActions.style.display = 'flex';
       editActions.style.display = 'none';
-    } // if (row.classList.contains('active')) {
-    // 	rowTextAreas.forEach((area) => {
-    // 		area.style.height = `${area.scrollHeight}px`;
-    // 	});
-    // 	participantActions.style.display = 'block';
-    // } else {
-    // 	rowTextAreas.forEach((area) => {
-    // 		area.style.height = `40px`;
-    // 	});
-    // 	participantActions.style.display = 'none';
-    // }
-    // if (row.classList.contains('edit')) {
-    // 	rowInputs.forEach((input) => {
-    // 		input.disabled = false;
-    // 	});
-    // 	editActions.style.display = 'flex';
-    // 	participantActions.style.display = 'none';
-    // } else {
-    // 	rowInputs.forEach((input) => {
-    // 		input.disabled = true;
-    // 	});
-    // 	editActions.style.display = 'none';
-    // }
-
+    }
   });
 }
 
@@ -495,6 +480,145 @@ function updateParticipantInfo(e, id) {
       jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
         jquery__WEBPACK_IMPORTED_MODULE_2___default()(participantRow).remove();
         updateParticipantTableDisplay();
+      });
+    } else return;
+  }
+} //contains waiting list action button event listeners
+
+
+function setWaitingListRowEdit() {
+  const editButtons = [...document.getElementsByClassName('btn-waiting-list-edit')];
+  const cancelButtons = [...document.getElementsByClassName('btn-waiting-list-cancel')];
+  const saveButtons = [...document.getElementsByClassName('btn-waiting-list-save')];
+  const deleteButtons = [...document.getElementsByClassName('btn-waiting-list-delete')];
+  const tableRows = [...document.querySelectorAll('.waiting-list-table .table-row.body')];
+  editButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const ID = button.id.slice(21);
+      tableRows.forEach(row => {
+        if (row.id == `waiting-list-row-${ID}`) {
+          row.classList.add('edit');
+        } else {
+          row.classList.remove('edit');
+        }
+      });
+      updateWaitingListTableDisplay();
+    });
+  });
+  cancelButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const ID = button.id.slice(24);
+      tableRows.forEach(row => {
+        if (row.id == `waiting-list-row-${ID}`) {
+          row.classList.remove('edit');
+        }
+      });
+      updateWaitingListTableDisplay();
+      updateWaitingListInfo(e, ID);
+    });
+  });
+  saveButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const ID = button.id.slice(22);
+      tableRows.forEach(row => {
+        if (row.id == `waiting-list-row-${ID}`) {
+          row.classList.remove('edit');
+        }
+      });
+      updateParticipantTableDisplay();
+      updateWaitingListInfo(e, ID);
+    });
+  });
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const ID = button.id.slice(24);
+      console.log(ID);
+      tableRows.forEach(row => {
+        if (row.id == `waiting-list-row-${ID}`) {
+          row.classList.remove('edit');
+        }
+      });
+      updateParticipantTableDisplay();
+      updateWaitingListInfo(e, ID);
+    });
+  });
+}
+
+function updateWaitingListTableDisplay() {
+  const tablesContainer = document.getElementsByClassName('event-tables-container')[0];
+  const tableRows = [...tablesContainer.querySelectorAll('.waiting-list-table .table-row.body')];
+  tableRows.forEach(row => {
+    const rowTextAreas = [...row.querySelectorAll('textarea')];
+    const rowInputs = [...row.querySelectorAll('input'), ...row.querySelectorAll('textarea'), ...row.querySelectorAll('select')];
+    const participantActions = row.querySelector('.waiting-list-action-buttons');
+    const editActions = row.querySelector('.waiting-list-edit-buttons');
+
+    if (row.classList.contains('edit')) {
+      rowInputs.forEach(input => {
+        input.disabled = false;
+      });
+      rowTextAreas.forEach(area => {
+        area.style.height = `${area.scrollHeight + 2}px`;
+      });
+      participantActions.style.display = 'none';
+      editActions.style.display = 'flex';
+    } else {
+      rowInputs.forEach(input => {
+        input.disabled = true;
+      });
+      rowTextAreas.forEach(area => {
+        area.style.height = `40px`;
+      });
+      participantActions.style.display = 'flex';
+      editActions.style.display = 'none';
+    }
+  });
+}
+
+function updateWaitingListInfo(e, id) {
+  const activeEventID = document.querySelector('.admin-event-row.active').id;
+  const waitingListRow = document.getElementById(`waiting-list-row-${id}`);
+  const rowInputs = [...waitingListRow.querySelectorAll('input'), ...waitingListRow.querySelectorAll('textarea'), ...waitingListRow.querySelectorAll('select')];
+
+  if (e.target.classList.contains('btn-waiting-list-cancel')) {
+    let data = {
+      action: 'admin_get_waiting_list_info',
+      eventID: activeEventID,
+      waitingListID: id
+    };
+    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+      const waitingListData = JSON.parse(response);
+      rowInputs[0].value = waitingListData[0].Inquiry_Name;
+      rowInputs[1].value = waitingListData[0].Email;
+      jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[2]).val(waitingListData[0].Notes);
+      rowInputs[3].value = waitingListData[0].Participants;
+    });
+  } else if (e.target.classList.contains('btn-waiting-list-save')) {
+    let data = {
+      action: 'admin_set_waiting_list_info',
+      eventID: activeEventID,
+      inquiryID: id,
+      name: rowInputs[0].value,
+      email: rowInputs[1].value,
+      notes: jquery__WEBPACK_IMPORTED_MODULE_2___default()(rowInputs[2]).val(),
+      participants: rowInputs[3].value
+    };
+    jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+      waitingListRow.classList.remove('edit');
+      updateWaitingListTableDisplay();
+    });
+  } else if (e.target.classList.contains('btn-waiting-list-delete')) {
+    const message = 'are you sure you wish to remove this booking from the event? Once deleted, this cannot be undone';
+
+    if (confirm(message) == true) {
+      let data = {
+        action: 'admin_delete_waiting_list_info',
+        eventID: activeEventID,
+        inquiryID: id
+      };
+      jquery__WEBPACK_IMPORTED_MODULE_2___default().post(ajaxData.ajaxurl, data, function (response) {
+        jquery__WEBPACK_IMPORTED_MODULE_2___default()(waitingListRow).remove();
+        updateWaitingListTableDisplay();
       });
     } else return;
   }
