@@ -10,17 +10,35 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "closeAdminForm": function() { return /* binding */ closeAdminForm; }
+/* harmony export */   "closeAdminForm": function() { return /* binding */ closeAdminForm; },
+/* harmony export */   "openAdminForm": function() { return /* binding */ openAdminForm; }
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _html_templates_add_inquiry_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./html-templates/add-inquiry-form */ "./src/backend/html-templates/add-inquiry-form.js");
+/* harmony import */ var _html_templates_add_participant_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./html-templates/add-participant-form */ "./src/backend/html-templates/add-participant-form.js");
 
+
+
+const formSubContainer = document.querySelector('.admin-form-sub-container');
+const formOverlay = document.querySelector('.admin-form-overlay');
+
+function openAdminForm(eventID, type) {
+  formOverlay.classList.add('active');
+  console.log(formSubContainer);
+
+  if (type == 'participant') {
+    formSubContainer.innerHTML = (0,_html_templates_add_participant_form__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  } else if (type == 'inquiry') {
+    formSubContainer.innerHTML = (0,_html_templates_add_inquiry_form__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  }
+}
 
 function closeAdminForm() {
   const closeButton = document.getElementById('admin-form-close');
-  const adminFormOverlay = document.getElementsByClassName('admin-form-overlay')[0];
   closeButton.addEventListener('click', () => {
-    adminFormOverlay.classList.remove('active');
+    formOverlay.classList.remove('active');
+    formSubContainer.empty();
   });
 }
 
@@ -39,7 +57,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": function() { return /* binding */ addInquiryForm; }
 /* harmony export */ });
 function addInquiryForm() {
-  return ``;
+  return `
+			
+		`;
 }
 
 /***/ }),
@@ -55,7 +75,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": function() { return /* binding */ addParticipantForm; }
 /* harmony export */ });
 function addParticipantForm() {
-  return ``;
+  return `
+			
+		`;
 }
 
 /***/ }),
@@ -354,6 +376,7 @@ function eventMonthSelect() {
     });
   });
 } //calls setParticipantRowEdit and setWaitingListRowEdit functions
+//contains add participant and inquiry event listeners
 
 
 function getEventParticipants(e) {
@@ -382,10 +405,14 @@ function getEventParticipants(e) {
       jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, dataParticipants, function (response) {
         jquery__WEBPACK_IMPORTED_MODULE_5___default()('#participant-table-container').html((0,_html_templates_participants_table__WEBPACK_IMPORTED_MODULE_0__["default"])(JSON.parse(response)));
         setParticipantRowEdit();
+        const addParticipantButton = document.getElementById('add-participant');
+        addParticipantButton.addEventListener('click', () => (0,_admin_form__WEBPACK_IMPORTED_MODULE_4__.openAdminForm)(dataParticipants.eventID, 'participant'));
       });
       jquery__WEBPACK_IMPORTED_MODULE_5___default().post(ajaxData.ajaxurl, dataWaitingList, function (response) {
         jquery__WEBPACK_IMPORTED_MODULE_5___default()('#waiting-list-table-container').html((0,_html_templates_waiting_list_table__WEBPACK_IMPORTED_MODULE_1__["default"])(JSON.parse(response)));
         setWaitingListRowEdit();
+        const addInquiryButton = document.getElementById('add-inquiry');
+        addInquiryButton.addEventListener('click', () => (0,_admin_form__WEBPACK_IMPORTED_MODULE_4__.openAdminForm)(dataParticipants.eventID, 'inquiry'));
       });
     });
   });
@@ -415,7 +442,6 @@ function setParticipantRowEdit() {
   const deleteButtons = [...document.getElementsByClassName('btn-participant-delete')];
   const tableRows = [...document.querySelectorAll('.participant-table .table-row.body')];
   const participantsHeader = document.getElementById('participants-table-header');
-  const addParticipantButton = document.getElementById('add-participant');
   editButtons.forEach(button => {
     button.addEventListener('click', () => {
       const ID = button.id.slice(21);
@@ -468,9 +494,6 @@ function setParticipantRowEdit() {
   participantsHeader.addEventListener('click', () => {
     document.querySelector('.participant-table').classList.toggle('show');
     participantsHeader.classList.toggle('show');
-  });
-  addParticipantButton.addEventListener('click', () => {
-    document.getElementsByClassName('admin-form-overlay')[0].classList.add('active');
   });
 }
 
@@ -620,9 +643,6 @@ function setWaitingListRowEdit() {
   waitingListHeader.addEventListener('click', () => {
     document.querySelector('.waiting-list-table').classList.toggle('show');
     waitingListHeader.classList.toggle('show');
-  });
-  addInquiryButton.addEventListener('click', () => {
-    document.getElementsByClassName('admin-form-overlay')[0].classList.add('active');
   });
 }
 

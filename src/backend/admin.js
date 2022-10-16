@@ -2,7 +2,7 @@ import participantsTable from './html-templates/participants-table';
 import waitingListTable from './html-templates/waiting-list-table';
 import addParticipantForm from './html-templates/add-participant-form';
 import addInquiryForm from './html-templates/add-inquiry-form';
-import { closeAdminForm } from './admin-form';
+import { openAdminForm, closeAdminForm } from './admin-form';
 import $ from 'jquery';
 
 //calls getEventParticipants function
@@ -35,6 +35,7 @@ function eventMonthSelect() {
 }
 
 //calls setParticipantRowEdit and setWaitingListRowEdit functions
+//contains add participant and inquiry event listeners
 function getEventParticipants(e) {
 	const adminEventRows = [...document.getElementsByClassName('admin-event-row')];
 	adminEventRows.forEach((row) => {
@@ -64,11 +65,15 @@ function getEventParticipants(e) {
 			$.post(ajaxData.ajaxurl, dataParticipants, function (response) {
 				$('#participant-table-container').html(participantsTable(JSON.parse(response)));
 				setParticipantRowEdit();
+				const addParticipantButton = document.getElementById('add-participant');
+				addParticipantButton.addEventListener('click', () => openAdminForm(dataParticipants.eventID, 'participant'));
 			});
 
 			$.post(ajaxData.ajaxurl, dataWaitingList, function (response) {
 				$('#waiting-list-table-container').html(waitingListTable(JSON.parse(response)));
 				setWaitingListRowEdit();
+				const addInquiryButton = document.getElementById('add-inquiry');
+				addInquiryButton.addEventListener('click', () => openAdminForm(dataParticipants.eventID, 'inquiry'));
 			});
 		});
 	});
@@ -98,7 +103,6 @@ function setParticipantRowEdit() {
 	const deleteButtons = [...document.getElementsByClassName('btn-participant-delete')];
 	const tableRows = [...document.querySelectorAll('.participant-table .table-row.body')];
 	const participantsHeader = document.getElementById('participants-table-header');
-	const addParticipantButton = document.getElementById('add-participant');
 
 	editButtons.forEach((button) => {
 		button.addEventListener('click', () => {
@@ -157,10 +161,6 @@ function setParticipantRowEdit() {
 	participantsHeader.addEventListener('click', () => {
 		document.querySelector('.participant-table').classList.toggle('show');
 		participantsHeader.classList.toggle('show');
-	});
-
-	addParticipantButton.addEventListener('click', () => {
-		document.getElementsByClassName('admin-form-overlay')[0].classList.add('active');
 	});
 }
 
@@ -320,10 +320,6 @@ function setWaitingListRowEdit() {
 	waitingListHeader.addEventListener('click', () => {
 		document.querySelector('.waiting-list-table').classList.toggle('show');
 		waitingListHeader.classList.toggle('show');
-	});
-
-	addInquiryButton.addEventListener('click', () => {
-		document.getElementsByClassName('admin-form-overlay')[0].classList.add('active');
 	});
 }
 

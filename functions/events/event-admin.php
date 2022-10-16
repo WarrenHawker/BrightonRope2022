@@ -54,6 +54,7 @@ function admin_HTML() { ?>
     <div class="admin-form-overlay">
       <div class="admin-form-container">
         <i class="fa fa-window-close" id="admin-form-close" aria-hidden="true"></i>
+          <div class="admin-form-sub-container"></div>
       </div>
     </div> 
   </div>
