@@ -163,8 +163,10 @@ function wpdocs_run_on_publish_only( $new_status, $old_status, $post ) {
 
     $event_post = get_post($post);
     $event_ID = $event_post->ID; 
-    create_event_participants_table($event_ID);
-    create_event_waitingList_table($event_ID);
+    if(get_field('free_event', $event_ID) == false) {
+      create_event_participants_table($event_ID);
+      create_event_waitingList_table($event_ID);
+    }
   }
 }
 add_action('transition_post_status', 'wpdocs_run_on_publish_only', 10, 3);

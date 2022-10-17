@@ -126,3 +126,16 @@ function admin_get_events() {
 }
 add_action('wp_ajax_admin_get_events', 'admin_get_events');
 
+function admin_is_event_full() {
+  global $wpdb;
+  $event_id = $_POST['eventID'];
+  $response_data = new stdClass();
+  $response_data->title = get_the_title($event_id);
+  $response_data->sold_out = get_field('sold_out', $event_id);
+
+  $response_JSON = json_encode($response_data);
+  echo $response_JSON;
+  wp_die();
+}
+add_action('wp_ajax_admin_is_event_full', 'admin_is_event_full');
+

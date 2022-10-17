@@ -26,7 +26,7 @@ export default function participantsTable(data) {
             <div class="table-item non-input" data-name='Amount Paid'>£${item.Amount_paid}</div>
             <div class="table-item non-input" data-name='Submission Date'>${convertDates(item.Submission_date)}</div>
           </div>
-          <div class="table-item" data-name='Notes'>
+          <div class="table-item" data-name='Admin Notes'>
             <textarea disabled>${item.Notes}</textarea>
           </div>
           <div class="participant-action-buttons">
@@ -63,7 +63,7 @@ export default function participantsTable(data) {
           <div class="table-item">Amount <br> Paid</div>
           <div class="table-item">Submission <br> Date</div>
         </div>
-        <div class="table-item">Notes</div>
+        <div class="table-item">Admin Notes</div>
       </li>
       ${participantDisplay}
     </ol>

@@ -25,13 +25,19 @@ const formOverlay = document.querySelector('.admin-form-overlay');
 
 function openAdminForm(eventID, type) {
   formOverlay.classList.add('active');
-  console.log(formSubContainer);
+  let data = {
+    action: 'admin_is_event_full',
+    eventID: eventID
+  };
+  jquery__WEBPACK_IMPORTED_MODULE_0___default().post(ajaxData.ajaxurl, data, function (response) {
+    const responseData = JSON.parse(response);
 
-  if (type == 'participant') {
-    formSubContainer.innerHTML = (0,_html_templates_add_participant_form__WEBPACK_IMPORTED_MODULE_2__["default"])();
-  } else if (type == 'inquiry') {
-    formSubContainer.innerHTML = (0,_html_templates_add_inquiry_form__WEBPACK_IMPORTED_MODULE_1__["default"])();
-  }
+    if (type == 'participant') {
+      formSubContainer.innerHTML = (0,_html_templates_add_participant_form__WEBPACK_IMPORTED_MODULE_2__["default"])(eventID, responseData.sold_out, responseData.title);
+    } else if (type == 'inquiry') {
+      formSubContainer.innerHTML = (0,_html_templates_add_inquiry_form__WEBPACK_IMPORTED_MODULE_1__["default"])(eventID);
+    }
+  });
 }
 
 function closeAdminForm() {
@@ -74,9 +80,61 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": function() { return /* binding */ addParticipantForm; }
 /* harmony export */ });
-function addParticipantForm() {
+function addParticipantForm(eventID, isEventFull, title) {
   return `
-			
+			<form class="admin-form add-participants">
+				<h1>Add new participants to event: ${title}</h1>
+				<h2 class='event-full-message'>
+					${isEventFull ? `WARNING: this event is full, are you sure you wish to add a new participant??` : ''}
+				</h2>
+				<fieldset class="participant-container">
+					<p class="label">Participant 1 Name<span class="required"> * </span></p>
+					<div class="input-container">
+						<input type="text" name="fname1" required>
+						<label class="sub-label" for="fname1">First</label>
+					</div>
+					<div class="input-container">
+						<input type="text" name="lname1" required>
+						<label class="sub-label" for="lname1">Last</label>
+					</div>
+				</fieldset>
+
+				<fieldset class="participant-container">
+					<p class="label">Participant 2 Name</p>
+					<div class="input-container">
+						<input type="text" name="fname2">
+						<label class="sub-label" for="fname2">First</label>
+					</div>
+					<div class="input-container">
+						<input type="text" name="lname2">
+						<label class="sub-label" for="lname2">Last</label>
+					</div>
+				</fieldset>
+
+				<fieldset class="participant-container">
+					<p class="label">Participant 3 Name</p>
+					<div class="input-container">
+						<input type="text" name="fname3">
+						<label class="sub-label" for="fname3">First</label>
+					</div>
+					<div class="input-container">
+						<input type="text" name="lname3">
+						<label class="sub-label" for="lname3">Last</label>
+					</div>
+				</fieldset>
+
+				<fieldset class="input-container email ">
+          <label class="label" for="email">Email<span class="required"> * </span></label>
+          <input type="email" name="email" required>
+        </fieldset>
+
+				<fieldset class="input-container info">
+          <label class="label" for="additional-info">Additional Information</label>
+          <textarea name="additional-info"></textarea>
+        </fieldset>
+
+				<button class="btn-admin primary large">Submit</button>
+			</form>
 		`;
 }
 
@@ -119,7 +177,7 @@ function participantsTable(data) {
             <div class="table-item non-input" data-name='Amount Paid'>£${item.Amount_paid}</div>
             <div class="table-item non-input" data-name='Submission Date'>${convertDates(item.Submission_date)}</div>
           </div>
-          <div class="table-item" data-name='Notes'>
+          <div class="table-item" data-name='Admin Notes'>
             <textarea disabled>${item.Notes}</textarea>
           </div>
           <div class="participant-action-buttons">
@@ -155,7 +213,7 @@ function participantsTable(data) {
           <div class="table-item">Amount <br> Paid</div>
           <div class="table-item">Submission <br> Date</div>
         </div>
-        <div class="table-item">Notes</div>
+        <div class="table-item">Admin Notes</div>
       </li>
       ${participantDisplay}
     </ol>

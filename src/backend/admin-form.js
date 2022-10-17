@@ -7,13 +7,20 @@ const formOverlay = document.querySelector('.admin-form-overlay');
 
 function openAdminForm(eventID, type) {
 	formOverlay.classList.add('active');
-	console.log(formSubContainer);
 
-	if (type == 'participant') {
-		formSubContainer.innerHTML = addParticipantForm();
-	} else if (type == 'inquiry') {
-		formSubContainer.innerHTML = addInquiryForm();
-	}
+	let data = {
+		action: 'admin_is_event_full',
+		eventID: eventID,
+	};
+
+	$.post(ajaxData.ajaxurl, data, function (response) {
+		const responseData = JSON.parse(response);
+		if (type == 'participant') {
+			formSubContainer.innerHTML = addParticipantForm(eventID, responseData.sold_out, responseData.title);
+		} else if (type == 'inquiry') {
+			formSubContainer.innerHTML = addInquiryForm(eventID);
+		}
+	});
 }
 
 function closeAdminForm() {
